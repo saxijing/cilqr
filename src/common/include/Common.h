@@ -1,6 +1,10 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+#include<iostream>
+#include<vector>
+#include<cmath>
+
 struct ObjState
 {
     double x;

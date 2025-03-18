@@ -1,0 +1,8 @@
+prefix=/home/saxijing/cilqr/install
+
+Name: config
+Description: Description of config
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

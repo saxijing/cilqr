@@ -1,0 +1,8 @@
+/timestep/planning: 0.1
+/timestep/control: 0.01
+/timestep/prediction: 0.01
+/road_info/lane_width: 0.35
+/road_info/lane_num: 2
+/planner/global_horizon: 10
+/planner/local_horizon: 10
+/planner/prediction_horizon: 10

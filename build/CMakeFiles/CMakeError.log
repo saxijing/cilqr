@@ -1,0 +1,65 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/saxijing/cilqr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_13a9c/fast && /usr/bin/make  -f CMakeFiles/cmTC_13a9c.dir/build.make CMakeFiles/cmTC_13a9c.dir/build
+make[1]: 进入目录“/home/saxijing/cilqr/build/CMakeFiles/CMakeTmp”
+Building C object CMakeFiles/cmTC_13a9c.dir/src.c.o
+/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_13a9c.dir/src.c.o -c /home/saxijing/cilqr/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_13a9c
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_13a9c.dir/link.txt --verbose=1
+/usr/bin/cc -rdynamic CMakeFiles/cmTC_13a9c.dir/src.c.o -o cmTC_13a9c 
+CMakeFiles/cmTC_13a9c.dir/src.c.o：在函数‘main’中：
+src.c:(.text+0x3e)：对‘pthread_create’未定义的引用
+src.c:(.text+0x4a)：对‘pthread_detach’未定义的引用
+src.c:(.text+0x56)：对‘pthread_cancel’未定义的引用
+src.c:(.text+0x67)：对‘pthread_join’未定义的引用
+src.c:(.text+0x7b)：对‘pthread_atfork’未定义的引用
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_13a9c.dir/build.make:98: recipe for target 'cmTC_13a9c' failed
+make[1]: *** [cmTC_13a9c] Error 1
+make[1]: 离开目录“/home/saxijing/cilqr/build/CMakeFiles/CMakeTmp”
+Makefile:127: recipe for target 'cmTC_13a9c/fast' failed
+make: *** [cmTC_13a9c/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/saxijing/cilqr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_29906/fast && /usr/bin/make  -f CMakeFiles/cmTC_29906.dir/build.make CMakeFiles/cmTC_29906.dir/build
+make[1]: 进入目录“/home/saxijing/cilqr/build/CMakeFiles/CMakeTmp”
+Building C object CMakeFiles/cmTC_29906.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_29906.dir/CheckFunctionExists.c.o -c /usr/local/share/cmake-3.24/Modules/CheckFunctionExists.c
+Linking C executable cmTC_29906
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29906.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_29906.dir/CheckFunctionExists.c.o -o cmTC_29906  -lpthreads 
+/usr/bin/ld: 找不到 -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_29906.dir/build.make:98: recipe for target 'cmTC_29906' failed
+make[1]: *** [cmTC_29906] Error 1
+make[1]: 离开目录“/home/saxijing/cilqr/build/CMakeFiles/CMakeTmp”
+Makefile:127: recipe for target 'cmTC_29906/fast' failed
+make: *** [cmTC_29906/fast] Error 2
+
+
+
