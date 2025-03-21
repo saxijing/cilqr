@@ -18,11 +18,11 @@ Object::Object()
     obj_size.height=1.44;
     dt=0.1;
     predict_horizon=10;
-    //predicted_traj.clear();
+    predicted_traj.clear();
     cout<<"Object default constructed!"<<endl;
 }
 
-Object::Object(const int ID, const string name, const double x, const double y, const double theta, const double v0, const double dT)
+Object::Object(const int ID, const string name, const double x, const double y, const double theta, const double v0, const double a0, const double dT)
 {
     id=ID;
     obj_name=name;
@@ -30,7 +30,7 @@ Object::Object(const int ID, const string name, const double x, const double y, 
     obj_state.y=y;
     obj_state.theta=theta;
     obj_state.v=v0;
-    obj_state.accel=0.0;
+    obj_state.accel=a0;
     obj_state.yaw_rate=0.0;
     //tesla model3:
     obj_size.length=4.72;
@@ -38,14 +38,14 @@ Object::Object(const int ID, const string name, const double x, const double y, 
     obj_size.height=1.44;
     dt=dT;
     predict_horizon=10;
-    //predicted_traj.clear();
+    predicted_traj.clear();
     cout<<"Object constructed!"<<endl;
     
 }
 
 Object::~Object(){cout<<"Object destructed!"<<endl;}
 
-void Object::repose(const double x, const double y, const double z, const double theta)
+void Object::repose(const double x, const double y, const double theta)
 {
     obj_state.x=x;
     obj_state.y=y;
@@ -59,17 +59,30 @@ void Object::resize(const double l, const double w, const double h)
     obj_size.height=h;
 }
 
-void Object::update(const double accel, const double yaw_rate)
+void Object::resetAccel(const double target_accel)
 {
-    obj_state.accel=accel;
-    obj_state.yaw_rate=yaw_rate;
+    obj_state.accel=target_accel;
+}
+
+void Object::resetYawRate(const double target_yaw_rate)
+{
+    obj_state.yaw_rate=target_yaw_rate;
+}
+
+void Object::resetPredictHorizon(const int horizon)
+{
+    predict_horizon=horizon;
+}
+
+void Object::update()
+{
     obj_state.x=obj_state.x+obj_state.v*dt*cos(obj_state.theta)+0.5*dt*dt*cos(obj_state.theta)*obj_state.accel;
     obj_state.y=obj_state.y+obj_state.v*dt*sin(obj_state.theta)+0.5*dt*dt*sin(obj_state.theta)*obj_state.accel;
     obj_state.v=obj_state.v+obj_state.accel*dt;
     obj_state.theta=obj_state.theta+obj_state.yaw_rate*dt;
 }
 
-const vector<ObjState>& Object::ObjectPredict(const int predict_horizon, const double accel, const double dt)
+void Object::ObjectPredict()
 {
     predicted_traj.clear();
     predicted_traj.push_back(obj_state);
@@ -83,61 +96,64 @@ const vector<ObjState>& Object::ObjectPredict(const int predict_horizon, const d
         obj_state.yaw_rate=predicted_traj[i-1].yaw_rate;
         predicted_traj.push_back(obj_state);
     }
-    return predicted_traj;
 }
 
-int Object::getID()
+int Object::getID() const
 {
     return id;
 }
 
-string Object::getName()
+string Object::getName() const
 {
     return obj_name;
 }
 
-double Object::getPoseX()
+double Object::getPoseX() const
 {
     return obj_state.x;
 }
 
-double Object::getPoseY()
+double Object::getPoseY() const
 {
     return obj_state.y;
 }
 
-double Object::getPoseTheta()
+double Object::getPoseTheta() const
 {
     return obj_state.theta;
 }
 
-double Object::getVelocity()
+double Object::getVelocity() const
 {
     return obj_state.v;
 }
 
-double Object::getAccelerate()
+double Object::getAccelerate() const
 {
     return obj_state.accel;
 }
 
-double Object::getYawRate()
+double Object::getYawRate() const
 {
     return obj_state.yaw_rate;
 }   
 
-double Object::getLength()
+double Object::getLength() const
 {
     return obj_size.length;
 }
 
-double Object::getWidth()
+double Object::getWidth() const
 {
     return obj_size.width;
 }
 
-double Object::getHeight()
+double Object::getHeight() const
 {
     return obj_size.height;
 }
 
+const vector<ObjState>& Object::getPredictedTraj() const
+{
+    return predicted_traj;
+}

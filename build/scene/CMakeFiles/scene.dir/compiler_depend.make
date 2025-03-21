@@ -1471,13 +1471,20 @@ scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.o: /home/saxijing/cilqr/src/s
   /opt/ros/melodic/include/nav_msgs/Path.h \
   /opt/ros/melodic/include/geometry_msgs/PoseStamped.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/State.h \
-  /home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
   /usr/include/c++/7/fstream \
   /usr/include/x86_64-linux-gnu/c++/7/bits/basic_file.h \
   /usr/include/x86_64-linux-gnu/c++/7/bits/c++io.h \
   /usr/include/c++/7/bits/fstream.tcc \
+  /usr/include/c++/7/mutex \
+  /usr/include/c++/7/chrono \
+  /usr/include/c++/7/ratio \
+  /usr/include/c++/7/bits/parse_numbers.h \
+  /usr/include/c++/7/bits/std_mutex.h \
   /home/saxijing/cilqr/src/scene/include/functions/VehicleModel.h \
   /home/saxijing/cilqr/src/common/include/Common.h \
   /usr/include/eigen3/Eigen/Dense \
@@ -3162,13 +3169,20 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
   /opt/ros/melodic/include/nav_msgs/Path.h \
   /opt/ros/melodic/include/geometry_msgs/PoseStamped.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/State.h \
-  /home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
   /usr/include/c++/7/fstream \
   /usr/include/x86_64-linux-gnu/c++/7/bits/basic_file.h \
   /usr/include/x86_64-linux-gnu/c++/7/bits/c++io.h \
   /usr/include/c++/7/bits/fstream.tcc \
+  /usr/include/c++/7/mutex \
+  /usr/include/c++/7/chrono \
+  /usr/include/c++/7/ratio \
+  /usr/include/c++/7/bits/parse_numbers.h \
+  /usr/include/c++/7/bits/std_mutex.h \
   /home/saxijing/cilqr/src/scene/include/functions/VehicleModel.h \
   /home/saxijing/cilqr/src/common/include/Common.h \
   /usr/include/eigen3/Eigen/Dense \
@@ -3514,11 +3528,21 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
 
 /home/saxijing/cilqr/src/scene/include/functions/VehicleModel.h:
 
+/usr/include/c++/7/bits/std_mutex.h:
+
+/usr/include/c++/7/bits/parse_numbers.h:
+
+/usr/include/c++/7/chrono:
+
+/usr/include/c++/7/mutex:
+
 /usr/include/c++/7/bits/fstream.tcc:
 
 /usr/include/x86_64-linux-gnu/c++/7/bits/c++io.h:
 
 /usr/include/x86_64-linux-gnu/c++/7/bits/basic_file.h:
+
+/home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h:
 
 /opt/ros/melodic/include/nav_msgs/Path.h:
 
@@ -3651,6 +3675,8 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
 /usr/include/boost/preprocessor/seq/seq.hpp:
 
 /usr/include/boost/preprocessor/seq/for_each_i.hpp:
+
+/usr/include/c++/7/ratio:
 
 /usr/include/boost/concept/detail/concept_def.hpp:
 
@@ -4520,6 +4546,8 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
 
 /usr/include/eigen3/Eigen/src/Core/products/Parallelizer.h:
 
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h:
+
 /usr/include/boost/smart_ptr/shared_array.hpp:
 
 /usr/include/boost/predef/library/std/roguewave.h:
@@ -4569,6 +4597,8 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
 /usr/include/log4cxx/logstring.h:
 
 /usr/include/boost/mpl/empty_fwd.hpp:
+
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h:
 
 /usr/include/c++/7/initializer_list:
 
@@ -5505,8 +5535,6 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
 /usr/include/boost/preprocessor/detail/is_binary.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrix.h:
-
-/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h:
 
 /usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
 

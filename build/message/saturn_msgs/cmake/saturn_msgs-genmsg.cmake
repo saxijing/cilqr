@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "saturn_msgs: 4 messages, 0 services")
+message(STATUS "saturn_msgs: 6 messages, 0 services")
 
 set(MSG_I_FLAGS "-Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg")
 
@@ -27,14 +27,24 @@ add_custom_target(_saturn_msgs_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "saturn_msgs" "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg" "std_msgs/Header"
 )
 
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" NAME_WE)
+add_custom_target(_saturn_msgs_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "saturn_msgs" "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" "saturn_msgs/ObstacleState:saturn_msgs/StateLite:std_msgs/Header"
+)
+
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" NAME_WE)
 add_custom_target(_saturn_msgs_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "saturn_msgs" "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" "std_msgs/Header"
 )
 
-get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" NAME_WE)
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" NAME_WE)
 add_custom_target(_saturn_msgs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "saturn_msgs" "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" "saturn_msgs/State:std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "saturn_msgs" "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" "std_msgs/Header"
+)
+
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" NAME_WE)
+add_custom_target(_saturn_msgs_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "saturn_msgs" "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" "saturn_msgs/StateLite:std_msgs/Header"
 )
 
 #
@@ -56,15 +66,27 @@ _generate_msg_cpp(saturn_msgs
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_cpp(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_cpp(saturn_msgs
   "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_cpp(saturn_msgs
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg"
   "${MSG_I_FLAGS}"
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_cpp(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/saturn_msgs
 )
 
@@ -86,9 +108,13 @@ get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/m
 add_dependencies(saturn_msgs_generate_messages_cpp _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_cpp _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_cpp _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_cpp _saturn_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" NAME_WE)
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_cpp _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_cpp _saturn_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -113,15 +139,27 @@ _generate_msg_eus(saturn_msgs
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_eus(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_eus(saturn_msgs
   "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_eus(saturn_msgs
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg"
   "${MSG_I_FLAGS}"
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_eus(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/saturn_msgs
 )
 
@@ -143,9 +181,13 @@ get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/m
 add_dependencies(saturn_msgs_generate_messages_eus _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_eus _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_eus _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_eus _saturn_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" NAME_WE)
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_eus _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_eus _saturn_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -170,15 +212,27 @@ _generate_msg_lisp(saturn_msgs
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_lisp(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_lisp(saturn_msgs
   "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_lisp(saturn_msgs
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg"
   "${MSG_I_FLAGS}"
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_lisp(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/saturn_msgs
 )
 
@@ -200,9 +254,13 @@ get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/m
 add_dependencies(saturn_msgs_generate_messages_lisp _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_lisp _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_lisp _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_lisp _saturn_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" NAME_WE)
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_lisp _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_lisp _saturn_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -227,15 +285,27 @@ _generate_msg_nodejs(saturn_msgs
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_nodejs(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_nodejs(saturn_msgs
   "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_nodejs(saturn_msgs
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg"
   "${MSG_I_FLAGS}"
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_nodejs(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/saturn_msgs
 )
 
@@ -257,9 +327,13 @@ get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/m
 add_dependencies(saturn_msgs_generate_messages_nodejs _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_nodejs _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_nodejs _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_nodejs _saturn_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" NAME_WE)
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_nodejs _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_nodejs _saturn_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -284,15 +358,27 @@ _generate_msg_py(saturn_msgs
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_py(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_py(saturn_msgs
   "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/saturn_msgs
 )
 _generate_msg_py(saturn_msgs
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg"
   "${MSG_I_FLAGS}"
-  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/saturn_msgs
+)
+_generate_msg_py(saturn_msgs
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg"
+  "${MSG_I_FLAGS}"
+  "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/saturn_msgs
 )
 
@@ -314,9 +400,13 @@ get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/m
 add_dependencies(saturn_msgs_generate_messages_py _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_py _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_py _saturn_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_py _saturn_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg" NAME_WE)
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg" NAME_WE)
+add_dependencies(saturn_msgs_generate_messages_py _saturn_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg" NAME_WE)
 add_dependencies(saturn_msgs_generate_messages_py _saturn_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

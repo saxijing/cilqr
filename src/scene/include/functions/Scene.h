@@ -6,10 +6,13 @@
 #include<visualization_msgs/MarkerArray.h>
 #include<nav_msgs/Path.h>
 #include<saturn_msgs/State.h>
-#include<saturn_msgs/StateArray.h>
+#include<saturn_msgs/StateLite.h>
+#include<saturn_msgs/ObstacleState.h>
+#include<saturn_msgs/ObstacleStateArray.h>
 #include<saturn_msgs/Control.h>
 #include<saturn_msgs/ControlArray.h>
 #include<fstream>
+#include<mutex>
 #include "VehicleModel.h"
 #include "Objects.h"
 //#include "cilqr.h"
@@ -19,19 +22,18 @@ using namespace std;
 class Scene
 {
     public:
-        Scene(const string name, ros::NodeHandle &nh_);
+        Scene(const string name, const string filepath, ros::NodeHandle &nh_);
         ~Scene();
-        void readGlobalWaypoints(const string filepath);
-        void recvCilqrPlannerWaypoints(const nav_msgs::Path &msg);
+        void readCenterlineAndCalRoadEdge();
         void recvCilqrPlannerControl(const saturn_msgs::ControlArray &msg);
         void update();
 
     protected:
         string scene_name;
+        string centerline_filepath;
         ros::NodeHandle nh;
         ros::Publisher ego_vehicle_pub;
         ros::Publisher obstacles_pub;
-        ros::Subscriber cilqr_planner_waypoints_sub;
         ros::Subscriber cilqr_planner_control_sub;
         //for display in rviz,
         ros::Publisher  ego_rviz_pub;
@@ -42,10 +44,20 @@ class Scene
         VehicleModel ego_vehicle;
         Objects obstacles;
         ObjState waypoint;
-        vector<ObjState>  global_waypoints;
+        ObjState right_point;
+        ObjState left_point;
+        CtrlInput control_signal;
+        vector<ObjState>  centerline_points;
+        vector<ObjState> rightedge_points;
+        vector<ObjState> leftedge_points;
+        vector<CtrlInput> local_control_lst;
         double dt;
         double lane_width;
         int lane_num;
         int global_horizon;
+        int prediction_horizon;
+        //for data lock
+        mutex data_mutex;
+        int control_index;
 };
 #endif

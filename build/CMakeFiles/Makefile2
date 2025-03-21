@@ -199,8 +199,10 @@ message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/std_msgs_generate_mess
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages.dir/clean
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir/clean
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/clean
+message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/clean
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/clean
-message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/clean
+message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/clean
+message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/clean
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/clean
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir/clean
 message/saturn_msgs/clean: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/clean
@@ -894,7 +896,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages.dir/all: message/sa
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 32
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages.dir/rule
@@ -961,6 +963,32 @@ message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control
 .PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/clean
 
 #=============================================================================
+# Target rules for target message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir
+
+# All Build rule for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/depend
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num= "Built target _saturn_msgs_generate_messages_check_deps_ObstacleStateArray"
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
+
+# Build rule for subdir invocation for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
+
+# Convenience name for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleStateArray: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleStateArray
+
+# clean rule for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/clean:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/clean
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/clean
+
+#=============================================================================
 # Target rules for target message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir
 
 # All Build rule for target.
@@ -987,30 +1015,56 @@ message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.d
 .PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/clean
 
 #=============================================================================
-# Target rules for target message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir
+# Target rules for target message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir
 
 # All Build rule for target.
-message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all:
-	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/depend
-	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num= "Built target _saturn_msgs_generate_messages_check_deps_StateArray"
-.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/depend
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num= "Built target _saturn_msgs_generate_messages_check_deps_StateLite"
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
 
 # Build rule for subdir invocation for target.
-message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule: cmake_check_build_system
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
-.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule
 
 # Convenience name for target.
-_saturn_msgs_generate_messages_check_deps_StateArray: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule
-.PHONY : _saturn_msgs_generate_messages_check_deps_StateArray
+_saturn_msgs_generate_messages_check_deps_StateLite: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_StateLite
 
 # clean rule for target.
-message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/clean:
-	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/clean
-.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/clean
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/clean:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/clean
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/clean
+
+#=============================================================================
+# Target rules for target message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir
+
+# All Build rule for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/depend
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num= "Built target _saturn_msgs_generate_messages_check_deps_ObstacleState"
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
+
+# Build rule for subdir invocation for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule
+
+# Convenience name for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleState: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleState
+
+# clean rule for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/clean:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/clean
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/clean
 
 #=============================================================================
 # Target rules for target message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir
@@ -1019,16 +1073,18 @@ message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateAr
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/all
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=12,13,14,15 "Built target saturn_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=12,13,14,15,16,17 "Built target saturn_msgs_generate_messages_cpp"
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/rule
@@ -1054,7 +1110,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir/all: message/saturn_msgs/C
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir/rule
@@ -1075,16 +1131,18 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir/clean:
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/all
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/depend
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=16,17,18,19,20 "Built target saturn_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=18,19,20,21,22,23,24 "Built target saturn_msgs_generate_messages_eus"
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/rule
@@ -1110,7 +1168,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_geneus.dir/all: message/saturn_msgs/C
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_geneus.dir/rule
@@ -1131,16 +1189,18 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_geneus.dir/clean:
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/all
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=21,22,23,24 "Built target saturn_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=25,26,27,28,29,30 "Built target saturn_msgs_generate_messages_lisp"
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/rule
@@ -1166,7 +1226,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_genlisp.dir/all: message/saturn_msgs/
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_genlisp.dir/rule
@@ -1187,16 +1247,18 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_genlisp.dir/clean:
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/all
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=25,26,27,28 "Built target saturn_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=31,32,33,34,35,36 "Built target saturn_msgs_generate_messages_nodejs"
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/rule
@@ -1222,7 +1284,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_gennodejs.dir/all: message/saturn_msg
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_gennodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_gennodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_gennodejs.dir/rule
@@ -1243,16 +1305,18 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_gennodejs.dir/clean:
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/std_msgs_generate_messages_py.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/all
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/all
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/all
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/all
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/depend
 	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/build.make message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=29,30,31,32,33 "Built target saturn_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=37,38,39,40,41,42,43 "Built target saturn_msgs_generate_messages_py"
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/rule
@@ -1278,7 +1342,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_genpy.dir/all: message/saturn_msgs/CM
 
 # Build rule for subdir invocation for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_genpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/saturn_msgs_genpy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saxijing/cilqr/build/CMakeFiles 0
 .PHONY : message/saturn_msgs/CMakeFiles/saturn_msgs_genpy.dir/rule
@@ -1299,7 +1363,7 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_genpy.dir/clean:
 scene/CMakeFiles/scene.dir/all:
 	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/depend
 	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=34,35,36,37,38,39 "Built target scene"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=44,45,46,47,48,49 "Built target scene"
 .PHONY : scene/CMakeFiles/scene.dir/all
 
 # Build rule for subdir invocation for target.

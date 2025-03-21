@@ -68,8 +68,10 @@
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir
+/home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir
-/home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir
+/home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir
+/home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/saturn_msgs_gencpp.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir

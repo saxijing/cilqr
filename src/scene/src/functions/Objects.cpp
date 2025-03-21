@@ -5,6 +5,7 @@ using namespace std;
 Objects::Objects(): object_num(0), object_index(-1)
 {
     cout<<"Objects constructed!"<<endl;
+    objects.clear();
 }
 
 Objects::~Objects()
@@ -23,7 +24,7 @@ void Objects::addObject(const Object& obj)
     object_num++;
 }
 
-int Objects::findObjectByID(const int id)
+int Objects::findObjectByID(const int id) const
 {
     for(int i=0; i<objects.size(); i++)
     {
@@ -35,7 +36,7 @@ int Objects::findObjectByID(const int id)
     return -1;
 }
 
-int Objects::findObjectByName(const string name)
+int Objects::findObjectByName(const string name) const
 {
     for(int i=0; i<objects.size(); i++)
     {
@@ -85,12 +86,12 @@ void Objects::removeObjectByName(const string name)
         cout<<"Object(Name) "<<name<<" not found!"<<endl;
 }
 
-int Objects::getObjectsNum()
+int Objects::getObjectsNum() const
 {
     return object_num;
 }
 
-const Object& Objects::getObjectByIndex(const int obj_index)
+const Object& Objects::getObjectByIndex(const int obj_index) const
 {
     if(obj_index >= 0 && obj_index < objects.size())
     {
@@ -103,7 +104,51 @@ const Object& Objects::getObjectByIndex(const int obj_index)
     }
 }
 
-const Object& Objects::getObjectByID(const int id)
+const Object& Objects::getObjectByID(const int id) const
+{
+    for(int i=0; i<objects.size(); i++)
+    {
+        if(objects[i].getID() == id)
+        {
+            return objects[i];
+        }
+    }
+    cout<<"Object(ID) "<<id<<" not found!"<<endl;
+    return objects[0];
+}
+
+const Object& Objects::getObjectByName(const string name) const
+{
+    for(int i=0; i<objects.size(); i++)
+    {
+        if(objects[i].getName() == name)
+        {
+            return objects[i];
+        }
+    }
+    cout<<"Object(Name) "<<name<<" not found!"<<endl;
+    return objects[0];
+}
+
+const vector<Object>& Objects::getObjects() const
+{
+    return objects;
+}
+
+Object& Objects::getObjectByIndexForModify(const int obj_index)
+{
+    if(obj_index >= 0 && obj_index < objects.size())
+    {
+        return objects[obj_index];
+    }
+    else
+    {
+        cout<<"Object index out of range!"<<endl;
+        return objects[0];
+    }
+}
+
+Object& Objects::getObjectByIDForModify(const int id)
 {
     object_index = findObjectByID(id);
     if(object_index != -1)
@@ -117,7 +162,7 @@ const Object& Objects::getObjectByID(const int id)
     }
 }
 
-const Object& Objects::getObjectByName(const string name)
+Object& Objects::getObjectByNameForModify(const string name)
 {
     object_index = findObjectByName(name);
     if(object_index != -1)
@@ -131,7 +176,7 @@ const Object& Objects::getObjectByName(const string name)
     }
 }
 
-const vector<Object>& Objects::getObjects()
+vector<Object>& Objects::getObjectsForModify()
 {
     return objects;
 }

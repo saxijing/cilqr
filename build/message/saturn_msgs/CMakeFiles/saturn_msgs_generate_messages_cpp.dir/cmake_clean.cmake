@@ -1,8 +1,10 @@
 file(REMOVE_RECURSE
   "/home/saxijing/cilqr/devel/include/saturn_msgs/Control.h"
   "/home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h"
+  "/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h"
+  "/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h"
   "/home/saxijing/cilqr/devel/include/saturn_msgs/State.h"
-  "/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h"
+  "/home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h"
   "CMakeFiles/saturn_msgs_generate_messages_cpp"
 )
 

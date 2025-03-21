@@ -424,6 +424,20 @@ _saturn_msgs_generate_messages_check_deps_Control/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_Control/fast
 
 # Convenience name for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
+
+# Convenience name for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleStateArray: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleStateArray
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleStateArray/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleStateArray/fast
+
+# Convenience name for target.
 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/rule:
 	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/rule
 .PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir/rule
@@ -438,18 +452,32 @@ _saturn_msgs_generate_messages_check_deps_State/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_State/fast
 
 # Convenience name for target.
-message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule
-.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule
 
 # Convenience name for target.
-_saturn_msgs_generate_messages_check_deps_StateArray: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/rule
-.PHONY : _saturn_msgs_generate_messages_check_deps_StateArray
+_saturn_msgs_generate_messages_check_deps_StateLite: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_StateLite
 
 # fast build rule for target.
-_saturn_msgs_generate_messages_check_deps_StateArray/fast:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build
-.PHONY : _saturn_msgs_generate_messages_check_deps_StateArray/fast
+_saturn_msgs_generate_messages_check_deps_StateLite/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_StateLite/fast
+
+# Convenience name for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule
+
+# Convenience name for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleState: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleState
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleState/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleState/fast
 
 # Convenience name for target.
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/rule:
@@ -606,8 +634,10 @@ help:
 	@echo "... test"
 	@echo "... _saturn_msgs_generate_messages_check_deps_Control"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ControlArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleState"
+	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleStateArray"
 	@echo "... _saturn_msgs_generate_messages_check_deps_State"
-	@echo "... _saturn_msgs_generate_messages_check_deps_StateArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_StateLite"
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... roscpp_generate_messages_lisp"

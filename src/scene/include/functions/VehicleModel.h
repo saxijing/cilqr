@@ -20,15 +20,15 @@ class VehicleModel
         void updateOneStep(const ObjState* xk, ObjState* xk1, const CtrlInput* uk, const double dt);
         void CalVDTrajectory(const ObjState* X0, const vector<CtrlInput>* U, vector<ObjState>* traj, const int* traj_len, const double* dt);
         void getVehicleModelAandB(const double v, const double theta, const double accel, const double dt, Eigen::MatrixXd& MA, Eigen::MatrixXd& MB);
-        double getPoseX();
-        double getPoseY();
-        double getPoseTheta();
-        double getVelocity();
-        double getAccelerate();
-        double getYawRate();
-        double getLength();
-        double getWidth();
-        double getHeight();
+        double getPoseX() const;
+        double getPoseY() const;
+        double getPoseTheta() const;
+        double getVelocity() const;
+        double getAccelerate() const;
+        double getYawRate() const;
+        double getLength() const;
+        double getWidth() const;
+        double getHeight() const;
         
     protected:
         ObjState veh_state;

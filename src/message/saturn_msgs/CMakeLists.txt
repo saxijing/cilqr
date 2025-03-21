@@ -50,7 +50,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(FILES
   State.msg
-  StateArray.msg
+  StateLite.msg
+  ObstacleState.msg
+  ObstacleStateArray.msg
   Control.msg
   ControlArray.msg
 )

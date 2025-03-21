@@ -68,8 +68,10 @@ include message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/pro
 
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/State.h
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h
 
 /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
 /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg
@@ -86,26 +88,44 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp: /home/saxijing
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from saturn_msgs/ControlArray.msg"
 	cd /home/saxijing/cilqr/src/message/saturn_msgs && /home/saxijing/cilqr/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ControlArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/include/saturn_msgs -e /opt/ros/melodic/share/gencpp/cmake/..
 
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h: /opt/ros/melodic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from saturn_msgs/ObstacleState.msg"
+	cd /home/saxijing/cilqr/src/message/saturn_msgs && /home/saxijing/cilqr/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/include/saturn_msgs -e /opt/ros/melodic/share/gencpp/cmake/..
+
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h: /opt/ros/melodic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from saturn_msgs/ObstacleStateArray.msg"
+	cd /home/saxijing/cilqr/src/message/saturn_msgs && /home/saxijing/cilqr/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/include/saturn_msgs -e /opt/ros/melodic/share/gencpp/cmake/..
+
 /home/saxijing/cilqr/devel/include/saturn_msgs/State.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
 /home/saxijing/cilqr/devel/include/saturn_msgs/State.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
 /home/saxijing/cilqr/devel/include/saturn_msgs/State.h: /opt/ros/melodic/share/std_msgs/msg/Header.msg
 /home/saxijing/cilqr/devel/include/saturn_msgs/State.h: /opt/ros/melodic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from saturn_msgs/State.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating C++ code from saturn_msgs/State.msg"
 	cd /home/saxijing/cilqr/src/message/saturn_msgs && /home/saxijing/cilqr/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/include/saturn_msgs -e /opt/ros/melodic/share/gencpp/cmake/..
 
-/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
-/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg
-/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
-/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-/home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h: /opt/ros/melodic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from saturn_msgs/StateArray.msg"
-	cd /home/saxijing/cilqr/src/message/saturn_msgs && /home/saxijing/cilqr/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/include/saturn_msgs -e /opt/ros/melodic/share/gencpp/cmake/..
+/home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+/home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h: /opt/ros/melodic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating C++ code from saturn_msgs/StateLite.msg"
+	cd /home/saxijing/cilqr/src/message/saturn_msgs && /home/saxijing/cilqr/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/include/saturn_msgs -e /opt/ros/melodic/share/gencpp/cmake/..
 
 saturn_msgs_generate_messages_cpp: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp
 saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h
 saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h
+saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h
+saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h
 saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/State.h
-saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/StateArray.h
+saturn_msgs_generate_messages_cpp: /home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h
 saturn_msgs_generate_messages_cpp: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_cpp.dir/build.make
 .PHONY : saturn_msgs_generate_messages_cpp
 

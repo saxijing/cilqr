@@ -68,8 +68,10 @@ include message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/pro
 
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ControlArray.l
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/Control.l
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/State.l
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateArray.l
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateLite.l
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/manifest.l
 
 /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/manifest.l: /opt/ros/melodic/lib/geneus/gen_eus.py
@@ -89,25 +91,41 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus: /home/saxijing
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from saturn_msgs/ControlArray.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ControlArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg
 
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l: /opt/ros/melodic/lib/geneus/gen_eus.py
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from saturn_msgs/ObstacleState.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg
+
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l: /opt/ros/melodic/lib/geneus/gen_eus.py
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from saturn_msgs/ObstacleStateArray.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg
+
 /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/State.l: /opt/ros/melodic/lib/geneus/gen_eus.py
 /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/State.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
 /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/State.l: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from saturn_msgs/State.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating EusLisp code from saturn_msgs/State.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg
 
-/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateArray.l: /opt/ros/melodic/lib/geneus/gen_eus.py
-/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateArray.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg
-/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateArray.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
-/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateArray.l: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from saturn_msgs/StateArray.msg"
-	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateLite.l: /opt/ros/melodic/lib/geneus/gen_eus.py
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateLite.l: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateLite.l: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating EusLisp code from saturn_msgs/StateLite.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg
 
 saturn_msgs_generate_messages_eus: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus
 saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/manifest.l
 saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/Control.l
 saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ControlArray.l
+saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l
+saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l
 saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/State.l
-saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateArray.l
+saturn_msgs_generate_messages_eus: /home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateLite.l
 saturn_msgs_generate_messages_eus: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_eus.dir/build.make
 .PHONY : saturn_msgs_generate_messages_eus
 

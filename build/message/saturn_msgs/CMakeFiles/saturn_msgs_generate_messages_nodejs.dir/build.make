@@ -68,8 +68,10 @@ include message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/
 
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ControlArray.js
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/Control.js
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/State.js
-message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateLite.js
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js
 
 /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/Control.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
 /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/Control.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg
@@ -84,24 +86,40 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs: /home/saxij
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from saturn_msgs/ControlArray.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ControlArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg
 
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from saturn_msgs/ObstacleState.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg
+
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from saturn_msgs/ObstacleStateArray.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg
+
 /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/State.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
 /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/State.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
 /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/State.js: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from saturn_msgs/State.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from saturn_msgs/State.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg
 
-/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
-/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg
-/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
-/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from saturn_msgs/StateArray.msg"
-	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateLite.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateLite.js: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateLite.js: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Javascript code from saturn_msgs/StateLite.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg
 
 saturn_msgs_generate_messages_nodejs: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs
 saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/Control.js
 saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ControlArray.js
+saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js
+saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js
 saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/State.js
-saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js
+saturn_msgs_generate_messages_nodejs: /home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateLite.js
 saturn_msgs_generate_messages_nodejs: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_nodejs.dir/build.make
 .PHONY : saturn_msgs_generate_messages_nodejs
 

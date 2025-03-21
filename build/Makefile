@@ -536,6 +536,19 @@ _saturn_msgs_generate_messages_check_deps_Control/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_Control/fast
 
 #=============================================================================
+# Target rules for targets named _saturn_msgs_generate_messages_check_deps_ObstacleStateArray
+
+# Build rule for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleStateArray: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _saturn_msgs_generate_messages_check_deps_ObstacleStateArray
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleStateArray
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleStateArray/fast:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleStateArray/fast
+
+#=============================================================================
 # Target rules for targets named _saturn_msgs_generate_messages_check_deps_State
 
 # Build rule for target.
@@ -549,17 +562,30 @@ _saturn_msgs_generate_messages_check_deps_State/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_State/fast
 
 #=============================================================================
-# Target rules for targets named _saturn_msgs_generate_messages_check_deps_StateArray
+# Target rules for targets named _saturn_msgs_generate_messages_check_deps_StateLite
 
 # Build rule for target.
-_saturn_msgs_generate_messages_check_deps_StateArray: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _saturn_msgs_generate_messages_check_deps_StateArray
-.PHONY : _saturn_msgs_generate_messages_check_deps_StateArray
+_saturn_msgs_generate_messages_check_deps_StateLite: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _saturn_msgs_generate_messages_check_deps_StateLite
+.PHONY : _saturn_msgs_generate_messages_check_deps_StateLite
 
 # fast build rule for target.
-_saturn_msgs_generate_messages_check_deps_StateArray/fast:
-	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateArray.dir/build
-.PHONY : _saturn_msgs_generate_messages_check_deps_StateArray/fast
+_saturn_msgs_generate_messages_check_deps_StateLite/fast:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_StateLite/fast
+
+#=============================================================================
+# Target rules for targets named _saturn_msgs_generate_messages_check_deps_ObstacleState
+
+# Build rule for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleState: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _saturn_msgs_generate_messages_check_deps_ObstacleState
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleState
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_ObstacleState/fast:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_ObstacleState/fast
 
 #=============================================================================
 # Target rules for targets named saturn_msgs_generate_messages_cpp
@@ -720,8 +746,10 @@ help:
 	@echo "... _catkin_empty_exported_target"
 	@echo "... _saturn_msgs_generate_messages_check_deps_Control"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ControlArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleState"
+	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleStateArray"
 	@echo "... _saturn_msgs_generate_messages_check_deps_State"
-	@echo "... _saturn_msgs_generate_messages_check_deps_StateArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_StateLite"
 	@echo "... clean_test_results"
 	@echo "... download_extra_data"
 	@echo "... doxygen"

@@ -1,8 +1,10 @@
 file(REMOVE_RECURSE
   "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/Control.js"
   "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ControlArray.js"
+  "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleState.js"
+  "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/ObstacleStateArray.js"
   "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/State.js"
-  "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateArray.js"
+  "/home/saxijing/cilqr/devel/share/gennodejs/ros/saturn_msgs/msg/StateLite.js"
   "CMakeFiles/saturn_msgs_generate_messages_nodejs"
 )
 

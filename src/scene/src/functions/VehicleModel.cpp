@@ -152,47 +152,47 @@ void VehicleModel::getVehicleModelAandB(const double v, const double theta, cons
     MB(3,1)=dt;
 }   
 
-double VehicleModel::getPoseX()
+double VehicleModel::getPoseX() const
 {
     return veh_state.x;
 }
 
-double VehicleModel::getPoseY()
+double VehicleModel::getPoseY() const
 {
     return veh_state.y;
 }
 
-double VehicleModel::getPoseTheta()
+double VehicleModel::getPoseTheta() const
 {
     return veh_state.theta;
 }
 
-double VehicleModel::getVelocity()
+double VehicleModel::getVelocity() const
 {
     return veh_state.v;
 }
 
-double VehicleModel::getAccelerate()
+double VehicleModel::getAccelerate() const
 {
     return veh_state.accel;
 }
 
-double VehicleModel::getYawRate()
+double VehicleModel::getYawRate() const
 {
     return veh_state.yaw_rate;
 }
 
-double VehicleModel::getLength()
+double VehicleModel::getLength() const
 {
     return veh_size.length;
 }
 
-double VehicleModel::getWidth()
+double VehicleModel::getWidth() const
 {
     return veh_size.width;
 }
 
-double VehicleModel::getHeight()
+double VehicleModel::getHeight() const
 {
     return veh_size.height;
 }
