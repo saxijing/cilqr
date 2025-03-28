@@ -46,6 +46,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/saturn_msgs/msg" TYPE FILE FILES
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg"
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg"
+    "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Size.msg"
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg"
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg"

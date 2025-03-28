@@ -257,30 +257,6 @@ src/functions/Scene.cpp.s:
 	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.s
 .PHONY : src/functions/Scene.cpp.s
 
-src/functions/VehicleModel.o: src/functions/VehicleModel.cpp.o
-.PHONY : src/functions/VehicleModel.o
-
-# target to build an object file
-src/functions/VehicleModel.cpp.o:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o
-.PHONY : src/functions/VehicleModel.cpp.o
-
-src/functions/VehicleModel.i: src/functions/VehicleModel.cpp.i
-.PHONY : src/functions/VehicleModel.i
-
-# target to preprocess a source file
-src/functions/VehicleModel.cpp.i:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.i
-.PHONY : src/functions/VehicleModel.cpp.i
-
-src/functions/VehicleModel.s: src/functions/VehicleModel.cpp.s
-.PHONY : src/functions/VehicleModel.s
-
-# target to generate assembly for a file
-src/functions/VehicleModel.cpp.s:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.s
-.PHONY : src/functions/VehicleModel.cpp.s
-
 src/main/StaticObstacle.o: src/main/StaticObstacle.cpp.o
 .PHONY : src/main/StaticObstacle.o
 
@@ -328,9 +304,6 @@ help:
 	@echo "... src/functions/Scene.o"
 	@echo "... src/functions/Scene.i"
 	@echo "... src/functions/Scene.s"
-	@echo "... src/functions/VehicleModel.o"
-	@echo "... src/functions/VehicleModel.i"
-	@echo "... src/functions/VehicleModel.s"
 	@echo "... src/main/StaticObstacle.o"
 	@echo "... src/main/StaticObstacle.i"
 	@echo "... src/main/StaticObstacle.s"

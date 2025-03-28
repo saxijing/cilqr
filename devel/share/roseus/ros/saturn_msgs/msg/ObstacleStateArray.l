@@ -78,7 +78,7 @@
    self)
   )
 
-(setf (get saturn_msgs::ObstacleStateArray :md5sum-) "c25d44797a7f0424f6e9ee3a9b560ae5")
+(setf (get saturn_msgs::ObstacleStateArray :md5sum-) "49f890b8acf390d2ac08943005e834a8")
 (setf (get saturn_msgs::ObstacleStateArray :datatype-) "saturn_msgs/ObstacleStateArray")
 (setf (get saturn_msgs::ObstacleStateArray :definition-)
       "std_msgs/Header header
@@ -108,6 +108,7 @@ std_msgs/Header header
 int32 id
 string name
 StateLite[] predicted_states
+Size size
 
 ================================================================================
 MSG: saturn_msgs/StateLite
@@ -120,10 +121,20 @@ float64 v
 float64 accel
 float64 yawrate
 
+================================================================================
+MSG: saturn_msgs/Size
+std_msgs/Header header
+
+float64 length
+float64 width
+float64 height
+float64 wheel_base
+float64 wheel_track
+
 ")
 
 
 
-(provide :saturn_msgs/ObstacleStateArray "c25d44797a7f0424f6e9ee3a9b560ae5")
+(provide :saturn_msgs/ObstacleStateArray "49f890b8acf390d2ac08943005e834a8")
 
 

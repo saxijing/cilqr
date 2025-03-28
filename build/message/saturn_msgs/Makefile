@@ -424,6 +424,20 @@ _saturn_msgs_generate_messages_check_deps_Control/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_Control/fast
 
 # Convenience name for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir/rule
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir/rule
+
+# Convenience name for target.
+_saturn_msgs_generate_messages_check_deps_Size: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_Size
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_Size/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_Size/fast
+
+# Convenience name for target.
 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule:
 	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
 .PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
@@ -636,6 +650,7 @@ help:
 	@echo "... _saturn_msgs_generate_messages_check_deps_ControlArray"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleState"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleStateArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_Size"
 	@echo "... _saturn_msgs_generate_messages_check_deps_State"
 	@echo "... _saturn_msgs_generate_messages_check_deps_StateLite"
 	@echo "... roscpp_generate_messages_cpp"

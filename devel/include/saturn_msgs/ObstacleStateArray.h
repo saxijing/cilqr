@@ -130,12 +130,12 @@ struct MD5Sum< ::saturn_msgs::ObstacleStateArray_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "c25d44797a7f0424f6e9ee3a9b560ae5";
+    return "49f890b8acf390d2ac08943005e834a8";
   }
 
   static const char* value(const ::saturn_msgs::ObstacleStateArray_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xc25d44797a7f0424ULL;
-  static const uint64_t static_value2 = 0xf6e9ee3a9b560ae5ULL;
+  static const uint64_t static_value1 = 0x49f890b8acf390d2ULL;
+  static const uint64_t static_value2 = 0xac08943005e834a8ULL;
 };
 
 template<class ContainerAllocator>
@@ -181,6 +181,7 @@ struct Definition< ::saturn_msgs::ObstacleStateArray_<ContainerAllocator> >
 "int32 id\n"
 "string name\n"
 "StateLite[] predicted_states\n"
+"Size size\n"
 "\n"
 "================================================================================\n"
 "MSG: saturn_msgs/StateLite\n"
@@ -192,6 +193,16 @@ struct Definition< ::saturn_msgs::ObstacleStateArray_<ContainerAllocator> >
 "float64 v\n"
 "float64 accel\n"
 "float64 yawrate\n"
+"\n"
+"================================================================================\n"
+"MSG: saturn_msgs/Size\n"
+"std_msgs/Header header\n"
+"\n"
+"float64 length\n"
+"float64 width\n"
+"float64 height\n"
+"float64 wheel_base\n"
+"float64 wheel_track\n"
 ;
   }
 

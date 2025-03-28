@@ -5,4 +5,4 @@ Description: Description of scene
 Version: 0.0.0
 Cflags: 
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: common

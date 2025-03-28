@@ -14,13 +14,14 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
-## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
+## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py<<exec_depend>roscpp<exec_depend>exec_depend>roscpp<exec_depend>.html
 # catkin_python_setup()
 
 ################################################
@@ -39,6 +40,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##     * add a exec_depend tag for "message_runtime"
 ## * In this file (CMakeLists.txt):
 ##   * add "message_generation" and every package in MSG_DEP_SET to
+
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * add "message_runtime" and every package in MSG_DEP_SET to
 ##     catkin_package(CATKIN_DEPENDS ...)
@@ -51,6 +53,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(FILES
   State.msg
   StateLite.msg
+  Size.msg
   ObstacleState.msg
   ObstacleStateArray.msg
   Control.msg

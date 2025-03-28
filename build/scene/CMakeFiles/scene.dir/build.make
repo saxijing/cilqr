@@ -97,24 +97,10 @@ scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scene.dir/src/functions/Scene.cpp.s"
 	cd /home/saxijing/cilqr/build/scene && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/saxijing/cilqr/src/scene/src/functions/Scene.cpp -o CMakeFiles/scene.dir/src/functions/Scene.cpp.s
 
-scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o: scene/CMakeFiles/scene.dir/flags.make
-scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o: /home/saxijing/cilqr/src/scene/src/functions/VehicleModel.cpp
-scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o: scene/CMakeFiles/scene.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o"
-	cd /home/saxijing/cilqr/build/scene && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o -MF CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o.d -o CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o -c /home/saxijing/cilqr/src/scene/src/functions/VehicleModel.cpp
-
-scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.i"
-	cd /home/saxijing/cilqr/build/scene && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/saxijing/cilqr/src/scene/src/functions/VehicleModel.cpp > CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.i
-
-scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.s"
-	cd /home/saxijing/cilqr/build/scene && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/saxijing/cilqr/src/scene/src/functions/VehicleModel.cpp -o CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.s
-
 scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o: scene/CMakeFiles/scene.dir/flags.make
 scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o: /home/saxijing/cilqr/src/scene/src/functions/Object.cpp
 scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o: scene/CMakeFiles/scene.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o"
 	cd /home/saxijing/cilqr/build/scene && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o -MF CMakeFiles/scene.dir/src/functions/Object.cpp.o.d -o CMakeFiles/scene.dir/src/functions/Object.cpp.o -c /home/saxijing/cilqr/src/scene/src/functions/Object.cpp
 
 scene/CMakeFiles/scene.dir/src/functions/Object.cpp.i: cmake_force
@@ -128,7 +114,7 @@ scene/CMakeFiles/scene.dir/src/functions/Object.cpp.s: cmake_force
 scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o: scene/CMakeFiles/scene.dir/flags.make
 scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o: /home/saxijing/cilqr/src/scene/src/functions/Objects.cpp
 scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o: scene/CMakeFiles/scene.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o"
 	cd /home/saxijing/cilqr/build/scene && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o -MF CMakeFiles/scene.dir/src/functions/Objects.cpp.o.d -o CMakeFiles/scene.dir/src/functions/Objects.cpp.o -c /home/saxijing/cilqr/src/scene/src/functions/Objects.cpp
 
 scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.i: cmake_force
@@ -143,7 +129,6 @@ scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.s: cmake_force
 scene_OBJECTS = \
 "CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o" \
 "CMakeFiles/scene.dir/src/functions/Scene.cpp.o" \
-"CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o" \
 "CMakeFiles/scene.dir/src/functions/Object.cpp.o" \
 "CMakeFiles/scene.dir/src/functions/Objects.cpp.o"
 
@@ -152,7 +137,6 @@ scene_EXTERNAL_OBJECTS =
 
 /home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o
 /home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.o
-/home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o
 /home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o
 /home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o
 /home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/build.make
@@ -163,8 +147,27 @@ scene_EXTERNAL_OBJECTS =
 /home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/librosconsole_backend_interface.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libxmlrpcpp.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libroscpp_serialization.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libxmlrpcpp.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/librostime.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libcpp_common.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_system.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libpthread.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
+/home/saxijing/cilqr/devel/lib/scene/scene: /home/saxijing/cilqr/devel/lib/libcommon.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libroscpp.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/librosconsole.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/librosconsole_log4cxx.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/librosconsole_backend_interface.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libroscpp_serialization.so
+/home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libxmlrpcpp.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/librostime.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /opt/ros/melodic/lib/libcpp_common.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libboost_system.so
@@ -175,7 +178,7 @@ scene_EXTERNAL_OBJECTS =
 /home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libpthread.so
 /home/saxijing/cilqr/devel/lib/scene/scene: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
 /home/saxijing/cilqr/devel/lib/scene/scene: scene/CMakeFiles/scene.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable /home/saxijing/cilqr/devel/lib/scene/scene"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable /home/saxijing/cilqr/devel/lib/scene/scene"
 	cd /home/saxijing/cilqr/build/scene && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/scene.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

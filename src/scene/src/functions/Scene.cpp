@@ -2,10 +2,9 @@
 
 using namespace std;
 
-Scene::Scene(const string name, const string filepath, ros::NodeHandle &nh_)
+Scene::Scene(const string name, ros::NodeHandle &nh_)
 {
     scene_name=name;
-    centerline_filepath=filepath;
     nh=nh_;
     ego_vehicle_pub=nh.advertise<saturn_msgs::State>("/ego_vehicle/state", 10, true);
     obstacles_pub=nh.advertise<saturn_msgs::ObstacleStateArray>("/obstacles/state", 10, true);
@@ -17,11 +16,13 @@ Scene::Scene(const string name, const string filepath, ros::NodeHandle &nh_)
     leftedge_pub=nh.advertise<nav_msgs::Path>("/leftedge", 10, true);
 
     ROS_INFO("Scene parameters loading...");
+    nh.getParam("/planner/global_file_path", centerline_filepath);
     nh.getParam("/timestep/control", dt);
     nh.getParam("/road_info/lane_width", lane_width);
     nh.getParam("/road_info/lane_num", lane_num);
     nh.getParam("/planner/global_horizon", global_horizon);
     nh.getParam("/planner/prediction_horizon", prediction_horizon);
+    
     control_index=0;
 
     readCenterlineAndCalRoadEdge();
@@ -223,6 +224,9 @@ void Scene::update()
         obs_statearray_msg.obstacles.clear();
         for(int i=0; i<obstacles.getObjectsNum(); i++)
         {
+            obstacles.getObjectByIndexForModify(i).resetPredictHorizon(prediction_horizon);
+            obstacles.getObjectByIndexForModify(i).ObjectPredict();
+
             obs_state_msg.id=obstacles.getObjectByIndex(i).getID();
             obs_state_msg.name=obstacles.getObjectByIndex(i).getName();
             obs_state_msg.predicted_states.clear();
@@ -236,6 +240,12 @@ void Scene::update()
                 obj_statelite_msg.yawrate=obstacles.getObjectByIndex(i).getPredictedTraj()[j].yaw_rate;
                 obs_state_msg.predicted_states.push_back(obj_statelite_msg);
             }
+            obs_state_msg.size.length=obstacles.getObjectByIndex(i).getLength();
+            obs_state_msg.size.width=obstacles.getObjectByIndex(i).getWidth();
+            obs_state_msg.size.height=obstacles.getObjectByIndex(i).getHeight();
+            obs_state_msg.size.wheel_base=0;
+            obs_state_msg.size.wheel_track=0;
+
             obs_statearray_msg.obstacles.push_back(obs_state_msg);
         }
         obstacles_pub.publish(obs_statearray_msg);
@@ -274,7 +284,6 @@ void Scene::update()
         for(int i=0; i<obstacles.getObjectsNum(); i++)
         {
             obstacles.getObjectByIndexForModify(i).update();
-            obstacles.getObjectByIndexForModify(i).ObjectPredict();
         }
 
         rate.sleep();

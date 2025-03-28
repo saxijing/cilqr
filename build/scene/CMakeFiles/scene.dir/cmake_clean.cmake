@@ -7,8 +7,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/scene.dir/src/functions/Objects.cpp.o.d"
   "CMakeFiles/scene.dir/src/functions/Scene.cpp.o"
   "CMakeFiles/scene.dir/src/functions/Scene.cpp.o.d"
-  "CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o"
-  "CMakeFiles/scene.dir/src/functions/VehicleModel.cpp.o.d"
   "CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o"
   "CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o.d"
 )

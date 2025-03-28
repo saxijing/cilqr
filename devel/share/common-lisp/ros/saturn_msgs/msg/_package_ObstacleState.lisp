@@ -7,4 +7,6 @@
           NAME
           PREDICTED_STATES-VAL
           PREDICTED_STATES
+          SIZE-VAL
+          SIZE
 ))

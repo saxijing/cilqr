@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/ControlArray.msg"
+messages_str = "/home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/Size.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg;/home/saxijing/cilqr/src/message/saturn_msgs/msg/ControlArray.msg"
 services_str = ""
 pkg_name = "saturn_msgs"
 dependencies_str = "std_msgs"

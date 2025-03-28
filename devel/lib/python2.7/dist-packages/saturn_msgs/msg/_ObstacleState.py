@@ -10,7 +10,7 @@ import saturn_msgs.msg
 import std_msgs.msg
 
 class ObstacleState(genpy.Message):
-  _md5sum = "d45e6ca6695835598d9ff9ee662af118"
+  _md5sum = "206a275054569710e712258c18396ed6"
   _type = "saturn_msgs/ObstacleState"
   _has_header = True  # flag to mark the presence of a Header object
   _full_text = """std_msgs/Header header
@@ -18,6 +18,7 @@ class ObstacleState(genpy.Message):
 int32 id
 string name
 StateLite[] predicted_states
+Size size
 
 ================================================================================
 MSG: std_msgs/Header
@@ -45,9 +46,19 @@ float64 theta
 float64 v
 float64 accel
 float64 yawrate
+
+================================================================================
+MSG: saturn_msgs/Size
+std_msgs/Header header
+
+float64 length
+float64 width
+float64 height
+float64 wheel_base
+float64 wheel_track
 """
-  __slots__ = ['header','id','name','predicted_states']
-  _slot_types = ['std_msgs/Header','int32','string','saturn_msgs/StateLite[]']
+  __slots__ = ['header','id','name','predicted_states','size']
+  _slot_types = ['std_msgs/Header','int32','string','saturn_msgs/StateLite[]','saturn_msgs/Size']
 
   def __init__(self, *args, **kwds):
     """
@@ -57,7 +68,7 @@ float64 yawrate
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       header,id,name,predicted_states
+       header,id,name,predicted_states,size
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -74,11 +85,14 @@ float64 yawrate
         self.name = ''
       if self.predicted_states is None:
         self.predicted_states = []
+      if self.size is None:
+        self.size = saturn_msgs.msg.Size()
     else:
       self.header = std_msgs.msg.Header()
       self.id = 0
       self.name = ''
       self.predicted_states = []
+      self.size = saturn_msgs.msg.Size()
 
   def _get_types(self):
     """
@@ -125,6 +139,16 @@ float64 yawrate
         buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
         _x = val1
         buff.write(_get_struct_6d().pack(_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate))
+      _x = self
+      buff.write(_get_struct_3I().pack(_x.size.header.seq, _x.size.header.stamp.secs, _x.size.header.stamp.nsecs))
+      _x = self.size.header.frame_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self
+      buff.write(_get_struct_5d().pack(_x.size.length, _x.size.width, _x.size.height, _x.size.wheel_base, _x.size.wheel_track))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -140,6 +164,8 @@ float64 yawrate
         self.header = std_msgs.msg.Header()
       if self.predicted_states is None:
         self.predicted_states = None
+      if self.size is None:
+        self.size = saturn_msgs.msg.Size()
       end = 0
       _x = self
       start = end
@@ -195,6 +221,23 @@ float64 yawrate
         end += 48
         (_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate,) = _get_struct_6d().unpack(str[start:end])
         self.predicted_states.append(val1)
+      _x = self
+      start = end
+      end += 12
+      (_x.size.header.seq, _x.size.header.stamp.secs, _x.size.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.size.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.size.header.frame_id = str[start:end]
+      _x = self
+      start = end
+      end += 40
+      (_x.size.length, _x.size.width, _x.size.height, _x.size.wheel_base, _x.size.wheel_track,) = _get_struct_5d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -240,6 +283,16 @@ float64 yawrate
         buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
         _x = val1
         buff.write(_get_struct_6d().pack(_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate))
+      _x = self
+      buff.write(_get_struct_3I().pack(_x.size.header.seq, _x.size.header.stamp.secs, _x.size.header.stamp.nsecs))
+      _x = self.size.header.frame_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self
+      buff.write(_get_struct_5d().pack(_x.size.length, _x.size.width, _x.size.height, _x.size.wheel_base, _x.size.wheel_track))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -256,6 +309,8 @@ float64 yawrate
         self.header = std_msgs.msg.Header()
       if self.predicted_states is None:
         self.predicted_states = None
+      if self.size is None:
+        self.size = saturn_msgs.msg.Size()
       end = 0
       _x = self
       start = end
@@ -311,6 +366,23 @@ float64 yawrate
         end += 48
         (_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate,) = _get_struct_6d().unpack(str[start:end])
         self.predicted_states.append(val1)
+      _x = self
+      start = end
+      end += 12
+      (_x.size.header.seq, _x.size.header.stamp.secs, _x.size.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.size.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.size.header.frame_id = str[start:end]
+      _x = self
+      start = end
+      end += 40
+      (_x.size.length, _x.size.width, _x.size.height, _x.size.wheel_base, _x.size.wheel_track,) = _get_struct_5d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -331,6 +403,12 @@ def _get_struct_3I():
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
+_struct_5d = None
+def _get_struct_5d():
+    global _struct_5d
+    if _struct_5d is None:
+        _struct_5d = struct.Struct("<5d")
+    return _struct_5d
 _struct_6d = None
 def _get_struct_6d():
     global _struct_6d

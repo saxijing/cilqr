@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"scene\"
 
-CXX_INCLUDES = -I/home/saxijing/cilqr/src/scene/../common/include -I/home/saxijing/cilqr/src/scene/include/main -I/home/saxijing/cilqr/src/scene/include/functions -I/home/saxijing/cilqr/devel/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
+CXX_INCLUDES = -I/home/saxijing/cilqr/src/scene/../common/include/common -I/home/saxijing/cilqr/src/scene/include/main -I/home/saxijing/cilqr/src/scene/include/functions -I/home/saxijing/cilqr/devel/include -I/home/saxijing/cilqr/src/common/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
 
 CXX_FLAGS = 
 

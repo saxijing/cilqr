@@ -10,7 +10,7 @@ import saturn_msgs.msg
 import std_msgs.msg
 
 class ObstacleStateArray(genpy.Message):
-  _md5sum = "c25d44797a7f0424f6e9ee3a9b560ae5"
+  _md5sum = "49f890b8acf390d2ac08943005e834a8"
   _type = "saturn_msgs/ObstacleStateArray"
   _has_header = True  # flag to mark the presence of a Header object
   _full_text = """std_msgs/Header header
@@ -40,6 +40,7 @@ std_msgs/Header header
 int32 id
 string name
 StateLite[] predicted_states
+Size size
 
 ================================================================================
 MSG: saturn_msgs/StateLite
@@ -51,6 +52,16 @@ float64 theta
 float64 v
 float64 accel
 float64 yawrate
+
+================================================================================
+MSG: saturn_msgs/Size
+std_msgs/Header header
+
+float64 length
+float64 width
+float64 height
+float64 wheel_base
+float64 wheel_track
 """
   __slots__ = ['header','obstacles']
   _slot_types = ['std_msgs/Header','saturn_msgs/ObstacleState[]']
@@ -140,6 +151,21 @@ float64 yawrate
           buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
           _x = val2
           buff.write(_get_struct_6d().pack(_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate))
+        _v5 = val1.size
+        _v6 = _v5.header
+        _x = _v6.seq
+        buff.write(_get_struct_I().pack(_x))
+        _v7 = _v6.stamp
+        _x = _v7
+        buff.write(_get_struct_2I().pack(_x.secs, _x.nsecs))
+        _x = _v6.frame_id
+        length = len(_x)
+        if python3 or type(_x) == unicode:
+          _x = _x.encode('utf-8')
+          length = len(_x)
+        buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+        _x = _v5
+        buff.write(_get_struct_5d().pack(_x.length, _x.width, _x.height, _x.wheel_base, _x.wheel_track))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -175,12 +201,12 @@ float64 yawrate
       self.obstacles = []
       for i in range(0, length):
         val1 = saturn_msgs.msg.ObstacleState()
-        _v5 = val1.header
+        _v8 = val1.header
         start = end
         end += 4
-        (_v5.seq,) = _get_struct_I().unpack(str[start:end])
-        _v6 = _v5.stamp
-        _x = _v6
+        (_v8.seq,) = _get_struct_I().unpack(str[start:end])
+        _v9 = _v8.stamp
+        _x = _v9
         start = end
         end += 8
         (_x.secs, _x.nsecs,) = _get_struct_2I().unpack(str[start:end])
@@ -190,9 +216,9 @@ float64 yawrate
         start = end
         end += length
         if python3:
-          _v5.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+          _v8.frame_id = str[start:end].decode('utf-8', 'rosmsg')
         else:
-          _v5.frame_id = str[start:end]
+          _v8.frame_id = str[start:end]
         start = end
         end += 4
         (val1.id,) = _get_struct_i().unpack(str[start:end])
@@ -211,12 +237,12 @@ float64 yawrate
         val1.predicted_states = []
         for i in range(0, length):
           val2 = saturn_msgs.msg.StateLite()
-          _v7 = val2.header
+          _v10 = val2.header
           start = end
           end += 4
-          (_v7.seq,) = _get_struct_I().unpack(str[start:end])
-          _v8 = _v7.stamp
-          _x = _v8
+          (_v10.seq,) = _get_struct_I().unpack(str[start:end])
+          _v11 = _v10.stamp
+          _x = _v11
           start = end
           end += 8
           (_x.secs, _x.nsecs,) = _get_struct_2I().unpack(str[start:end])
@@ -226,14 +252,37 @@ float64 yawrate
           start = end
           end += length
           if python3:
-            _v7.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+            _v10.frame_id = str[start:end].decode('utf-8', 'rosmsg')
           else:
-            _v7.frame_id = str[start:end]
+            _v10.frame_id = str[start:end]
           _x = val2
           start = end
           end += 48
           (_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate,) = _get_struct_6d().unpack(str[start:end])
           val1.predicted_states.append(val2)
+        _v12 = val1.size
+        _v13 = _v12.header
+        start = end
+        end += 4
+        (_v13.seq,) = _get_struct_I().unpack(str[start:end])
+        _v14 = _v13.stamp
+        _x = _v14
+        start = end
+        end += 8
+        (_x.secs, _x.nsecs,) = _get_struct_2I().unpack(str[start:end])
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        start = end
+        end += length
+        if python3:
+          _v13.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+        else:
+          _v13.frame_id = str[start:end]
+        _x = _v12
+        start = end
+        end += 40
+        (_x.length, _x.width, _x.height, _x.wheel_base, _x.wheel_track,) = _get_struct_5d().unpack(str[start:end])
         self.obstacles.append(val1)
       return self
     except struct.error as e:
@@ -258,13 +307,13 @@ float64 yawrate
       length = len(self.obstacles)
       buff.write(_struct_I.pack(length))
       for val1 in self.obstacles:
-        _v9 = val1.header
-        _x = _v9.seq
+        _v15 = val1.header
+        _x = _v15.seq
         buff.write(_get_struct_I().pack(_x))
-        _v10 = _v9.stamp
-        _x = _v10
+        _v16 = _v15.stamp
+        _x = _v16
         buff.write(_get_struct_2I().pack(_x.secs, _x.nsecs))
-        _x = _v9.frame_id
+        _x = _v15.frame_id
         length = len(_x)
         if python3 or type(_x) == unicode:
           _x = _x.encode('utf-8')
@@ -281,13 +330,13 @@ float64 yawrate
         length = len(val1.predicted_states)
         buff.write(_struct_I.pack(length))
         for val2 in val1.predicted_states:
-          _v11 = val2.header
-          _x = _v11.seq
+          _v17 = val2.header
+          _x = _v17.seq
           buff.write(_get_struct_I().pack(_x))
-          _v12 = _v11.stamp
-          _x = _v12
+          _v18 = _v17.stamp
+          _x = _v18
           buff.write(_get_struct_2I().pack(_x.secs, _x.nsecs))
-          _x = _v11.frame_id
+          _x = _v17.frame_id
           length = len(_x)
           if python3 or type(_x) == unicode:
             _x = _x.encode('utf-8')
@@ -295,6 +344,21 @@ float64 yawrate
           buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
           _x = val2
           buff.write(_get_struct_6d().pack(_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate))
+        _v19 = val1.size
+        _v20 = _v19.header
+        _x = _v20.seq
+        buff.write(_get_struct_I().pack(_x))
+        _v21 = _v20.stamp
+        _x = _v21
+        buff.write(_get_struct_2I().pack(_x.secs, _x.nsecs))
+        _x = _v20.frame_id
+        length = len(_x)
+        if python3 or type(_x) == unicode:
+          _x = _x.encode('utf-8')
+          length = len(_x)
+        buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+        _x = _v19
+        buff.write(_get_struct_5d().pack(_x.length, _x.width, _x.height, _x.wheel_base, _x.wheel_track))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -331,12 +395,12 @@ float64 yawrate
       self.obstacles = []
       for i in range(0, length):
         val1 = saturn_msgs.msg.ObstacleState()
-        _v13 = val1.header
+        _v22 = val1.header
         start = end
         end += 4
-        (_v13.seq,) = _get_struct_I().unpack(str[start:end])
-        _v14 = _v13.stamp
-        _x = _v14
+        (_v22.seq,) = _get_struct_I().unpack(str[start:end])
+        _v23 = _v22.stamp
+        _x = _v23
         start = end
         end += 8
         (_x.secs, _x.nsecs,) = _get_struct_2I().unpack(str[start:end])
@@ -346,9 +410,9 @@ float64 yawrate
         start = end
         end += length
         if python3:
-          _v13.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+          _v22.frame_id = str[start:end].decode('utf-8', 'rosmsg')
         else:
-          _v13.frame_id = str[start:end]
+          _v22.frame_id = str[start:end]
         start = end
         end += 4
         (val1.id,) = _get_struct_i().unpack(str[start:end])
@@ -367,12 +431,12 @@ float64 yawrate
         val1.predicted_states = []
         for i in range(0, length):
           val2 = saturn_msgs.msg.StateLite()
-          _v15 = val2.header
+          _v24 = val2.header
           start = end
           end += 4
-          (_v15.seq,) = _get_struct_I().unpack(str[start:end])
-          _v16 = _v15.stamp
-          _x = _v16
+          (_v24.seq,) = _get_struct_I().unpack(str[start:end])
+          _v25 = _v24.stamp
+          _x = _v25
           start = end
           end += 8
           (_x.secs, _x.nsecs,) = _get_struct_2I().unpack(str[start:end])
@@ -382,14 +446,37 @@ float64 yawrate
           start = end
           end += length
           if python3:
-            _v15.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+            _v24.frame_id = str[start:end].decode('utf-8', 'rosmsg')
           else:
-            _v15.frame_id = str[start:end]
+            _v24.frame_id = str[start:end]
           _x = val2
           start = end
           end += 48
           (_x.x, _x.y, _x.theta, _x.v, _x.accel, _x.yawrate,) = _get_struct_6d().unpack(str[start:end])
           val1.predicted_states.append(val2)
+        _v26 = val1.size
+        _v27 = _v26.header
+        start = end
+        end += 4
+        (_v27.seq,) = _get_struct_I().unpack(str[start:end])
+        _v28 = _v27.stamp
+        _x = _v28
+        start = end
+        end += 8
+        (_x.secs, _x.nsecs,) = _get_struct_2I().unpack(str[start:end])
+        start = end
+        end += 4
+        (length,) = _struct_I.unpack(str[start:end])
+        start = end
+        end += length
+        if python3:
+          _v27.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+        else:
+          _v27.frame_id = str[start:end]
+        _x = _v26
+        start = end
+        end += 40
+        (_x.length, _x.width, _x.height, _x.wheel_base, _x.wheel_track,) = _get_struct_5d().unpack(str[start:end])
         self.obstacles.append(val1)
       return self
     except struct.error as e:
@@ -411,6 +498,12 @@ def _get_struct_3I():
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
+_struct_5d = None
+def _get_struct_5d():
+    global _struct_5d
+    if _struct_5d is None:
+        _struct_5d = struct.Struct("<5d")
+    return _struct_5d
 _struct_6d = None
 def _get_struct_6d():
     global _struct_6d

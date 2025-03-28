@@ -3,6 +3,6 @@ prefix=/home/saxijing/cilqr/devel
 Name: common
 Description: Description of common
 Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
+Cflags: -I/home/saxijing/cilqr/src/common/include
+Libs: -L${prefix}/lib -lcommon
+Requires: roscpp

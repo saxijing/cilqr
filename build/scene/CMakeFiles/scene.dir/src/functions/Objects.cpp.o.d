@@ -3,7 +3,7 @@ scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o: \
  /usr/include/stdc-predef.h \
  /home/saxijing/cilqr/src/scene/include/functions/Objects.h \
  /home/saxijing/cilqr/src/scene/include/functions/Object.h \
- /home/saxijing/cilqr/src/scene/../common/include/Common.h \
+ /home/saxijing/cilqr/src/scene/../common/include/common/Common.h \
  /usr/include/c++/7/iostream \
  /usr/include/x86_64-linux-gnu/c++/7/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/7/bits/os_defines.h \

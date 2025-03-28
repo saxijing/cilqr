@@ -2,7 +2,6 @@
 #define OBJECT_H_
 
 #include "Common.h"
-#include<string>
 
 using namespace std;
 

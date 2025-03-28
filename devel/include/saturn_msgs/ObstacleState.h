@@ -17,6 +17,7 @@
 
 #include <std_msgs/Header.h>
 #include <saturn_msgs/StateLite.h>
+#include <saturn_msgs/Size.h>
 
 namespace saturn_msgs
 {
@@ -29,13 +30,15 @@ struct ObstacleState_
     : header()
     , id(0)
     , name()
-    , predicted_states()  {
+    , predicted_states()
+    , size()  {
     }
   ObstacleState_(const ContainerAllocator& _alloc)
     : header(_alloc)
     , id(0)
     , name(_alloc)
-    , predicted_states(_alloc)  {
+    , predicted_states(_alloc)
+    , size(_alloc)  {
   (void)_alloc;
     }
 
@@ -52,6 +55,9 @@ struct ObstacleState_
 
    typedef std::vector< ::saturn_msgs::StateLite_<ContainerAllocator> , typename std::allocator_traits<ContainerAllocator>::template rebind_alloc< ::saturn_msgs::StateLite_<ContainerAllocator> >> _predicted_states_type;
   _predicted_states_type predicted_states;
+
+   typedef  ::saturn_msgs::Size_<ContainerAllocator>  _size_type;
+  _size_type size;
 
 
 
@@ -85,7 +91,8 @@ bool operator==(const ::saturn_msgs::ObstacleState_<ContainerAllocator1> & lhs, 
   return lhs.header == rhs.header &&
     lhs.id == rhs.id &&
     lhs.name == rhs.name &&
-    lhs.predicted_states == rhs.predicted_states;
+    lhs.predicted_states == rhs.predicted_states &&
+    lhs.size == rhs.size;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -142,12 +149,12 @@ struct MD5Sum< ::saturn_msgs::ObstacleState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "d45e6ca6695835598d9ff9ee662af118";
+    return "206a275054569710e712258c18396ed6";
   }
 
   static const char* value(const ::saturn_msgs::ObstacleState_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xd45e6ca669583559ULL;
-  static const uint64_t static_value2 = 0x8d9ff9ee662af118ULL;
+  static const uint64_t static_value1 = 0x206a275054569710ULL;
+  static const uint64_t static_value2 = 0xe712258c18396ed6ULL;
 };
 
 template<class ContainerAllocator>
@@ -171,6 +178,7 @@ struct Definition< ::saturn_msgs::ObstacleState_<ContainerAllocator> >
 "int32 id\n"
 "string name\n"
 "StateLite[] predicted_states\n"
+"Size size\n"
 "\n"
 "================================================================================\n"
 "MSG: std_msgs/Header\n"
@@ -198,6 +206,16 @@ struct Definition< ::saturn_msgs::ObstacleState_<ContainerAllocator> >
 "float64 v\n"
 "float64 accel\n"
 "float64 yawrate\n"
+"\n"
+"================================================================================\n"
+"MSG: saturn_msgs/Size\n"
+"std_msgs/Header header\n"
+"\n"
+"float64 length\n"
+"float64 width\n"
+"float64 height\n"
+"float64 wheel_base\n"
+"float64 wheel_track\n"
 ;
   }
 
@@ -220,6 +238,7 @@ namespace serialization
       stream.next(m.id);
       stream.next(m.name);
       stream.next(m.predicted_states);
+      stream.next(m.size);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -253,6 +272,9 @@ struct Printer< ::saturn_msgs::ObstacleState_<ContainerAllocator> >
       s << indent;
       Printer< ::saturn_msgs::StateLite_<ContainerAllocator> >::stream(s, indent + "    ", v.predicted_states[i]);
     }
+    s << indent << "size: ";
+    s << std::endl;
+    Printer< ::saturn_msgs::Size_<ContainerAllocator> >::stream(s, indent + "  ", v.size);
   }
 };
 

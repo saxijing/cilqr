@@ -12,6 +12,7 @@ find_package(catkin REQUIRED
   rospy
   std_msgs
   saturn_msgs
+  common
 )
 
 find_package(Eigen3 REQUIRED)
@@ -108,7 +109,7 @@ find_package(Eigen3 REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES motion_planner
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS common
 #  DEPENDS system_lib
 )
 
@@ -118,7 +119,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(${PROJECT_SOURCE_DIR}/../common/include)
+include_directories(${PROJECT_SOURCE_DIR}/../common/include/common)
 include_directories(${PROJECT_SOURCE_DIR}/include/main)
 include_directories(${PROJECT_SOURCE_DIR}/include/functions)
 include_directories(${Eigen_INCLUDE_DIR})
@@ -141,7 +142,6 @@ message(STATUS "catkin_INCLUDE_DIRS: ${catkin_INCLUDE_DIRS}")
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(scene src/main/StaticObstacle.cpp
   src/functions/Scene.cpp
-  src/functions/VehicleModel.cpp
   src/functions/Object.cpp
   src/functions/Objects.cpp
 )
@@ -161,7 +161,9 @@ add_definitions(${EIGEN_DEFINITIONS})
 ## Specify libraries to link a library or executable target against
 target_link_libraries(scene
   ${catkin_LIBRARIES}
+  common
 )
+
 
 #############
 ## Install ##

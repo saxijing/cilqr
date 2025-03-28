@@ -136,9 +136,10 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/saxijing/cilqr/build/gtest/cmake_install.cmake")
-  include("/home/saxijing/cilqr/build/common/cmake_install.cmake")
   include("/home/saxijing/cilqr/build/config/cmake_install.cmake")
   include("/home/saxijing/cilqr/build/message/saturn_msgs/cmake_install.cmake")
+  include("/home/saxijing/cilqr/build/common/cmake_install.cmake")
+  include("/home/saxijing/cilqr/build/planning/cmake_install.cmake")
   include("/home/saxijing/cilqr/build/scene/cmake_install.cmake")
 
 endif()

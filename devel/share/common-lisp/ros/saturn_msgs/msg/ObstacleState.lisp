@@ -26,7 +26,12 @@
     :reader predicted_states
     :initarg :predicted_states
     :type (cl:vector saturn_msgs-msg:StateLite)
-   :initform (cl:make-array 0 :element-type 'saturn_msgs-msg:StateLite :initial-element (cl:make-instance 'saturn_msgs-msg:StateLite))))
+   :initform (cl:make-array 0 :element-type 'saturn_msgs-msg:StateLite :initial-element (cl:make-instance 'saturn_msgs-msg:StateLite)))
+   (size
+    :reader size
+    :initarg :size
+    :type saturn_msgs-msg:Size
+    :initform (cl:make-instance 'saturn_msgs-msg:Size)))
 )
 
 (cl:defclass ObstacleState (<ObstacleState>)
@@ -56,6 +61,11 @@
 (cl:defmethod predicted_states-val ((m <ObstacleState>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader saturn_msgs-msg:predicted_states-val is deprecated.  Use saturn_msgs-msg:predicted_states instead.")
   (predicted_states m))
+
+(cl:ensure-generic-function 'size-val :lambda-list '(m))
+(cl:defmethod size-val ((m <ObstacleState>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader saturn_msgs-msg:size-val is deprecated.  Use saturn_msgs-msg:size instead.")
+  (size m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <ObstacleState>) ostream)
   "Serializes a message object of type '<ObstacleState>"
   (roslisp-msg-protocol:serialize (cl:slot-value msg 'header) ostream)
@@ -78,6 +88,7 @@
     (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_arr_len) ostream))
   (cl:map cl:nil #'(cl:lambda (ele) (roslisp-msg-protocol:serialize ele ostream))
    (cl:slot-value msg 'predicted_states))
+  (roslisp-msg-protocol:serialize (cl:slot-value msg 'size) ostream)
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <ObstacleState>) istream)
   "Deserializes a message object of type '<ObstacleState>"
@@ -106,6 +117,7 @@
     (cl:dotimes (i __ros_arr_len)
     (cl:setf (cl:aref vals i) (cl:make-instance 'saturn_msgs-msg:StateLite))
   (roslisp-msg-protocol:deserialize (cl:aref vals i) istream))))
+  (roslisp-msg-protocol:deserialize (cl:slot-value msg 'size) istream)
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<ObstacleState>)))
@@ -116,22 +128,23 @@
   "saturn_msgs/ObstacleState")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<ObstacleState>)))
   "Returns md5sum for a message object of type '<ObstacleState>"
-  "d45e6ca6695835598d9ff9ee662af118")
+  "206a275054569710e712258c18396ed6")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'ObstacleState)))
   "Returns md5sum for a message object of type 'ObstacleState"
-  "d45e6ca6695835598d9ff9ee662af118")
+  "206a275054569710e712258c18396ed6")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<ObstacleState>)))
   "Returns full string definition for message of type '<ObstacleState>"
-  (cl:format cl:nil "std_msgs/Header header~%~%int32 id~%string name~%StateLite[] predicted_states~%~%================================================================================~%MSG: std_msgs/Header~%# Standard metadata for higher-level stamped data types.~%# This is generally used to communicate timestamped data ~%# in a particular coordinate frame.~%# ~%# sequence ID: consecutively increasing ID ~%uint32 seq~%#Two-integer timestamp that is expressed as:~%# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')~%# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')~%# time-handling sugar is provided by the client library~%time stamp~%#Frame this data is associated with~%string frame_id~%~%================================================================================~%MSG: saturn_msgs/StateLite~%std_msgs/Header header~%~%float64 x~%float64 y~%float64 theta~%float64 v~%float64 accel~%float64 yawrate~%~%~%"))
+  (cl:format cl:nil "std_msgs/Header header~%~%int32 id~%string name~%StateLite[] predicted_states~%Size size~%~%================================================================================~%MSG: std_msgs/Header~%# Standard metadata for higher-level stamped data types.~%# This is generally used to communicate timestamped data ~%# in a particular coordinate frame.~%# ~%# sequence ID: consecutively increasing ID ~%uint32 seq~%#Two-integer timestamp that is expressed as:~%# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')~%# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')~%# time-handling sugar is provided by the client library~%time stamp~%#Frame this data is associated with~%string frame_id~%~%================================================================================~%MSG: saturn_msgs/StateLite~%std_msgs/Header header~%~%float64 x~%float64 y~%float64 theta~%float64 v~%float64 accel~%float64 yawrate~%~%================================================================================~%MSG: saturn_msgs/Size~%std_msgs/Header header~%~%float64 length~%float64 width~%float64 height~%float64 wheel_base~%float64 wheel_track~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'ObstacleState)))
   "Returns full string definition for message of type 'ObstacleState"
-  (cl:format cl:nil "std_msgs/Header header~%~%int32 id~%string name~%StateLite[] predicted_states~%~%================================================================================~%MSG: std_msgs/Header~%# Standard metadata for higher-level stamped data types.~%# This is generally used to communicate timestamped data ~%# in a particular coordinate frame.~%# ~%# sequence ID: consecutively increasing ID ~%uint32 seq~%#Two-integer timestamp that is expressed as:~%# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')~%# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')~%# time-handling sugar is provided by the client library~%time stamp~%#Frame this data is associated with~%string frame_id~%~%================================================================================~%MSG: saturn_msgs/StateLite~%std_msgs/Header header~%~%float64 x~%float64 y~%float64 theta~%float64 v~%float64 accel~%float64 yawrate~%~%~%"))
+  (cl:format cl:nil "std_msgs/Header header~%~%int32 id~%string name~%StateLite[] predicted_states~%Size size~%~%================================================================================~%MSG: std_msgs/Header~%# Standard metadata for higher-level stamped data types.~%# This is generally used to communicate timestamped data ~%# in a particular coordinate frame.~%# ~%# sequence ID: consecutively increasing ID ~%uint32 seq~%#Two-integer timestamp that is expressed as:~%# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')~%# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')~%# time-handling sugar is provided by the client library~%time stamp~%#Frame this data is associated with~%string frame_id~%~%================================================================================~%MSG: saturn_msgs/StateLite~%std_msgs/Header header~%~%float64 x~%float64 y~%float64 theta~%float64 v~%float64 accel~%float64 yawrate~%~%================================================================================~%MSG: saturn_msgs/Size~%std_msgs/Header header~%~%float64 length~%float64 width~%float64 height~%float64 wheel_base~%float64 wheel_track~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <ObstacleState>))
   (cl:+ 0
      (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'header))
      4
      4 (cl:length (cl:slot-value msg 'name))
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'predicted_states) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))
+     (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'size))
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <ObstacleState>))
   "Converts a ROS message object to a list"
@@ -140,4 +153,5 @@
     (cl:cons ':id (id msg))
     (cl:cons ':name (name msg))
     (cl:cons ':predicted_states (predicted_states msg))
+    (cl:cons ':size (size msg))
 ))

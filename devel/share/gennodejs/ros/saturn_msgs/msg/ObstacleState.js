@@ -12,6 +12,7 @@ const _arrayDeserializer = _deserializer.Array;
 const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
 let StateLite = require('./StateLite.js');
+let Size = require('./Size.js');
 let std_msgs = _finder('std_msgs');
 
 //-----------------------------------------------------------
@@ -24,6 +25,7 @@ class ObstacleState {
       this.id = null;
       this.name = null;
       this.predicted_states = null;
+      this.size = null;
     }
     else {
       if (initObj.hasOwnProperty('header')) {
@@ -50,6 +52,12 @@ class ObstacleState {
       else {
         this.predicted_states = [];
       }
+      if (initObj.hasOwnProperty('size')) {
+        this.size = initObj.size
+      }
+      else {
+        this.size = new Size();
+      }
     }
   }
 
@@ -67,6 +75,8 @@ class ObstacleState {
     obj.predicted_states.forEach((val) => {
       bufferOffset = StateLite.serialize(val, buffer, bufferOffset);
     });
+    // Serialize message field [size]
+    bufferOffset = Size.serialize(obj.size, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -87,6 +97,8 @@ class ObstacleState {
     for (let i = 0; i < len; ++i) {
       data.predicted_states[i] = StateLite.deserialize(buffer, bufferOffset)
     }
+    // Deserialize message field [size]
+    data.size = Size.deserialize(buffer, bufferOffset);
     return data;
   }
 
@@ -97,6 +109,7 @@ class ObstacleState {
     object.predicted_states.forEach((val) => {
       length += StateLite.getMessageSize(val);
     });
+    length += Size.getMessageSize(object.size);
     return length + 12;
   }
 
@@ -107,7 +120,7 @@ class ObstacleState {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd45e6ca6695835598d9ff9ee662af118';
+    return '206a275054569710e712258c18396ed6';
   }
 
   static messageDefinition() {
@@ -118,6 +131,7 @@ class ObstacleState {
     int32 id
     string name
     StateLite[] predicted_states
+    Size size
     
     ================================================================================
     MSG: std_msgs/Header
@@ -145,6 +159,16 @@ class ObstacleState {
     float64 v
     float64 accel
     float64 yawrate
+    
+    ================================================================================
+    MSG: saturn_msgs/Size
+    std_msgs/Header header
+    
+    float64 length
+    float64 width
+    float64 height
+    float64 wheel_base
+    float64 wheel_track
     
     `;
   }
@@ -184,6 +208,13 @@ class ObstacleState {
     }
     else {
       resolved.predicted_states = []
+    }
+
+    if (msg.size !== undefined) {
+      resolved.size = Size.Resolve(msg.size)
+    }
+    else {
+      resolved.size = new Size()
     }
 
     return resolved;

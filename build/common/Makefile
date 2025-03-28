@@ -172,18 +172,42 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-common/CMakeFiles/_catkin_empty_exported_target.dir/rule:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 common/CMakeFiles/_catkin_empty_exported_target.dir/rule
-.PHONY : common/CMakeFiles/_catkin_empty_exported_target.dir/rule
+common/CMakeFiles/common.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 common/CMakeFiles/common.dir/rule
+.PHONY : common/CMakeFiles/common.dir/rule
 
 # Convenience name for target.
-_catkin_empty_exported_target: common/CMakeFiles/_catkin_empty_exported_target.dir/rule
-.PHONY : _catkin_empty_exported_target
+common: common/CMakeFiles/common.dir/rule
+.PHONY : common
 
 # fast build rule for target.
-_catkin_empty_exported_target/fast:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f common/CMakeFiles/_catkin_empty_exported_target.dir/build.make common/CMakeFiles/_catkin_empty_exported_target.dir/build
-.PHONY : _catkin_empty_exported_target/fast
+common/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f common/CMakeFiles/common.dir/build.make common/CMakeFiles/common.dir/build
+.PHONY : common/fast
+
+src/VehicleModel.o: src/VehicleModel.cpp.o
+.PHONY : src/VehicleModel.o
+
+# target to build an object file
+src/VehicleModel.cpp.o:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f common/CMakeFiles/common.dir/build.make common/CMakeFiles/common.dir/src/VehicleModel.cpp.o
+.PHONY : src/VehicleModel.cpp.o
+
+src/VehicleModel.i: src/VehicleModel.cpp.i
+.PHONY : src/VehicleModel.i
+
+# target to preprocess a source file
+src/VehicleModel.cpp.i:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f common/CMakeFiles/common.dir/build.make common/CMakeFiles/common.dir/src/VehicleModel.cpp.i
+.PHONY : src/VehicleModel.cpp.i
+
+src/VehicleModel.s: src/VehicleModel.cpp.s
+.PHONY : src/VehicleModel.s
+
+# target to generate assembly for a file
+src/VehicleModel.cpp.s:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f common/CMakeFiles/common.dir/build.make common/CMakeFiles/common.dir/src/VehicleModel.cpp.s
+.PHONY : src/VehicleModel.cpp.s
 
 # Help Target
 help:
@@ -198,7 +222,10 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... _catkin_empty_exported_target"
+	@echo "... common"
+	@echo "... src/VehicleModel.o"
+	@echo "... src/VehicleModel.i"
+	@echo "... src/VehicleModel.s"
 .PHONY : help
 
 

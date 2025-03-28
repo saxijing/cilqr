@@ -983,19 +983,13 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: \
  /opt/ros/melodic/include/geometry_msgs/PoseStamped.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/State.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/StateLite.h \
+ /home/saxijing/cilqr/devel/include/saturn_msgs/Size.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleState.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
- /usr/include/c++/7/fstream \
- /usr/include/x86_64-linux-gnu/c++/7/bits/basic_file.h \
- /usr/include/x86_64-linux-gnu/c++/7/bits/c++io.h \
- /usr/include/c++/7/bits/fstream.tcc /usr/include/c++/7/mutex \
- /usr/include/c++/7/chrono /usr/include/c++/7/ratio \
- /usr/include/c++/7/bits/parse_numbers.h \
- /usr/include/c++/7/bits/std_mutex.h \
- /home/saxijing/cilqr/src/scene/include/functions/VehicleModel.h \
- /home/saxijing/cilqr/src/scene/../common/include/Common.h \
+ /home/saxijing/cilqr/src/common/include/common/VehicleModel.h \
+ /home/saxijing/cilqr/src/common/include/common/Common.h \
  /usr/include/eigen3/Eigen/Dense /usr/include/eigen3/Eigen/Core \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
  /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
@@ -1172,5 +1166,13 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: \
  /usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+ /usr/include/c++/7/fstream \
+ /usr/include/x86_64-linux-gnu/c++/7/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/7/bits/c++io.h \
+ /usr/include/c++/7/bits/fstream.tcc /usr/include/c++/7/mutex \
+ /usr/include/c++/7/chrono /usr/include/c++/7/ratio \
+ /usr/include/c++/7/bits/parse_numbers.h \
+ /usr/include/c++/7/bits/std_mutex.h \
  /home/saxijing/cilqr/src/scene/include/functions/Objects.h \
- /home/saxijing/cilqr/src/scene/include/functions/Object.h
+ /home/saxijing/cilqr/src/scene/include/functions/Object.h \
+ /home/saxijing/cilqr/src/scene/../common/include/common/Common.h

@@ -7,13 +7,14 @@
 #include<nav_msgs/Path.h>
 #include<saturn_msgs/State.h>
 #include<saturn_msgs/StateLite.h>
+#include<saturn_msgs/Size.h>
 #include<saturn_msgs/ObstacleState.h>
 #include<saturn_msgs/ObstacleStateArray.h>
 #include<saturn_msgs/Control.h>
 #include<saturn_msgs/ControlArray.h>
+#include<common/VehicleModel.h>
 #include<fstream>
 #include<mutex>
-#include "VehicleModel.h"
 #include "Objects.h"
 //#include "cilqr.h"
 
@@ -22,7 +23,7 @@ using namespace std;
 class Scene
 {
     public:
-        Scene(const string name, const string filepath, ros::NodeHandle &nh_);
+        Scene(const string name, ros::NodeHandle &nh_);
         ~Scene();
         void readCenterlineAndCalRoadEdge();
         void recvCilqrPlannerControl(const saturn_msgs::ControlArray &msg);

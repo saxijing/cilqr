@@ -67,7 +67,7 @@ include message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps
 include message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/progress.make
 
 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState:
-	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py saturn_msgs /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg saturn_msgs/StateLite:std_msgs/Header
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py saturn_msgs /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleState.msg saturn_msgs/Size:saturn_msgs/StateLite:std_msgs/Header
 
 _saturn_msgs_generate_messages_check_deps_ObstacleState: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState
 _saturn_msgs_generate_messages_check_deps_ObstacleState: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleState.dir/build.make
