@@ -46,6 +46,9 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     nh.getParam("/ego_vehicle/wheel_base", egoL);
     nh.getParam("/planner/ego_lf", ego_lf);
     nh.getParam("/planner/ego_lr", ego_lr);
+    nh.getParam("/planner/forward/line_search/beta_min", beta1);
+    nh.getParam("/planner/forward/line_search/beta_max", beta2);
+    nh.getParam("/planner/forward/line_search/gama", gama);
     closest_global_index=0;
     closest_local_index=0;
     isFirstFrame=true;
@@ -210,7 +213,7 @@ void ciLQR::polynominalFitting()
     }
 }
 
-double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<vector<double>>& K_cal_lst, vector<vector<double>>& d_cal_lst, double& deltaV1d_cal, double&deltaV2d_cal)
+double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isCompleteCal)
 {
     //X_cal_lst is X_vd_lst, order: 0~N
     double costJ_temp=0;
@@ -218,12 +221,15 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<v
     cout<<"X_bar_lst length="<<X_bar_lst.size()<<";"<<endl;
 
     //K, d list order: N-1~0
-    K_cal_lst.clear();
-    d_cal_lst.clear();
+    if(isCompleteCal)
+    {
+        K_lst.clear();
+        d_lst.clear();
 
-    deltaV1d_cal=0;
-    deltaV2d_cal=0;
-
+        deltaV1d=0;
+        deltaV2d=0;
+    }
+    
     // 1. whe k=N, calc relevant variables and ternimal costJ
     X(0,0)=X_cal_lst[X_cal_lst.size()-1].x;
     X(1,0)=X_cal_lst[X_cal_lst.size()-1].y;
@@ -326,7 +332,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<v
         costJ_temp+=M_scalar(0,0);
 
         // 2.4 control costvector<vector<double>>K_lst;
-        vector<vector<double>>d_lst;
         U(0,0)=initial_controls[i].accel+delta_controls[i].accel;
         U(1,0)=initial_controls[i].yaw_rate+delta_controls[i].yaw_rate;
         dU=dU+U.transpose()*R;
@@ -334,7 +339,7 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<v
         M_scalar=0.5*U.transpose()*R*U;
         costJ_temp+=M_scalar(0,0);
 
-        // 2.4 control constraint cost
+        // 2.5 control constraint cost
         dCu<<1,0;
         dU=dU+q1_acc*q2_acc*exp(q2_acc*(U(0,0)-a_high))*dCu;
         ddU=ddU+q1_acc*q2_acc*q2_acc*exp(q2_acc*(U(0,0)-a_high))*dCu.transpose()*dCu;
@@ -354,7 +359,7 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<v
         dU=dU+q1_yr*q2_yr*exp(q2_yr*(X_cal_lst[i].v*tan(steer_low)/egoL-U(1,0)))*dCu;
         ddU=ddU+q1_yr*q2_yr*q2_yr*exp(q2_yr*(X_cal_lst[i].v*tan(steer_low)/egoL-U(1,0)))*dCu.transpose()*dCu;
         costJ_temp+=q1_yr*exp(q2_yr*(X_cal_lst[i].v*tan(steer_low)/egoL-U(1,0)));
-        // 2.5 calculate Qx, Qu, Qxx, Quu, Qxu, Qux, deltaV
+        // 2.6 calculate Qx, Qu, Qxx, Quu, Qxu, Qux, deltaV
         vd_model.getVehicleModelAandB(X_cal_lst[i].v, X_cal_lst[i].theta, U(0,0), control_dt, A, B);
         Qx=dX+dVk*A;
         Qu=dU+dVk*B;
@@ -362,15 +367,18 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<v
         Quu=ddU+B.transpose()*ddVk*B;
         Qxu=B.transpose()*ddVk*A;
         Qux=Qxu.transpose();
-        K=-(Quu.inverse()).transpose()*Qxu;
-        d=-(Quu.inverse()).transpose()*Qu.transpose();
-        K_cal_lst.push_back({K(0,0), K(0,1), K(0,2), K(0,3), K(1,0), K(1,1), K(1,2), K(1,3)});
-        d_cal_lst.push_back({d(0,0), d(1,0)});
-        M_scalar=Qu*d;
-        deltaV1d_cal+=M_scalar(0,0);
-        M_scalar=0.5*d.transpose()*Quu*d;
-        deltaV2d_cal=deltaV2d_cal+M_scalar(0,0);
-        // 2.6 calculate dVk, ddVk, for next loop
+        if(isCompleteCal)
+        {
+            K=-(Quu.inverse()).transpose()*Qxu;
+            d=-(Quu.inverse()).transpose()*Qu.transpose();
+            K_lst.push_back({K(0,0), K(0,1), K(0,2), K(0,3), K(1,0), K(1,1), K(1,2), K(1,3)});
+            d_lst.push_back({d(0,0), d(1,0)});
+            M_scalar=Qu*d;
+            deltaV1d+=M_scalar(0,0);
+            M_scalar=0.5*d.transpose()*Quu*d;
+            deltaV2d=deltaV2d+M_scalar(0,0);
+        }
+        // 2.7 calculate dVk, ddVk, for next loop
         dVk=Qx+Qu*K+d.transpose()*Quu*K+d.transpose()*Qxu;
         ddVk=Qxx+K.transpose()*Quu*K+Qux*K+K.transpose()*Quu;
     }
@@ -442,19 +450,84 @@ void ciLQR::iLQRSolver()
     }
 
     //3. backward pass and get the costJ_nominal
-    costJ=BackwardPassAndGetCostJ(X_vd_lst, K_lst, d_lst, deltaV1d, deltaV2d);
+    costJ=BackwardPassAndGetCostJ(X_vd_lst, true);
 
     //4. forward pass and get the final cost
     forward_counter=0;
     while(forward_counter<1000)
     {
+        // initialize X0 and X_nominal0
         X(0,0)=X_vd_lst[0].x;
         X(1,0)=X_vd_lst[0].y;
         X(2,0)=X_vd_lst[0].v;
         X(3,0)=X_vd_lst[0].theta;
+        X_nominal(0,0)=X_vd_lst[0].x;
+        X_nominal(1,0)=X_vd_lst[0].y;
+        X_nominal(2,0)=X_vd_lst[0].v;
+        X_nominal(3,0)=X_vd_lst[0].theta;
+        
+        //xk as the first point of X_nominal_lst
+        xk.x=X_vd_lst[0].x;
+        xk.y=X_vd_lst[0].y;
+        xk.v=X_vd_lst[0].v;
+        xk.theta=X_vd_lst[0].theta;
+        xk.accel=0;
+        xk.yaw_rate=0;
+        X_nominal_lst.clear();
+        X_nominal_lst.push_back(xk);
+        delta_controls.clear();
+        planned_controls.clear();
 
-         
+        for(int i=0; i<local_horizon-1; i++)
+        {
+            K(0,0)=K_lst[K_lst.size()-1-i][0];
+            K(0,1)=K_lst[K_lst.size()-1-i][1];
+            K(0,2)=K_lst[K_lst.size()-1-i][2];
+            K(0,3)=K_lst[K_lst.size()-1-i][3];
+            K(1,0)=K_lst[K_lst.size()-1-i][4];
+            K(1,1)=K_lst[K_lst.size()-1-i][5];
+            K(1,2)=K_lst[K_lst.size()-1-i][6];
+            K(1,3)=K_lst[K_lst.size()-1-i][7];
+            d(0,0)=d_lst[d_lst.size()-1-i][0];
+            d(1,0)=d_lst[d_lst.size()-1-i][1];
+            deltaU_star=K*(X_nominal-X)+alfa*d;
+            delta_control_signal.accel=deltaU_star(0,0);
+            delta_control_signal.yaw_rate=deltaU_star(1,0);
+            delta_controls.push_back(delta_control_signal);
+            control_signal.accel=initial_controls[i].accel+U(0,0);
+            control_signal.yaw_rate=initial_controls[i].yaw_rate+U(1,0);
+            planned_controls.push_back(control_signal);
+        
+            vd_model.updateOneStep(&xk, &xk1, &control_signal, dt);
+            X_nominal_lst.push_back(xk1);
+            
+            // fulfill (i+1) frame variables
+            X_nominal(0,0)=xk1.x;
+            X_nominal(1,0)=xk1.y;
+            X_nominal(2,0)=xk1.v;
+            X_nominal(3,0)=xk1.theta;
+            X(0,0)=X_vd_lst[i+1].x;
+            X(1,0)=X_vd_lst[i+1].y;
+            X(2,0)=X_vd_lst[i+1].v;
+            X(3,0)=X_vd_lst[i+1].theta;
+            xk.x=xk1.x;
+            xk.y=xk1.y;
+            xk.v=xk1.v;
+            xk.theta=xk1.theta;
+            xk.accel=xk1.accel;
+            xk.yaw_rate=xk1.yaw_rate;
+        }
 
+        //calculate nominal trajectory cost
+        costJ_nominal=BackwardPassAndGetCostJ(X_nominal_lst, false);
+        deltaV=alfa*deltaV1d+alfa*alfa*deltaV2d;
+        z=(costJ_nominal-costJ)/deltaV;
+        if(z>=beta1 && z<=beta2)
+            break;
+        else
+        {
+            alfa=gama*alfa;
+        }
     }
 }
 
@@ -471,6 +544,9 @@ void ciLQR::update()
     {
         ros::spinOnce();
         iLQRSolver();
+
+        //fulfill related message, publish planned_path and planned_controls
+        
         rate.sleep();
     }
 }

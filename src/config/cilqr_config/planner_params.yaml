@@ -25,6 +25,9 @@
 /planner/ego_radius: 2
 /planner/ego_lf: 1.44
 /planner/ego_lr: 1.44
+/planner/forward/line_search/beta_min: 0
+/planner/forward/line_search/beta_max: 1e-4
+/planner/forward/line_search/gama: 0.5
 
 # weights
 /planner/weight/iLQR/w_pos_x: 1

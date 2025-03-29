@@ -28,7 +28,7 @@ class ciLQR
         void readGlobalWaypoints();
         void findClosestWaypointIndex(const vector<ObjState> &waypoints, const ObjState &state, int &closest_index, bool isFromStart);
         void polynominalFitting();
-        double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, vector<vector<double>>& K_cal_lst, vector<vector<double>>& d_cal_lst, double& delta1d_cal, double&delta2d_cal);
+        double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isCompleteCal);
         void iLQRSolver();
         void update();
     protected:
@@ -64,7 +64,8 @@ class ciLQR
         vector<CtrlInput> planned_controls;
         vector<double> polyCoeff;
         vector<ObjState> X_bar_lst;
-        vector<ObjState>X_vd_lst;
+        vector<ObjState> X_vd_lst;
+        vector<ObjState> X_nominal_lst;
         int global_horizon;
         int local_horizon;
         int prediction_horizon;
@@ -102,6 +103,8 @@ class ciLQR
 
         Eigen::MatrixXd X=Eigen::MatrixXd(state_num, 1);
         Eigen::MatrixXd X_bar=Eigen::MatrixXd(state_num, 1);
+        Eigen::MatrixXd X_nominal=Eigen::MatrixXd(state_num, 1);
+        Eigen::MatrixXd X_k=Eigen::MatrixXd(state_num, 1);
         Eigen::MatrixXd X_front=Eigen::MatrixXd(state_num, 1);
         Eigen::MatrixXd X_rear=Eigen::MatrixXd(state_num, 1);
         Eigen::MatrixXd X_obs=Eigen::MatrixXd(state_num, 1);
@@ -138,17 +141,23 @@ class ciLQR
         Eigen::MatrixXd Qux=Eigen::MatrixXd(state_num, control_num);
         Eigen::MatrixXd K=Eigen::MatrixXd(control_num, state_num);
         Eigen::MatrixXd d=Eigen::MatrixXd(control_num, 1);
+        Eigen::MatrixXd deltaU_star=Eigen::MatrixXd(control_num, 1);
         Eigen::MatrixXd M_scalar;  //store 1*1 matrix calculation result
+        ObjState xk;
+        ObjState xk1;
         vector<vector<double>>K_lst;
         vector<vector<double>>d_lst;
-        double deltaV1d, deltaV2d;
-        //store temp K, d in forward pass process, additional result, no sense in forward pass
-        vector<vector<double>>K_temp_lst;
-        vector<vector<double>>d_temp_lst;
-        double deltaV1d_temp, deltaV2d_temp;
+        double deltaV, deltaV1d, deltaV2d;
+        // //store temp K, d in forward pass process, additional result, no sense in forward pass
+        // vector<vector<double>>K_temp_lst;
+        // vector<vector<double>>d_temp_lst;
+        // double deltaV1d_temp, deltaV2d_temp;
         double costJ;
         double costJ_nominal;
         int forward_counter;
+        double z;
+        double beta1, beta2;
+        double gama;
 };
 
 #endif
