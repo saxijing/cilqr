@@ -7,7 +7,8 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     ego_state_sub=nh.subscribe("/ego_vehicle/state", 10, &ciLQR::recvEgoState, this);
     obstacles_state_sub=nh.subscribe("/obstacles/state", 10, &ciLQR::recvObstaclesState, this);
     cilqr_control_pub=nh.advertise<saturn_msgs::ControlArray>("/cilqr_planner/control", 10, true);
-    rviz_local_referline_pub=nh.advertise<visualization_msgs::Marker>("/local_referline", 10, true);
+    rviz_local_refer_points_pub=nh.advertise<visualization_msgs::Marker>("/local_referline/points", 1, true);
+    rviz_local_refer_lines_pub=nh.advertise<visualization_msgs::Marker>("/local_referline/lines", 1, true);
     rviz_local_planned_path_pub=nh.advertise<nav_msgs::Path>("/local_planned_path", 10, true);
     
     ROS_INFO("ciLQR parameters loading...");
@@ -44,6 +45,7 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     nh.getParam("/planner/constraints/control/min_wheel_angle", steer_low);
     nh.getParam("/planner/constraints/control/max_wheel_angle", steer_high);
     nh.getParam("/ego_vehicle/wheel_base", egoL);
+    nh.getParam("/ego_vehicle/height", egoHeight);
     nh.getParam("/planner/ego_lf", ego_lf);
     nh.getParam("/planner/ego_lr", ego_lr);
     nh.getParam("/planner/forward/line_search/beta_min", beta1);
@@ -536,9 +538,15 @@ void ciLQR::update()
     int planning_rate=1/dt;
     ros::Rate rate(planning_rate);
 
+    saturn_msgs::Control control_msg;
     saturn_msgs::ControlArray control_lst_msg;
-    visualization_msgs::Marker local_referline_msg;
+    
+    geometry_msgs::PoseStamped waypoint_msg;
     nav_msgs::Path planned_path_msg;
+
+    geometry_msgs::Point point_msg;
+    visualization_msgs::Marker local_points_msg;
+    visualization_msgs::Marker local_lines_msg;
 
     while(ros::ok())
     {
@@ -546,6 +554,69 @@ void ciLQR::update()
         iLQRSolver();
 
         //fulfill related message, publish planned_path and planned_controls
+        //1. publish controls
+        control_lst_msg.header.frame_id="cilqr_planner";
+        control_lst_msg.header.stamp=ros::Time::now();
+        control_lst_msg.control_lst.clear();
+        for(int i=0; i<planned_controls.size();i++)
+        {
+            control_msg.u_accel=planned_controls[i].accel;
+            control_msg.u_yawrate=planned_controls[i].yaw_rate;
+            control_lst_msg.control_lst.push_back(control_msg);
+        }
+        cilqr_control_pub.publish(control_lst_msg);
+
+        //2. planned path for rviz
+        planned_path_msg.header.frame_id="cilqr_planner";
+        planned_path_msg.header.stamp=ros::Time::now();
+        planned_path_msg.poses.clear();
+        for(int i=0; i<planned_path.size(); i++)
+        {
+            waypoint_msg.pose.position.x=planned_path[i].x;
+            waypoint_msg.pose.position.y=planned_path[i].y;
+            waypoint_msg.pose.position.z=egoHeight/2;
+            waypoint_msg.pose.orientation.x=0;
+            waypoint_msg.pose.orientation.y=0;
+            waypoint_msg.pose.orientation.z=sin(planned_path[i].theta/2);
+            waypoint_msg.pose.orientation.w=cos(planned_path[i].theta/2);
+
+            planned_path_msg.poses.push_back(waypoint_msg);
+        }
+        rviz_local_planned_path_pub.publish(planned_path_msg);
+
+        //3. local reference waypoint for rviz
+        local_points_msg.header.frame_id="cilqr_planner/local_referline";
+        local_points_msg.header.stamp=ros::Time::now();
+        local_lines_msg.header.frame_id="cilqr_planner/local_referline";
+        local_lines_msg.header.stamp=ros::Time::now();
+        local_points_msg.action=visualization_msgs::Marker::ADD;
+        local_lines_msg.action=visualization_msgs::Marker::ADD;
+        local_points_msg.ns="local_points_and_lines";
+        local_lines_msg.ns="local_points_and_lines";
+        local_points_msg.id=1;
+        local_lines_msg.id=2;
+        local_points_msg.type=visualization_msgs::Marker::POINTS;
+        local_lines_msg.type=visualization_msgs::Marker::LINE_STRIP;
+        //set scale and color
+        local_points_msg.scale.x=0.2;
+        local_points_msg.scale.y=0.2;
+        local_lines_msg.scale.x=0.1;
+        local_lines_msg.scale.y=0.1;
+        local_points_msg.color.g=1.0;
+        local_points_msg.color.a=1.0;
+        local_lines_msg.color.b=1.0;
+        local_lines_msg.color.a=1.0;
+        //fuifill points and lines
+        for(int i=0; i<planned_path.size(); i++)
+        {
+            point_msg.x=planned_path[i].x;
+            point_msg.y=planned_path[i].y;
+            point_msg.z=0;
+            local_points_msg.points.push_back(point_msg);
+            local_lines_msg.points.push_back(point_msg);
+        }
+        rviz_local_refer_points_pub.publish(local_points_msg);
+        rviz_local_refer_lines_pub.publish(local_lines_msg);
         
         rate.sleep();
     }

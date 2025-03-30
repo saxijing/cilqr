@@ -3,6 +3,7 @@
 
 #include "Common.h"
 #include<ros/ros.h>
+#include<geometry_msgs/PoseStamped.h>
 #include<nav_msgs/Path.h>
 #include<visualization_msgs/Marker.h>
 #include<saturn_msgs/State.h>
@@ -36,7 +37,8 @@ class ciLQR
         ros::Subscriber ego_state_sub;
         ros::Subscriber obstacles_state_sub;
         ros::Publisher cilqr_control_pub;
-        ros::Publisher rviz_local_referline_pub;
+        ros::Publisher rviz_local_refer_points_pub;
+        ros::Publisher rviz_local_refer_lines_pub;
         ros::Publisher rviz_local_planned_path_pub;
         string global_waypoints_filepath;
         int state_num;
@@ -97,6 +99,7 @@ class ciLQR
         double ellipse_a;
         double ellipse_b;
         double egoL;
+        double egoHeight;
         double ego_lf, ego_lr;
         Eigen::MatrixXd Q=Eigen::MatrixXd::Zero(state_num, state_num);
         Eigen::MatrixXd R=Eigen::MatrixXd::Zero(control_num, control_num);

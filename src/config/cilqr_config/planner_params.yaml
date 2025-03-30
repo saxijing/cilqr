@@ -53,6 +53,7 @@
 
 # hardware params
 /ego_vehicle/wheel_base: 2.875
+/ego_vehicle/height: 1.44
 
 
 
