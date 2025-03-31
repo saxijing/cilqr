@@ -69,6 +69,64 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
         initial_controls.push_back(control_signal);
         delta_controls.push_back(delta_control_signal);
     }
+    //Matrix resize
+    Q.resize(state_num, state_num);
+    Q.setZero();
+    R.resize(control_num, control_num);
+    R.setZero();
+    X.resize(state_num, 1);
+    X_bar.resize(state_num, 1);
+    X_nominal.resize(state_num, 1);
+    X_front.resize(state_num, 1);
+    X_rear.resize(state_num, 1);
+    X_obs.resize(state_num, 1);
+    X_front_obs.resize(state_num, 1);
+    X_rear_obs.resize(state_num, 1);
+    U.resize(control_num, 1);
+    T.resize(state_num, state_num);
+    T.setZero();
+    dX_front.resize(state_num, state_num);
+    dX_rear.resize(state_num, state_num);
+    dCf.resize(1, state_num);
+    dCr.resize(1, state_num);
+    f_cf.resize(1, state_num);
+    f_cr.resize(1, state_num);
+    dBf.resize(1, state_num);
+    dBr.resize(1, state_num);
+    ddBf.resize(state_num, state_num);
+    ddBr.resize(state_num, state_num);
+    dVk.resize(1, state_num);
+    ddVk.resize(state_num, state_num);
+    dX.resize(1, state_num);
+    dX.setZero();
+    ddX.resize(state_num, state_num);
+    ddX.setZero();
+    dU.resize(1, control_num);
+    dU.setZero();
+    ddU.resize(control_num, control_num);
+    ddU.setZero();
+    A.resize(state_num, state_num);
+    A.setZero();
+    B.resize(state_num, control_num);
+    B.setZero();
+    P.resize(state_num, state_num);
+    P.setZero();
+    dCu.resize(1, control_num);
+    dCu.setZero();
+    Qx.resize(1, state_num);
+    Qu.resize(1, control_num);
+    Qxx.resize(state_num, state_num);
+    Quu.resize(control_num, control_num);
+    Qxu.resize(control_num, state_num);
+    Qux.resize(state_num, control_num);
+    K.resize(control_num, state_num);
+    d.resize(control_num, 1);
+    deltaU_star.resize(control_num, 1);
+    M_scalar.resize(1, 1);
+
+
+
+
     Q(0,0)=w_posX;
     Q(1,1)=w_posY;
     Q(2,2)=w_vel;
@@ -148,16 +206,16 @@ void ciLQR::readGlobalWaypoints()
             {
                 switch(col)
                 {
-                    case 4:
+                    case 5:
                         waypoint.x=stod(itemw);
                         break;
-                    case 5:
+                    case 6:
                         waypoint.y=stod(itemw);
                         break;
-                    case 6:
+                    case 7:
                         waypoint.theta=stod(itemw);
                         break;
-                    case 7:
+                    case 8:
                         waypoint.v=stod(itemw);
                         break;
                 }
@@ -207,7 +265,10 @@ void ciLQR::polynominalFitting()
         }
         polyY(i,0)=local_waypoints[i].y;
     }
-    poly_a=polyX.transpose()*polyX.ldlt().solve(polyX.transpose()*polyY);
+
+    //poly_a=polyX.transpose()*polyX.ldlt().solve(polyX.transpose()*polyY);
+    //poly_a = polyX.colPivHouseholderQr().solve(polyY);
+    poly_a = polyX.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(polyY);
     for(int i=0;i<=poly_order;i++)
     {
         //order is a0, a1, a2,...an
@@ -219,8 +280,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
 {
     //X_cal_lst is X_vd_lst, order: 0~N
     double costJ_temp=0;
-    cout<<"X_cal_lst length="<<X_cal_lst.size()<<";"<<endl;
-    cout<<"X_bar_lst length="<<X_bar_lst.size()<<";"<<endl;
 
     //K, d list order: N-1~0
     if(isCompleteCal)
@@ -361,6 +420,7 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
         dU=dU+q1_yr*q2_yr*exp(q2_yr*(X_cal_lst[i].v*tan(steer_low)/egoL-U(1,0)))*dCu;
         ddU=ddU+q1_yr*q2_yr*q2_yr*exp(q2_yr*(X_cal_lst[i].v*tan(steer_low)/egoL-U(1,0)))*dCu.transpose()*dCu;
         costJ_temp+=q1_yr*exp(q2_yr*(X_cal_lst[i].v*tan(steer_low)/egoL-U(1,0)));
+
         // 2.6 calculate Qx, Qu, Qxx, Quu, Qxu, Qux, deltaV
         vd_model.getVehicleModelAandB(X_cal_lst[i].v, X_cal_lst[i].theta, U(0,0), control_dt, A, B);
         Qx=dX+dVk*A;
@@ -382,7 +442,7 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
         }
         // 2.7 calculate dVk, ddVk, for next loop
         dVk=Qx+Qu*K+d.transpose()*Quu*K+d.transpose()*Qxu;
-        ddVk=Qxx+K.transpose()*Quu*K+Qux*K+K.transpose()*Quu;
+        ddVk=Qxx+K.transpose()*Quu*K+Qux*K+K.transpose()*Qxu;
     }
 
     return costJ_temp;

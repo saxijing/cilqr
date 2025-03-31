@@ -26,7 +26,6 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     control_index=0;
 
     readCenterlineAndCalRoadEdge();
-    update();
 }
 
 Scene::~Scene()
@@ -36,7 +35,6 @@ Scene::~Scene()
     centerline_points.clear();
     rightedge_points.clear();
     leftedge_points.clear();
-    local_control_lst.clear();
     ROS_INFO("Scene destructed!");
 }
 
@@ -120,9 +118,38 @@ void Scene::recvCilqrPlannerControl(const saturn_msgs::ControlArray  &msg)
     control_index=0;
 }
 
+void Scene::reposeEgoVehicle(const double x, const double y, const double theta, const double v0, const double dT)
+{
+    ego_vehicle.repose(x, y, theta, v0, dT);
+}
+
+void Scene::resizeEgoVehicle(const double l, const double w, const double h)
+{
+    ego_vehicle.resize(l, w, h);
+}
+
+void Scene::reconfigEgoVehVDpara(const double m, const double L, const double B)
+{
+    ego_vehicle.reconfigVDpara(m, L, B);
+}
+
+void Scene::addObject(const Object &obj)
+{
+    obstacles.addObject(obj);
+}
+
+void Scene::removeObjectByID(const int id)
+{
+    obstacles.removeObjectByID(id);
+}
+
+void Scene::removeObjectByIndex(const int obj_index)
+{
+    obstacles.removeObjectByIndex(obj_index);
+}
+
 void Scene::update()
 {
-    //readCenterlineAndCalRoadEdge("/home/saxijing/catkin_ws/src/motion_planner/data/centerline.csv");
     int control_rate=1/dt;
     ros::Rate rate(control_rate);
     saturn_msgs::State ego_state_msg;
@@ -145,6 +172,9 @@ void Scene::update()
     rightedge_msg.header.stamp=ros::Time::now();
     leftedge_msg.header.frame_id="map";
     leftedge_msg.header.stamp=ros::Time::now();
+    centerline_msg.poses.clear();
+    rightedge_msg.poses.clear();
+    leftedge_msg.poses.clear();
     for(int i=0; i<centerline_points.size(); i++)
     {
         road_pose.pose.position.x=centerline_points[i].x;
@@ -188,7 +218,6 @@ void Scene::update()
 
     obj_rviz_msg.type=visualization_msgs::Marker::CUBE;
     obj_rviz_msg.color.a=0.5;
-
 
     while(ros::ok())
     {
@@ -269,16 +298,20 @@ void Scene::update()
         obstacles_rviz_pub.publish(obstacles_rviz_msg);
 
         //update ego vehicle state
+        cout<<"here1"<<endl;
         {
             lock_guard<mutex> lock(data_mutex);
-            ego_vehicle.applyU(local_control_lst[control_index].accel, local_control_lst[control_index].yaw_rate);
-            ego_vehicle.update();
+            lock_accel=local_control_lst[control_index].accel;
+            lock_yawrate=local_control_lst[control_index].yaw_rate;
             control_index++;
             if(control_index>=local_control_lst.size())
             {
                 control_index=0;
             }
         }
+        cout<<"here2"<<endl;
+        ego_vehicle.applyU(lock_accel, lock_yawrate);
+        ego_vehicle.update();
 
         //update obstacles state
         for(int i=0; i<obstacles.getObjectsNum(); i++)
@@ -288,5 +321,6 @@ void Scene::update()
 
         rate.sleep();
         ros::spinOnce();
+        cout<<"here5"<<endl;
     }
 }

@@ -27,6 +27,12 @@ class Scene
         ~Scene();
         void readCenterlineAndCalRoadEdge();
         void recvCilqrPlannerControl(const saturn_msgs::ControlArray &msg);
+        void reposeEgoVehicle(const double x, const double y, const double theta, const double v0, const double dT);
+        void resizeEgoVehicle(const double l, const double w, const double h);
+        void reconfigEgoVehVDpara(const double m, const double L, const double B);
+        void addObject(const Object &obj);
+        void removeObjectByID(const int id);
+        void removeObjectByIndex(const int obj_index);
         void update();
 
     protected:
@@ -60,5 +66,6 @@ class Scene
         //for data lock
         mutex data_mutex;
         int control_index;
+        double lock_accel, lock_yawrate;
 };
 #endif

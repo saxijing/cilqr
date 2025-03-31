@@ -13,15 +13,15 @@
 /road_info/lane_num: 2
 
 # horizon
-/planner/global_horizon: 10
-/planner/local_horizon: 20
+/planner/global_horizon: 20
+/planner/local_horizon: 40
 /planner/prediction_horizon: 20
 
 # iLQR solver params
 /planner/poly_order: 5
-/planner/safe_dist/a: 1
-/planner/safe_dist/b: 1
-/planner/safe_time: 10
+/planner/safe_dist/a: 10.0
+/planner/safe_dist/b: 4.0
+/planner/safe_time: 0.1
 /planner/ego_radius: 2
 /planner/ego_lf: 1.44
 /planner/ego_lr: 1.44
@@ -30,20 +30,20 @@
 /planner/forward/line_search/gama: 0.5
 
 # weights
-/planner/weight/iLQR/w_pos_x: 1
-/planner/weight/iLQR/w_pos_y: 1
-/planner/weight/iLQR/w_vel: 1
-/planner/weight/iLQR/w_theta: 0
-/planner/weight/iLQR/w_accel: 1
-/planner/weight/iLQR/w_yawrate: 1
+/planner/weight/iLQR/w_pos_x: 2.0
+/planner/weight/iLQR/w_pos_y: 2.0
+/planner/weight/iLQR/w_vel: 0.5
+/planner/weight/iLQR/w_theta: 0.0
+/planner/weight/iLQR/w_accel: 1.0
+/planner/weight/iLQR/w_yawrate: 3.0
 /planner/weight/obstacle/q1_front: 2.75
 /planner/weight/obstacle/q2_front: 2.75
 /planner/weight/obstacle/q1_rear: 2.5
 /planner/weight/obstacle/q2_rear: 2.5
-/planner/weight/control/q1_acc: 1
-/planner/weight/control/q2_acc: 1
-/planner/weight/control/q1_yawrate: 1
-/planner/weight/control/q2_yawrate: 1
+/planner/weight/control/q1_acc: 1.0
+/planner/weight/control/q2_acc: 1.0
+/planner/weight/control/q1_yawrate: 1.0
+/planner/weight/control/q2_yawrate: 1.0
 
 # constraints
 /planner/constraints/control/min_accel: -5.5 #m/s2

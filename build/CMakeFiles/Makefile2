@@ -67,6 +67,7 @@ all: gtest/all
 all: config/all
 all: message/saturn_msgs/all
 all: common/all
+all: launch/all
 all: planning/all
 all: scene/all
 .PHONY : all
@@ -76,6 +77,7 @@ preinstall: gtest/preinstall
 preinstall: config/preinstall
 preinstall: message/saturn_msgs/preinstall
 preinstall: common/preinstall
+preinstall: launch/preinstall
 preinstall: planning/preinstall
 preinstall: scene/preinstall
 .PHONY : preinstall
@@ -90,6 +92,7 @@ clean: gtest/clean
 clean: config/clean
 clean: message/saturn_msgs/clean
 clean: common/clean
+clean: launch/clean
 clean: planning/clean
 clean: scene/clean
 .PHONY : clean
@@ -171,6 +174,21 @@ gtest/googlemock/gtest/preinstall:
 gtest/googlemock/gtest/clean: gtest/googlemock/gtest/CMakeFiles/gtest.dir/clean
 gtest/googlemock/gtest/clean: gtest/googlemock/gtest/CMakeFiles/gtest_main.dir/clean
 .PHONY : gtest/googlemock/gtest/clean
+
+#=============================================================================
+# Directory level rules for directory launch
+
+# Recursive "all" directory target.
+launch/all:
+.PHONY : launch/all
+
+# Recursive "preinstall" directory target.
+launch/preinstall:
+.PHONY : launch/preinstall
+
+# Recursive "clean" directory target.
+launch/clean:
+.PHONY : launch/clean
 
 #=============================================================================
 # Directory level rules for directory message/saturn_msgs

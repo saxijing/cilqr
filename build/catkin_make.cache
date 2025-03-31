@@ -1,2 +1,2 @@
-common:config:message/saturn_msgs:planning:scene
+common:config:launch:message/saturn_msgs:planning:scene
 -DCATKIN_DEVEL_PREFIX=/home/saxijing/cilqr/devel -DCMAKE_INSTALL_PREFIX=/home/saxijing/cilqr/install -G Unix Makefiles
