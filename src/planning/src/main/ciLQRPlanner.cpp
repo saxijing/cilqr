@@ -8,4 +8,6 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "planner");
     ros::NodeHandle nh;
     ciLQR cilqr_planner(nh);
+    ROS_INFO("ciLQR Planner  loop starts.");
+    cilqr_planner.update();
 }

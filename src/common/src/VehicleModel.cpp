@@ -83,44 +83,49 @@ void VehicleModel::reconfigVDpara(const double m, const double L, const double B
 
 void VehicleModel::applyU(const double accel, const double yaw_rate)
 {
+    cout<<"applied recved U!"<<endl;
     veh_ctrl.accel=accel;
     veh_ctrl.yaw_rate=yaw_rate;
 }
 
 void VehicleModel::update()
 {
+    cout<<"before update veh_state:"<<veh_state.x<<","<<veh_state.y<<","<<veh_state.theta<<","<<veh_state.v<<endl;
     veh_state.x=veh_state.x+veh_state.v*dt*cos(veh_state.theta)+0.5*dt*dt*cos(veh_state.theta)*veh_ctrl.accel;
     veh_state.y=veh_state.y+veh_state.v*dt*sin(veh_state.theta)+0.5*dt*dt*sin(veh_state.theta)*veh_ctrl.accel;
     veh_state.v=veh_state.v+dt*veh_ctrl.accel;
     veh_state.theta=veh_state.theta+dt*veh_ctrl.yaw_rate;
     veh_state.accel=veh_ctrl.accel;
     veh_state.yaw_rate=veh_ctrl.yaw_rate;
+    cout<<"after update veh_state:"<<veh_state.x<<","<<veh_state.y<<","<<veh_state.theta<<","<<veh_state.v<<endl;
 }
 
-void VehicleModel::updateOneStep(const ObjState* xk, ObjState* xk1, const CtrlInput* uk, const double dt)
+void VehicleModel::updateOneStep(const ObjState& xk, ObjState& xk1, const CtrlInput& uk, const double& dt)
 {
-    xk1->x=xk->x+xk->v*dt*cos(xk->theta)+0.5*dt*dt*cos(xk->theta)*xk->accel;
-    xk1->y=xk->y+xk->v*dt*sin(xk->theta)+0.5*dt*dt*sin(xk->theta)*xk->accel;
-    xk1->v=xk->v+dt*xk->accel;
-    xk1->theta=xk->theta+dt*xk->yaw_rate;
-    xk1->accel=uk->accel;
-    xk1->yaw_rate=uk->yaw_rate;
+    xk1.x=xk.x+xk.v*dt*cos(xk.theta)+0.5*dt*dt*cos(xk.theta)*uk.accel;
+    xk1.y=xk.y+xk.v*dt*sin(xk.theta)+0.5*dt*dt*sin(xk.theta)*uk.accel;
+    xk1.v=xk.v+dt*uk.accel;
+    xk1.theta=xk.theta+dt*uk.yaw_rate;
+    xk1.accel=uk.accel;
+    xk1.yaw_rate=uk.yaw_rate;
 }
 
-void VehicleModel::CalVDTrajectory(const ObjState* X0, const vector<CtrlInput>* U, vector<ObjState>* traj, const int* traj_len, const double* dt)
+void VehicleModel::CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& U, vector<ObjState>& traj, const int& traj_len, const double& dt)
 {
-    traj->clear();
-    traj->push_back(*X0);
-    for(int i=1; i<(*traj_len); i++)
+    cout<<"come into CalVDTrajectory!"<<endl;
+    traj.clear();
+    traj.push_back(X0);
+    for(int i=1; i<traj_len; i++)
     {
-        X_temp.x=(*traj)[i-1].x+((*traj)[i-1].v*(*dt)+0.5*(*U)[i-1].accel*(*dt)*(*dt))*cos((*traj)[i-1].theta);
-        X_temp.y=(*traj)[i-1].y+((*traj)[i-1].v*(*dt)+0.5*(*U)[i-1].accel*(*dt)*(*dt))*sin((*traj)[i-1].theta);
-        X_temp.v=(*traj)[i-1].v+(*U)[i-1].accel*(*dt);
-        X_temp.theta=(*traj)[i-1].theta+(*U)[i-1].yaw_rate*(*dt);
-        X_temp.accel=(*U)[i-1].accel;
-        X_temp.yaw_rate=(*U)[i-1].yaw_rate;
-        traj->push_back(X_temp);
+        X_temp.x=traj[i-1].x+traj[i-1].v*dt*cos(traj[i-1].theta)+0.5*dt*dt*cos(traj[i-1].theta)*U[i-1].accel;
+        X_temp.y=traj[i-1].y+traj[i-1].v*dt*sin(traj[i-1].theta)+0.5*dt*dt*sin(traj[i-1].theta)*U[i-1].accel;
+        X_temp.v=traj[i-1].v+dt*U[i-1].accel;
+        X_temp.theta=traj[i-1].theta+dt*U[i-1].yaw_rate;
+        X_temp.accel=U[i-1].accel;
+        X_temp.yaw_rate=U[i-1].yaw_rate;
+        traj.push_back(X_temp);
     }
+    cout<<"traj size="<<traj.size()<<endl;
 }
 
 void VehicleModel::getVehicleModelAandB(const double v, const double theta, const double accel, const double dt, Eigen::MatrixXd& MA, Eigen::MatrixXd& MB)

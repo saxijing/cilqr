@@ -1,0 +1,4 @@
+<launch>
+   <rosparam command="load" file="$(find config)/cilqr_config/planner_params.yaml"/>
+   <node pkg="planning" type="cilqr_planner" name="planner" output="screen"/>
+</launch>

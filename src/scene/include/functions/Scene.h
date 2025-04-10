@@ -16,6 +16,7 @@
 #include<fstream>
 #include<mutex>
 #include "Objects.h"
+
 //#include "cilqr.h"
 
 using namespace std;
@@ -48,6 +49,7 @@ class Scene
         ros::Publisher  centerline_pub;
         ros::Publisher  rightedge_pub;
         ros::Publisher  leftedge_pub;
+        ros::Publisher rviz_camera_pose_pub;
         VehicleModel ego_vehicle;
         Objects obstacles;
         ObjState waypoint;
@@ -64,8 +66,17 @@ class Scene
         int global_horizon;
         int prediction_horizon;
         //for data lock
-        mutex data_mutex;
+        mutex control_lst_mutex;
         int control_index;
-        double lock_accel, lock_yawrate;
+        vector<CtrlInput> lock_local_control_lst;
+        CtrlInput lock_control_signal;
+        //rviz camera pose
+        double camera_distanceX;
+        double camera_distanceY;
+        double camera_distanceZ;
+        double camera_pitch;
+        double camera_yaw;
+        double camera_roll;
+
 };
 #endif

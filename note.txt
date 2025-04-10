@@ -1,0 +1,3 @@
+roslaunch launch scene.launch>scene.txt
+roslaunch launch planner.launch>planner.txt
+source devel/setup.bash

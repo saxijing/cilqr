@@ -9,13 +9,13 @@
 
 # params for building scene
 /planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
-/road_info/lane_width: 0.35
+/road_info/lane_width: 3.5
 /road_info/lane_num: 2
 
 # horizon
 /planner/global_horizon: 20
 /planner/local_horizon: 40
-/planner/prediction_horizon: 20
+/planner/prediction_horizon: 40
 
 # iLQR solver params
 /planner/poly_order: 5
@@ -25,8 +25,8 @@
 /planner/ego_radius: 2
 /planner/ego_lf: 1.44
 /planner/ego_lr: 1.44
-/planner/forward/line_search/beta_min: 0
-/planner/forward/line_search/beta_max: 1e-4
+/planner/forward/line_search/beta_min: 1e-4
+/planner/forward/line_search/beta_max: 10
 /planner/forward/line_search/gama: 0.5
 
 # weights

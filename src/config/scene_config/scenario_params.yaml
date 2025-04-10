@@ -1,0 +1,68 @@
+# state dimension, control dimension
+/variable_num/state: 4
+/variable_num/control: 2
+
+# timestep of prediction, planning and control
+/timestep/planning: 0.1
+/timestep/control: 0.01
+/timestep/prediction: 0.01
+
+# params for building scene
+/planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
+/road_info/lane_width: 3.5
+/road_info/lane_num: 2
+
+# horizon
+/planner/global_horizon: 20
+/planner/local_horizon: 40
+/planner/prediction_horizon: 40
+
+# iLQR solver params
+/planner/poly_order: 5
+/planner/safe_dist/a: 10.0
+/planner/safe_dist/b: 4.0
+/planner/safe_time: 0.1
+/planner/ego_radius: 2
+/planner/ego_lf: 1.44
+/planner/ego_lr: 1.44
+/planner/forward/line_search/beta_min: 1e-4
+/planner/forward/line_search/beta_max: 10
+/planner/forward/line_search/gama: 0.5
+
+# weights
+/planner/weight/iLQR/w_pos_x: 2.0
+/planner/weight/iLQR/w_pos_y: 2.0
+/planner/weight/iLQR/w_vel: 0.5
+/planner/weight/iLQR/w_theta: 0.0
+/planner/weight/iLQR/w_accel: 1.0
+/planner/weight/iLQR/w_yawrate: 3.0
+/planner/weight/obstacle/q1_front: 2.75
+/planner/weight/obstacle/q2_front: 2.75
+/planner/weight/obstacle/q1_rear: 2.5
+/planner/weight/obstacle/q2_rear: 2.5
+/planner/weight/control/q1_acc: 1.0
+/planner/weight/control/q2_acc: 1.0
+/planner/weight/control/q1_yawrate: 1.0
+/planner/weight/control/q2_yawrate: 1.0
+
+# constraints
+/planner/constraints/control/min_accel: -5.5 #m/s2
+/planner/constraints/control/max_accel: 2.0 #m/s2
+/planner/constraints/control/min_wheel_angle: -1 #radius
+/planner/constraints/control/max_wheel_angle: 1 #radius
+
+# hardware params
+/ego_vehicle/wheel_base: 2.875
+/ego_vehicle/height: 1.44
+
+# rviz display
+/rviz/camera_pose/distance/x: 0
+/rviz/camera_pose/distance/y: 0
+/rviz/camera_pose/distance/z: 15
+/rviz/camera_pose/rotation/pitch: 1.57
+/rviz/camera_pose/rotation/yaw: 0
+/rviz/camera_pose/rotation/roll: 0
+
+
+
+

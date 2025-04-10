@@ -75,23 +75,23 @@ def save_to_csv(original_points, radial_points, filename):
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         # 写入表头
-        writer.writerow(['x_center', 'y_center', 'theta_radians_center', 'theta_degrees_center', 'x', 'y', 'theta_radians', 'theta_degrees' ])
+        writer.writerow(['x_center', 'y_center', 'theta_radians_center', 'theta_degrees_center', 'v_center', 'x_global', 'y_global', 'theta_radians_global', 'theta_degrees_global', 'v_global' ])
         if len(original_points) != len(radial_points):
             raise ValueError("原始点和径向点的数量不匹配")
 
         for i in range(len(original_points)):
             x, y, theta = original_points[i]
             xr, yr, thetar = radial_points[i]
-            writer.writerow([ xr, yr, thetar, math.degrees(thetar), x, y, theta, math.degrees(theta)])
+            writer.writerow([ xr, yr, thetar, math.degrees(thetar), 0.0, x, y, theta, math.degrees(theta), 0.0])
 
 if __name__ == "__main__":
     # 用户输入
     start_x = 10.0
     start_y = 100.0
-    end_x =120
-    end_y =120
+    end_x =1200
+    end_y =1200
     interval = 1.0
-    d = -1.75
+    d = 1.75
     output_file = "waypoints.csv"
     
     # 计算原始点

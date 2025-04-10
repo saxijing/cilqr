@@ -6,14 +6,15 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
 {
     scene_name=name;
     nh=nh_;
-    ego_vehicle_pub=nh.advertise<saturn_msgs::State>("/ego_vehicle/state", 10, true);
-    obstacles_pub=nh.advertise<saturn_msgs::ObstacleStateArray>("/obstacles/state", 10, true);
+    ego_vehicle_pub=nh.advertise<saturn_msgs::State>("/scene/ego_vehicle/state", 10, true);
+    obstacles_pub=nh.advertise<saturn_msgs::ObstacleStateArray>("/scene/obstacles/state", 10, true);
     cilqr_planner_control_sub=nh.subscribe("/cilqr_planner/control", 10, &Scene::recvCilqrPlannerControl, this);
-    ego_rviz_pub=nh.advertise<visualization_msgs::Marker>("/ego_vehicle/rviz/state", 10, true);
-    obstacles_rviz_pub=nh.advertise<visualization_msgs::MarkerArray>("/obstacles/rviz/state", 10, true);
-    centerline_pub=nh.advertise<nav_msgs::Path>("/centerline", 10, true);
-    rightedge_pub=nh.advertise<nav_msgs::Path>("/rightedge", 10, true);
-    leftedge_pub=nh.advertise<nav_msgs::Path>("/leftedge", 10, true);
+    ego_rviz_pub=nh.advertise<visualization_msgs::Marker>("/scene/ego_vehicle/rviz/state", 1, true);
+    obstacles_rviz_pub=nh.advertise<visualization_msgs::MarkerArray>("/scene/obstacles/rviz/state", 1, true);
+    centerline_pub=nh.advertise<nav_msgs::Path>("/scene/centerline", 10, true);
+    rightedge_pub=nh.advertise<nav_msgs::Path>("/scene/rightedge", 10, true);
+    leftedge_pub=nh.advertise<nav_msgs::Path>("/scene/leftedge", 10, true);
+    rviz_camera_pose_pub=nh.advertise<geometry_msgs::PoseStamped>("/rviz/camera_placement", 10, true);
 
     ROS_INFO("Scene parameters loading...");
     nh.getParam("/planner/global_file_path", centerline_filepath);
@@ -22,8 +23,19 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     nh.getParam("/road_info/lane_num", lane_num);
     nh.getParam("/planner/global_horizon", global_horizon);
     nh.getParam("/planner/prediction_horizon", prediction_horizon);
-    
-    control_index=0;
+    nh.getParam("/rviz/camera_pose/distance/x", camera_distanceX);
+    nh.getParam("/rviz/camera_pose/distance/y", camera_distanceY);
+    nh.getParam("/rviz/camera_pose/distance/z", camera_distanceZ);
+    nh.getParam("/rviz/camera_pose/rotation/pitch", camera_pitch);
+    nh.getParam("/rviz/camera_pose/rotation/yaw", camera_yaw);
+    nh.getParam("/rviz/camera_pose/rotation/roll", camera_roll);
+
+    {
+        lock_guard<mutex> lock(control_lst_mutex);
+        lock_control_signal.accel=0;
+        lock_control_signal.yaw_rate=0;
+    }
+
 
     readCenterlineAndCalRoadEdge();
 }
@@ -69,10 +81,10 @@ void Scene::readCenterlineAndCalRoadEdge()
                         waypoint.y=stod(itemw);
                         break;
                     case 2:
-                        waypoint.v=stod(itemw);
-                        break; 
-                    case 3:
                         waypoint.theta=stod(itemw);
+                        break; 
+                    case 4:
+                        waypoint.v=stod(itemw);
                         break;
                 }
             }
@@ -107,15 +119,25 @@ void Scene::readCenterlineAndCalRoadEdge()
 
 void Scene::recvCilqrPlannerControl(const saturn_msgs::ControlArray  &msg)
 {
-    lock_guard<mutex> lock(data_mutex);
+    ROS_INFO("receive cilqr planner control!");
     local_control_lst.clear();
+    //cout<<"msg.control_lst.size()="<<msg.control_lst.size()<<endl;
     for(int i=0; i<msg.control_lst.size(); i++)
     {
         control_signal.accel=msg.control_lst[i].u_accel;
         control_signal.yaw_rate=msg.control_lst[i].u_yawrate;
         local_control_lst.push_back(control_signal);
     }
-    control_index=0;
+    //cout<<"local_control_lst.size()="<<local_control_lst.size()<<endl;
+    {
+        lock_guard<mutex> lock(control_lst_mutex);
+        lock_local_control_lst=move(local_control_lst);
+        control_index=0;
+        for(int i=0;i<lock_local_control_lst.size();i++)
+        {
+            cout<<"recv control: "<<lock_local_control_lst[i].accel<<","<<lock_local_control_lst[i].yaw_rate<<endl;
+        }
+    }
 }
 
 void Scene::reposeEgoVehicle(const double x, const double y, const double theta, const double v0, const double dT)
@@ -151,7 +173,7 @@ void Scene::removeObjectByIndex(const int obj_index)
 void Scene::update()
 {
     int control_rate=1/dt;
-    ros::Rate rate(control_rate);
+    ros::Rate controller_rate(control_rate);
     saturn_msgs::State ego_state_msg;
     saturn_msgs::StateLite obj_statelite_msg;
     saturn_msgs::ObstacleState obs_state_msg;
@@ -164,6 +186,8 @@ void Scene::update()
     nav_msgs::Path leftedge_msg; 
 
     geometry_msgs::PoseStamped road_pose;
+    //view_controller_msgs::CameraPlacement camera_pose_msg;
+    //geometry_msgs::Point view_point;
 
     //send road line to rviz
     centerline_msg.header.frame_id="map";
@@ -210,6 +234,8 @@ void Scene::update()
 
     //set ego_vehicle and obstacles rviz geometry
     ego_rviz_msg.type=visualization_msgs::Marker::CUBE;
+    ego_rviz_msg.action=visualization_msgs::Marker::ADD;
+    ego_rviz_msg.pose.position.z=ego_vehicle.getHeight()/2;
     ego_rviz_msg.scale.x=ego_vehicle.getLength();
     ego_rviz_msg.scale.y=ego_vehicle.getWidth();
     ego_rviz_msg.scale.z=ego_vehicle.getHeight();
@@ -217,6 +243,9 @@ void Scene::update()
     ego_rviz_msg.color.a=0.5;
 
     obj_rviz_msg.type=visualization_msgs::Marker::CUBE;
+    obj_rviz_msg.color.r=205;
+    obj_rviz_msg.color.g=92;
+    obj_rviz_msg.color.b=92;
     obj_rviz_msg.color.a=0.5;
 
     while(ros::ok())
@@ -235,17 +264,29 @@ void Scene::update()
         ego_vehicle_pub.publish(ego_state_msg);
 
         //fulfill ego_state_rviz_msg and publish
-        ego_rviz_msg.header.frame_id="ego_rviz";
+        ego_rviz_msg.header.frame_id="map";
         ego_rviz_msg.header.stamp=ros::Time::now();
+        ego_rviz_msg.ns="ego_rviz";
         ego_rviz_msg.id=1;
         ego_rviz_msg.pose.position.x=ego_vehicle.getPoseX();
         ego_rviz_msg.pose.position.y=ego_vehicle.getPoseY();
-        ego_rviz_msg.pose.position.z=0;
         ego_rviz_msg.pose.orientation.x=0;
         ego_rviz_msg.pose.orientation.y=0;
         ego_rviz_msg.pose.orientation.z=sin(ego_vehicle.getPoseTheta()/2);
         ego_rviz_msg.pose.orientation.w=cos(ego_vehicle.getPoseTheta()/2);
         ego_rviz_pub.publish(ego_rviz_msg);
+
+        //fulfill rviz_camera_pose_msg and publishcamera_pose_msg
+        // camera_pose_msg.header.frame_id="map";
+        // camera_pose_msg.header.stamp=ros::Time::now();
+        // camera_pose_msg.pose.position.x=ego_vehicle.getPoseX()+camera_distanceX;
+        // camera_pose_msg.pose.position.y=ego_vehicle.getPoseY()+camera_distanceY;
+        // camera_pose_msg.pose.position.z=ego_vehicle.getHeight()/2+camera_distanceZ;
+        // camera_pose_msg.pose.orientation.w=cos(camera_roll/2)*cos(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2)+sin(camera_roll/2)*sin(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2);
+        // camera_pose_msg.pose.orientation.x=sin(camera_roll/2)*cos(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2)-cos(camera_roll/2)*sin(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2);
+        // camera_pose_msg.pose.orientation.y=cos(camera_roll/2)*sin(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2)+sin(camera_roll/2)*cos(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2);
+        // camera_pose_msg.pose.orientation.z=cos(camera_roll/2)*cos(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2)-sin(camera_roll/2)*sin(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2);
+        // rviz_camera_pose_pub.publish(camera_pose_msg);
 
         //fulfill obstacles_state_msg and publish
         obs_statearray_msg.header.frame_id="obstacles_state";
@@ -283,6 +324,12 @@ void Scene::update()
         obstacles_rviz_msg.markers.clear();
         for(int i=0; i<obstacles.getObjectsNum(); i++)
         {
+            obj_rviz_msg.header.frame_id="map";
+            obj_rviz_msg.header.stamp=ros::Time::now();
+            obj_rviz_msg.ns="obstacle_rviz";
+            obj_rviz_msg.id=i+2;
+            obj_rviz_msg.type=visualization_msgs::Marker::CUBE;
+            obj_rviz_msg.action=visualization_msgs::Marker::ADD;
             obj_rviz_msg.scale.x=obstacles.getObjectByIndex(i).getLength();
             obj_rviz_msg.scale.y=obstacles.getObjectByIndex(i).getWidth();
             obj_rviz_msg.scale.z=obstacles.getObjectByIndex(i).getHeight();
@@ -298,29 +345,33 @@ void Scene::update()
         obstacles_rviz_pub.publish(obstacles_rviz_msg);
 
         //update ego vehicle state
-        cout<<"here1"<<endl;
+        //cout<<"here1"<<endl;
+        //cout<<"local_control_lst.size()="<<local_control_lst.size()<<endl;
+        //cout<<"control_index="<<control_index<<endl;
         {
-            lock_guard<mutex> lock(data_mutex);
-            lock_accel=local_control_lst[control_index].accel;
-            lock_yawrate=local_control_lst[control_index].yaw_rate;
-            control_index++;
-            if(control_index>=local_control_lst.size())
+            lock_guard<mutex> lock(control_lst_mutex);
+            if(control_index>=lock_local_control_lst.size()||control_index<0)
             {
                 control_index=0;
             }
+            if(lock_local_control_lst.size()>0)
+            {
+                lock_control_signal.accel=lock_local_control_lst[control_index].accel;
+                lock_control_signal.yaw_rate=lock_local_control_lst[control_index].yaw_rate;
+                control_index++;
+                cout<<"main loop recved control: "<<lock_control_signal.accel<<","<<lock_control_signal.yaw_rate<<endl;
+            }
         }
-        cout<<"here2"<<endl;
-        ego_vehicle.applyU(lock_accel, lock_yawrate);
+
+        ego_vehicle.applyU(lock_control_signal.accel, lock_control_signal.yaw_rate);
         ego_vehicle.update();
 
-        //update obstacles state
         for(int i=0; i<obstacles.getObjectsNum(); i++)
         {
             obstacles.getObjectByIndexForModify(i).update();
         }
-
-        rate.sleep();
         ros::spinOnce();
-        cout<<"here5"<<endl;
+        controller_rate.sleep();
+        //ROS_INFO("here3");
     }
 }

@@ -54,7 +54,8 @@ class ciLQR
         CtrlInput control_signal; 
         CtrlInput delta_control_signal;
         //obstacles msg parse
-        ObjState obs_state_single;                                 
+        ObjState obs_state_single;
+        ObsInfo obs_info_single;                                 
         vector<ObsInfo> obstacles_info;
         //end
         vector<ObjState> global_waypoints;
@@ -70,6 +71,7 @@ class ciLQR
         vector<ObjState> X_nominal_lst;
         int global_horizon;
         int local_horizon;
+        int local_end_index;
         int prediction_horizon;
         int poly_order;
         double dt;
@@ -112,6 +114,7 @@ class ciLQR
         Eigen::MatrixXd X_obs;
         Eigen::MatrixXd X_front_obs;
         Eigen::MatrixXd X_rear_obs;
+        Eigen::MatrixXd deltaX;
         Eigen::MatrixXd U;
         Eigen::MatrixXd T;
         Eigen::MatrixXd dX_front; //vector X_front to vector X
@@ -131,6 +134,8 @@ class ciLQR
         Eigen::MatrixXd ddX;
         Eigen::MatrixXd dU;
         Eigen::MatrixXd ddU;
+        Eigen::MatrixXd dBu;
+        Eigen::MatrixXd ddBu;
         Eigen::MatrixXd A;
         Eigen::MatrixXd B;
         Eigen::MatrixXd P;
@@ -156,10 +161,14 @@ class ciLQR
         // double deltaV1d_temp, deltaV2d_temp;
         double costJ;
         double costJ_nominal;
+        double cost_single;
         int forward_counter;
         double z;
         double beta1, beta2;
         double gama;
+        bool isRecEgoVeh;
+        const double EPS=1e-5;
+        const double start_dist=5;
 };
 
 #endif

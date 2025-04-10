@@ -1,7 +1,0 @@
-<launch>
-   <rosparam command="load" file="$(find config)/cilqr_config/planner_params.yaml"/>
-   <node pkg="scene" type="scene" name="static_obstacle_scene" output="screen" args="1"/>
-   <node pkg="planning" type="cilqr_planner" name="planner" output="screen" args="1"/>
-   <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 100" />
-   <node pkg="rviz" type="rviz" name="rviz"/>
-</launch>
