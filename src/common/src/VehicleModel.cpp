@@ -74,6 +74,11 @@ void VehicleModel::resize(const double l, const double w, const double h)
     veh_size.height=h;
 }
 
+void VehicleModel::setMaxSpeed(const double& m_speed)
+{
+    max_speed=m_speed;
+}
+
 void VehicleModel::reconfigVDpara(const double m, const double L, const double B)
 {
     mass=m;
@@ -93,7 +98,11 @@ void VehicleModel::update()
     cout<<"before update veh_state:"<<veh_state.x<<","<<veh_state.y<<","<<veh_state.theta<<","<<veh_state.v<<endl;
     veh_state.x=veh_state.x+veh_state.v*dt*cos(veh_state.theta)+0.5*dt*dt*cos(veh_state.theta)*veh_ctrl.accel;
     veh_state.y=veh_state.y+veh_state.v*dt*sin(veh_state.theta)+0.5*dt*dt*sin(veh_state.theta)*veh_ctrl.accel;
-    veh_state.v=veh_state.v+dt*veh_ctrl.accel;
+    calc_speed=veh_state.v+dt*veh_ctrl.accel;
+    cout<<"calc_speed="<<calc_speed<<endl;
+    if(calc_speed>max_speed) { calc_speed=max_speed;}
+    else if(calc_speed<0) {calc_speed=0;}
+    veh_state.v=calc_speed;
     veh_state.theta=veh_state.theta+dt*veh_ctrl.yaw_rate;
     veh_state.accel=veh_ctrl.accel;
     veh_state.yaw_rate=veh_ctrl.yaw_rate;
@@ -104,7 +113,11 @@ void VehicleModel::updateOneStep(const ObjState& xk, ObjState& xk1, const CtrlIn
 {
     xk1.x=xk.x+xk.v*dt*cos(xk.theta)+0.5*dt*dt*cos(xk.theta)*uk.accel;
     xk1.y=xk.y+xk.v*dt*sin(xk.theta)+0.5*dt*dt*sin(xk.theta)*uk.accel;
-    xk1.v=xk.v+dt*uk.accel;
+    calc_speed=xk.v+dt*uk.accel;
+    cout<<"calc_speed="<<calc_speed<<endl;
+    if(calc_speed>max_speed) { calc_speed=max_speed;}
+    else if(calc_speed<0) {calc_speed=0;}
+    xk1.v=calc_speed;
     xk1.theta=xk.theta+dt*uk.yaw_rate;
     xk1.accel=uk.accel;
     xk1.yaw_rate=uk.yaw_rate;
@@ -119,7 +132,11 @@ void VehicleModel::CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& 
     {
         X_temp.x=traj[i-1].x+traj[i-1].v*dt*cos(traj[i-1].theta)+0.5*dt*dt*cos(traj[i-1].theta)*U[i-1].accel;
         X_temp.y=traj[i-1].y+traj[i-1].v*dt*sin(traj[i-1].theta)+0.5*dt*dt*sin(traj[i-1].theta)*U[i-1].accel;
-        X_temp.v=traj[i-1].v+dt*U[i-1].accel;
+        calc_speed=traj[i-1].v+dt*U[i-1].accel;
+        cout<<"calc_speed="<<calc_speed<<endl;
+        if(calc_speed>max_speed) { calc_speed=max_speed;}
+        else if(calc_speed<0) {calc_speed=0;}
+        X_temp.v=calc_speed;
         X_temp.theta=traj[i-1].theta+dt*U[i-1].yaw_rate;
         X_temp.accel=U[i-1].accel;
         X_temp.yaw_rate=U[i-1].yaw_rate;

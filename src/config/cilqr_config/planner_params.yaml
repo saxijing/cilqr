@@ -11,6 +11,7 @@
 /planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
 /road_info/lane_width: 3.5
 /road_info/lane_num: 2
+/obstacle/max_perception_dist: 200
 
 # horizon
 /planner/global_horizon: 20
@@ -26,16 +27,17 @@
 /planner/ego_lf: 1.44
 /planner/ego_lr: 1.44
 /planner/forward/line_search/beta_min: 1e-4
-/planner/forward/line_search/beta_max: 10
+/planner/forward/line_search/beta_max: 5
 /planner/forward/line_search/gama: 0.5
+/planner/forward/max_iterate: 50
 
 # weights
-/planner/weight/iLQR/w_pos_x: 2.0
-/planner/weight/iLQR/w_pos_y: 2.0
+/planner/weight/iLQR/w_pos_x: 1.0
+/planner/weight/iLQR/w_pos_y: 1.0
 /planner/weight/iLQR/w_vel: 0.5
 /planner/weight/iLQR/w_theta: 0.0
 /planner/weight/iLQR/w_accel: 1.0
-/planner/weight/iLQR/w_yawrate: 3.0
+/planner/weight/iLQR/w_yawrate: 1.0
 /planner/weight/obstacle/q1_front: 2.75
 /planner/weight/obstacle/q2_front: 2.75
 /planner/weight/obstacle/q1_rear: 2.5
@@ -54,6 +56,7 @@
 # hardware params
 /ego_vehicle/wheel_base: 2.875
 /ego_vehicle/height: 1.44
+/ego_vehicle/max_speed: 30.0
 
 
 

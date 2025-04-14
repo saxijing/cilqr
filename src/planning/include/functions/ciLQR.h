@@ -29,6 +29,7 @@ class ciLQR
         void readGlobalWaypoints();
         void findClosestWaypointIndex(const vector<ObjState> &waypoints, const ObjState &state, int &closest_index, bool isFromStart);
         void polynominalFitting();
+        void getLocalReferPoints(const vector<ObjState>& local_waypoints, const vector<ObjState>& trajcetory, vector<ObjState>& local_refer_points);
         double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isCompleteCal);
         void iLQRSolver();
         void update();
@@ -169,6 +170,15 @@ class ciLQR
         bool isRecEgoVeh;
         const double EPS=1e-5;
         const double start_dist=5;
+        int max_forward_iterate;
+        double J, J_nominal;
+        int refer_closest_index;
+        double xm,ym,thetam;
+        double xr,yr,thetar;
+        double x_ego, y_ego, theta_ego;
+        ObjState project_point;
+        double max_percep_dist;
+        double max_speed;
 };
 
 #endif

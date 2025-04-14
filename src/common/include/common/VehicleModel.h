@@ -14,6 +14,7 @@ class VehicleModel
         ~VehicleModel();
         void repose(const double x, const double y, const double theta, const double v0, const double dT);
         void resize(const double l, const double w, const double h);
+        void setMaxSpeed(const double& m_speed);
         void reconfigVDpara(const double m, const double L, const double B);
         void applyU(const double accel, const double yaw_rate);
         void update();
@@ -39,5 +40,7 @@ class VehicleModel
         double mass;
         double wheel_base;
         double wheel_track;
+        double max_speed;
+        double calc_speed;
 };
 #endif

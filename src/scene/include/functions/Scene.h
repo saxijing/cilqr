@@ -60,6 +60,7 @@ class Scene
         vector<ObjState> rightedge_points;
         vector<ObjState> leftedge_points;
         vector<CtrlInput> local_control_lst;
+        double ego_max_speed;
         double dt;
         double lane_width;
         int lane_num;
@@ -70,13 +71,6 @@ class Scene
         int control_index;
         vector<CtrlInput> lock_local_control_lst;
         CtrlInput lock_control_signal;
-        //rviz camera pose
-        double camera_distanceX;
-        double camera_distanceY;
-        double camera_distanceZ;
-        double camera_pitch;
-        double camera_yaw;
-        double camera_roll;
 
 };
 #endif

@@ -14,7 +14,6 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     centerline_pub=nh.advertise<nav_msgs::Path>("/scene/centerline", 10, true);
     rightedge_pub=nh.advertise<nav_msgs::Path>("/scene/rightedge", 10, true);
     leftedge_pub=nh.advertise<nav_msgs::Path>("/scene/leftedge", 10, true);
-    rviz_camera_pose_pub=nh.advertise<geometry_msgs::PoseStamped>("/rviz/camera_placement", 10, true);
 
     ROS_INFO("Scene parameters loading...");
     nh.getParam("/planner/global_file_path", centerline_filepath);
@@ -23,12 +22,7 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     nh.getParam("/road_info/lane_num", lane_num);
     nh.getParam("/planner/global_horizon", global_horizon);
     nh.getParam("/planner/prediction_horizon", prediction_horizon);
-    nh.getParam("/rviz/camera_pose/distance/x", camera_distanceX);
-    nh.getParam("/rviz/camera_pose/distance/y", camera_distanceY);
-    nh.getParam("/rviz/camera_pose/distance/z", camera_distanceZ);
-    nh.getParam("/rviz/camera_pose/rotation/pitch", camera_pitch);
-    nh.getParam("/rviz/camera_pose/rotation/yaw", camera_yaw);
-    nh.getParam("/rviz/camera_pose/rotation/roll", camera_roll);
+    nh.getParam("/ego_vehicle/max_speed", ego_max_speed);
 
     {
         lock_guard<mutex> lock(control_lst_mutex);
@@ -36,7 +30,7 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
         lock_control_signal.yaw_rate=0;
     }
 
-
+    ego_vehicle.setMaxSpeed(ego_max_speed);
     readCenterlineAndCalRoadEdge();
 }
 
@@ -186,8 +180,6 @@ void Scene::update()
     nav_msgs::Path leftedge_msg; 
 
     geometry_msgs::PoseStamped road_pose;
-    //view_controller_msgs::CameraPlacement camera_pose_msg;
-    //geometry_msgs::Point view_point;
 
     //send road line to rviz
     centerline_msg.header.frame_id="map";
@@ -275,18 +267,6 @@ void Scene::update()
         ego_rviz_msg.pose.orientation.z=sin(ego_vehicle.getPoseTheta()/2);
         ego_rviz_msg.pose.orientation.w=cos(ego_vehicle.getPoseTheta()/2);
         ego_rviz_pub.publish(ego_rviz_msg);
-
-        //fulfill rviz_camera_pose_msg and publishcamera_pose_msg
-        // camera_pose_msg.header.frame_id="map";
-        // camera_pose_msg.header.stamp=ros::Time::now();
-        // camera_pose_msg.pose.position.x=ego_vehicle.getPoseX()+camera_distanceX;
-        // camera_pose_msg.pose.position.y=ego_vehicle.getPoseY()+camera_distanceY;
-        // camera_pose_msg.pose.position.z=ego_vehicle.getHeight()/2+camera_distanceZ;
-        // camera_pose_msg.pose.orientation.w=cos(camera_roll/2)*cos(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2)+sin(camera_roll/2)*sin(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2);
-        // camera_pose_msg.pose.orientation.x=sin(camera_roll/2)*cos(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2)-cos(camera_roll/2)*sin(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2);
-        // camera_pose_msg.pose.orientation.y=cos(camera_roll/2)*sin(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2)+sin(camera_roll/2)*cos(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2);
-        // camera_pose_msg.pose.orientation.z=cos(camera_roll/2)*cos(camera_pitch/2)*sin((ego_vehicle.getPoseTheta()+camera_yaw)/2)-sin(camera_roll/2)*sin(camera_pitch/2)*cos((ego_vehicle.getPoseTheta()+camera_yaw)/2);
-        // rviz_camera_pose_pub.publish(camera_pose_msg);
 
         //fulfill obstacles_state_msg and publish
         obs_statearray_msg.header.frame_id="obstacles_state";

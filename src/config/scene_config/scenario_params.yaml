@@ -54,6 +54,7 @@
 # hardware params
 /ego_vehicle/wheel_base: 2.875
 /ego_vehicle/height: 1.44
+/ego_vehicle/max_speed: 30.0
 
 # rviz display
 /rviz/camera_pose/distance/x: 0
