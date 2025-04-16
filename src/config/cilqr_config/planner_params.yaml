@@ -29,7 +29,13 @@
 /planner/forward/line_search/beta_min: 1e-4
 /planner/forward/line_search/beta_max: 5
 /planner/forward/line_search/gama: 0.5
-/planner/forward/max_iterate: 50
+/planner/forward/max_iterate: 10
+/planner/optimal/max_iterate: 500
+/planner/optimal/lamb/init: 20
+/planner/optimal/lamb/decay: 0.7
+/planner/optimal/lamb/amplify: 2.0
+/planner/optimal/lamb/max: 10000
+/planner/optimal/tol: 5e-4
 
 # weights
 /planner/weight/iLQR/w_pos_x: 1.0

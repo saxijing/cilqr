@@ -52,8 +52,14 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     nh.getParam("/planner/forward/line_search/beta_max", beta2);
     nh.getParam("/planner/forward/line_search/gama", gama);
     nh.getParam("/planner/forward/max_iterate", max_forward_iterate);
+    nh.getParam("/planner/optimal/max_iterate", max_optimal_iterate);
     nh.getParam("/obstacle/max_perception_dist", max_percep_dist);
     nh.getParam("/ego_vehicle/max_speed", max_speed);
+    nh.getParam("/planner/optimal/lamb/init", lamb_init);
+    nh.getParam("/planner/optimal/lamb/decay", lamb_decay);
+    nh.getParam("/planner/optimal/lamb/ambify", lamb_ambify);
+    nh.getParam("/planner/optimal/lamb/max", lamb_max);
+    nh.getParam("/planner/optimal/tol", optimal_tol);
     closest_global_index=0;
     closest_local_index=0;
     isFirstFrame=true;
@@ -62,17 +68,7 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     dist=0.0;
     alfa=1.0;
     isRecEgoVeh=false;
-    //initialize controls list
-    control_signal.accel=0.5;
-    control_signal.yaw_rate=0.0;
-    delta_control_signal.accel=0;
-    delta_control_signal.yaw_rate=0;
-    initial_controls.clear();
-    for(int i=0;  i<local_horizon; i++)
-    {
-        initial_controls.push_back(control_signal);
-        delta_controls.push_back(delta_control_signal);
-    }
+    
     vd_model.setMaxSpeed(max_speed);
     //Matrix resize
     Q.resize(state_num, state_num);
@@ -157,12 +153,24 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     Qxu.setZero();
     Qux.resize(state_num, control_num);
     Qux.setZero();
+    B_reg.resize(state_num, control_num);
+    B_reg.setZero();
+    Quu_reg.resize(control_num, control_num);
+    Quu_reg.setZero();
+    Qxu_reg.resize(control_num, state_num);
+    Qxu_reg.setZero();
+    Qux_reg.resize(state_num, control_num);
+    Qux_reg.setZero();
     K.resize(control_num, state_num);
     K.setZero();
     d.resize(control_num, 1);
     d.setZero();
     deltaU_star.resize(control_num, 1);
     deltaU_star.setZero();
+    Regular.resize(state_num, state_num);
+    Regular.setZero();
+    I.resize(state_num, state_num);
+    I.setIdentity();
     M_scalar.resize(1, 1);
     M_scalar.setZero();
 
@@ -188,7 +196,6 @@ ciLQR::~ciLQR()
 
 void ciLQR::recvEgoState(const saturn_msgs::State &msg)
 {
-    ROS_INFO("receive ego vehicle state!");
     isRecEgoVeh=true;
     ego_state.x=msg.x;
     ego_state.y=msg.y;
@@ -200,7 +207,6 @@ void ciLQR::recvEgoState(const saturn_msgs::State &msg)
 
 void ciLQR::recvObstaclesState(const saturn_msgs::ObstacleStateArray &msg)
 {
-    ROS_INFO("receive obstacles state!");
     if(msg.obstacles.size()==0)
     {
         return;
@@ -345,14 +351,9 @@ void ciLQR::getLocalReferPoints(const vector<ObjState>& local_waypoints, const v
         project_point.v=trajectory[i].v;
         local_refer_points.push_back(project_point);
     }
-    for(int j=0; j<trajectory.size(); j++)
-    {
-        cout<<"x_bar: ("<<local_refer_points[j].x<<","<<local_refer_points[j].y<<","<<local_refer_points[j].theta<<","<<local_refer_points[j].v<<")    ";
-        cout<<"x: ("<<trajectory[j].x<<","<<trajectory[j].y<<","<<trajectory[j].theta<<","<<trajectory[j].v<<")"<<endl;
-    }
 }
 
-double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isCompleteCal)
+double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, double lambda, bool isCompleteCal)
 {
     //X_cal_lst is X_vd_lst, order: 0~N
     double costJ_temp=0;
@@ -393,6 +394,14 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
     costJ_temp+=M_scalar(0,0);
     J_temp+=M_scalar(0,0);
     cout<<"cost_terminal="<<costJ_temp<<endl;
+    cout<<"terminalX="<<X(0,0)<<","<<X(1,0)<<","<<X(2,0)<<","<<X(3,0)<<endl;
+    cout<<"terminalXbar="<<X_bar(0,0)<<","<<X_bar(1,0)<<","<<X_bar(2,0)<<","<<X_bar(3,0)<<endl;
+    for(int m=0; m<X_cal_lst.size(); m++)
+    {
+        cout<<"X_bar: ("<<X_bar_lst[m].x<<","<<X_bar_lst[m].y<<","<<X_bar_lst[m].theta<<","<<X_bar_lst[m].v<<")    ";
+        cout<<"X: ("<<X_cal_lst[m].x<<","<<X_cal_lst[m].y<<","<<X_cal_lst[m].theta<<","<<X_cal_lst[m].v<<")"<<endl;
+    }
+
     cout<<"J_temp_terminal="<<J_temp<<endl;
     ROS_INFO("backward_1");
     // 2. when k=N-1~k=0, i represent timestep
@@ -422,8 +431,8 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
                 {
                     continue;
                 }
-                ellipse_a=obstacles_info[j].size.length+obstacles_info[j].predicted_states[i].v*safe_time*cos(obstacles_info[j].predicted_states[i].theta)+safe_a+ego_radius;
-                ellipse_b=obstacles_info[j].size.length+obstacles_info[j].predicted_states[i].v*safe_time*sin(obstacles_info[j].predicted_states[i].theta)+safe_b+ego_radius;
+                ellipse_a=0.5*obstacles_info[j].size.length+obstacles_info[j].predicted_states[i].v*safe_time*cos(obstacles_info[j].predicted_states[i].theta)+safe_a+ego_radius;
+                ellipse_b=0.5*obstacles_info[j].size.length+obstacles_info[j].predicted_states[i].v*safe_time*sin(obstacles_info[j].predicted_states[i].theta)+safe_b+ego_radius;
                 P(0,0)=1/(ellipse_a*ellipse_a);
                 P(1,1)=1/(ellipse_b*ellipse_b);
 
@@ -647,6 +656,11 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
         Qxu=B.transpose()*ddVk*A;
         Qxu=(Qxu.array().abs()<EPS).select(0, Qxu);
         Qux=Qxu.transpose();
+        Regular=lamb*I;
+        B_reg=Regular*B;
+        Qux_reg=Qux+A*B_reg;
+        Qxu_reg=Qux_reg.transpose();
+        Quu_reg=Quu+B_reg.transpose()*B_reg;
         cout<<"Qx="<<Qx(0,0)<<","<<Qx(0,1)<<","<<Qx(0,2)<<","<<Qx(0,3)<<endl;
         cout<<"Qu="<<Qu(0,0)<<","<<Qu(0,1)<<endl;
         cout<<"Qxx="<<Qxx(0,0)<<","<<Qxx(0,1)<<","<<Qxx(0,2)<<","<<Qxx(0,3)<<endl;
@@ -658,10 +672,10 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
         cout<<Qxu(1,0)<<","<<Qxu(1,1)<<","<<Qxu(1,2)<<","<<Qxu(1,3)<<endl;
         if(isCompleteCal)
         {
-            K=-(Quu.inverse()).transpose()*Qxu;
+            K=-(Quu_reg.inverse()).transpose()*Qxu_reg;
             K=(K.array().abs()<EPS).select(0, K);
             cout<<"back K="<<K(0,0)<<","<<K(0,1)<<","<<K(0,2)<<","<<K(0,3)<<endl<<K(1,0)<<","<<K(1,1)<<","<<K(1,2)<<","<<K(1,3)<<endl;
-            d=-(Quu.inverse()).transpose()*Qu.transpose();
+            d=-(Quu_reg.inverse()).transpose()*Qu.transpose();
             d=(d.array().abs()<EPS).select(0, d);
             cout<<"back d="<<d(0,0)<<","<<d(1,0)<<endl;
             K_lst.push_back({K(0,0), K(0,1), K(0,2), K(0,3), K(1,0), K(1,1), K(1,2), K(1,3)});
@@ -680,104 +694,11 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isC
         ddVk=(ddVk.array().abs()<EPS).select(0, ddVk);
     }
     ROS_INFO("backward_5");
-    cout<<"cost_total="<<costJ_temp<<endl;
-    //return costJ_temp;
     return costJ_temp;
 }
 
-
-void ciLQR::iLQRSolver()
+void ciLQR::ForwardPass()
 {
-    // 1. find the closest index in global waypoints and intercept local waypoints
-    alfa=1.0;
-    if(isFirstFrame)
-    {
-        findClosestWaypointIndex(global_waypoints, ego_state, closest_global_index, true);
-        start_state.x=ego_state.x;
-        start_state.y=ego_state.y;
-        start_state.theta=ego_state.theta;
-        start_state.v=ego_state.v;
-        start_state.accel=ego_state.accel;
-        start_state.yaw_rate=ego_state.yaw_rate;
-        isFirstFrame=false;
-    }
-    else
-    {
-        ROS_INFO("come to the 2nd frame!");
-        if(pow(planned_path[planning_start_index].x-ego_state.x,2)+pow(planned_path[planning_start_index].y-ego_state.y,2)<start_dist*start_dist)
-        {
-            findClosestWaypointIndex(global_waypoints, planned_path[planning_start_index], closest_global_index, false);
-            start_state.x=planned_path[planning_start_index].x;
-            start_state.y=planned_path[planning_start_index].y;
-            start_state.theta=planned_path[planning_start_index].theta;
-            start_state.v=planned_path[planning_start_index].v;
-            start_state.accel=planned_path[planning_start_index].accel;
-            start_state.yaw_rate=planned_path[planning_start_index].yaw_rate;
-            
-        }
-        else
-        {
-            findClosestWaypointIndex(global_waypoints, ego_state, closest_global_index, true);
-            start_state.x=ego_state.x;
-            start_state.y=ego_state.y;
-            start_state.theta=ego_state.theta;
-            start_state.v=ego_state.v;
-            start_state.accel=ego_state.accel;
-            start_state.yaw_rate=ego_state.yaw_rate;
-        }
-    }
-    ROS_INFO("planner_here2.1");
-    local_waypoints.clear();
-    cout<<"closest_global_index="<<closest_global_index<<endl;
-    cout<<"global_waypoints size="<<global_waypoints.size()<<endl;
-    cout<<"global_horizon="<<global_horizon<<endl;
-    cout<<"min value:"<<min<int>(global_waypoints.size(), closest_global_index+global_horizon)<<endl;
-    local_end_index=min<int>(global_waypoints.size(), closest_global_index+global_horizon);
-    cout<<"local from global:"<<endl;
-    for(int i=closest_global_index; i<local_end_index; i++)
-    {
-        waypoint.x=global_waypoints[i].x;
-        waypoint.y=global_waypoints[i].y;
-        waypoint.theta=global_waypoints[i].theta;
-        waypoint.v=global_waypoints[i].v;
-        waypoint.accel=global_waypoints[i].accel;
-        waypoint.yaw_rate=global_waypoints[i].yaw_rate;
-        local_waypoints.push_back(waypoint);
-        //cout<<waypoint.x<<"," <<waypoint.y<<","<<waypoint.theta<<","<<waypoint.v<<endl;
-    }
-    ROS_INFO("planner_here2.2");
-    //2. polynominal fitting of local waypoints, make local waypoints dense, and calculate x_bar_lst
-    polynominalFitting();
-    local_waypoints_dense.clear();
-    interplot_increment=(local_waypoints[local_waypoints.size()-1].x-local_waypoints[0].x)/(local_horizon-1);
-    cout<<"local_waypoints_dense:"<<endl;
-    for(int i=0; i<local_horizon; i++)
-    {
-        waypoint.x=local_waypoints[0].x+i*interplot_increment;
-        waypoint.y=0;
-        for(int j=0; j<=poly_order; j++)
-        {
-            waypoint.y+=polyCoeff[j]*pow(waypoint.x, j);
-        }
-        local_waypoints_dense.push_back(waypoint);
-        //cout<<waypoint.x<<"," <<waypoint.y<<","<<waypoint.theta<<","<<waypoint.v<<endl;
-    }
-
-    X_vd_lst.clear();
-    vd_model.CalVDTrajectory(start_state, initial_controls, X_vd_lst, local_horizon, control_dt);
-    // cout<<"x_vd_lst:"<<endl;
-    // for(int i=0; i<X_vd_lst.size(); i++)
-    // {
-    //     cout<<X_vd_lst[i].x<<"," <<X_vd_lst[i].y<<","<<X_vd_lst[i].theta<<","<<X_vd_lst[i].v<<endl;
-    // }
-
-    // 
-    getLocalReferPoints(local_waypoints_dense, X_vd_lst, X_bar_lst);
-    ROS_INFO("planner_here2.3");
-    //3. backward pass and get the costJ_nominal
-    costJ=BackwardPassAndGetCostJ(X_vd_lst, true);
-    ROS_INFO("planner_here2.4");
-    //4. forward pass and get the final cost
     forward_counter=0;
     cout<<"forward start..."<<endl;
     while(forward_counter<max_forward_iterate)
@@ -865,7 +786,7 @@ void ciLQR::iLQRSolver()
         }
         //cout<<"planner_here2.6"<<endl;
         //calculate nominal trajectory cost
-        costJ_nominal=BackwardPassAndGetCostJ(X_nominal_lst, false);
+        costJ_nominal=BackwardPassAndGetCostJ(X_nominal_lst, lamb, false);
         deltaV=alfa*deltaV1d+alfa*alfa*deltaV2d;
         z=(costJ_nominal-costJ)/deltaV;
         cout<<"costJ_nominal="<<costJ_nominal<<endl;
@@ -875,9 +796,11 @@ void ciLQR::iLQRSolver()
         cout<<"deltaV="<<deltaV<<endl;
         cout<<"alfa="<<alfa<<endl;
         cout<<"z="<<z<<endl;
-        if(z>=beta1&&z<=beta2)
+        if(costJ_nominal<costJ||fabs(costJ_nominal-costJ)<1e-8)//(costJ_nominal<=costJ)
         {
+            forward_iter_flag=true;
             break;
+            //X_nominal, planned_controls, costJ_nominal are the optimal results
         }
         else
         {
@@ -886,6 +809,137 @@ void ciLQR::iLQRSolver()
         forward_counter++;
     }
     cout<<"forward loop: "<<forward_counter<<endl;
+}
+
+
+void ciLQR::iLQRSolver()
+{
+    //initialize controls list
+    control_signal.accel=0.5;
+    control_signal.yaw_rate=0.0;
+    delta_control_signal.accel=0;
+    delta_control_signal.yaw_rate=0;
+    initial_controls.clear();
+    for(int i=0;  i<local_horizon; i++)
+    {
+        initial_controls.push_back(control_signal);
+        delta_controls.push_back(delta_control_signal);
+    }
+
+    // 1. find the closest index in global waypoints and intercept local waypoints
+    if(isFirstFrame)
+    {
+        findClosestWaypointIndex(global_waypoints, ego_state, closest_global_index, true);
+        start_state.x=ego_state.x;
+        start_state.y=ego_state.y;
+        start_state.theta=ego_state.theta;
+        start_state.v=ego_state.v;
+        start_state.accel=ego_state.accel;
+        start_state.yaw_rate=ego_state.yaw_rate;
+        isFirstFrame=false;
+    }
+    else
+    {
+        ROS_INFO("come to the 2nd frame!");
+        if(pow(planned_path[planning_start_index].x-ego_state.x,2)+pow(planned_path[planning_start_index].y-ego_state.y,2)<start_dist*start_dist)
+        {
+            findClosestWaypointIndex(global_waypoints, planned_path[planning_start_index], closest_global_index, false);
+            start_state.x=planned_path[planning_start_index].x;
+            start_state.y=planned_path[planning_start_index].y;
+            start_state.theta=planned_path[planning_start_index].theta;
+            start_state.v=planned_path[planning_start_index].v;
+            start_state.accel=planned_path[planning_start_index].accel;
+            start_state.yaw_rate=planned_path[planning_start_index].yaw_rate;
+            
+        }
+        else
+        {
+            findClosestWaypointIndex(global_waypoints, ego_state, closest_global_index, true);
+            start_state.x=ego_state.x;
+            start_state.y=ego_state.y;
+            start_state.theta=ego_state.theta;
+            start_state.v=ego_state.v;
+            start_state.accel=ego_state.accel;
+            start_state.yaw_rate=ego_state.yaw_rate;
+        }
+    }
+    ROS_INFO("planner_here2.1");
+    local_waypoints.clear();
+    local_end_index=min<int>(global_waypoints.size(), closest_global_index+global_horizon);
+    for(int i=closest_global_index; i<local_end_index; i++)
+    {
+        waypoint.x=global_waypoints[i].x;
+        waypoint.y=global_waypoints[i].y;
+        waypoint.theta=global_waypoints[i].theta;
+        waypoint.v=global_waypoints[i].v;
+        waypoint.accel=global_waypoints[i].accel;
+        waypoint.yaw_rate=global_waypoints[i].yaw_rate;
+        local_waypoints.push_back(waypoint);
+    }
+    ROS_INFO("planner_here2.2");
+    //2. polynominal fitting of local waypoints, make local waypoints dense, and calculate x_bar_lst
+    polynominalFitting();
+    local_waypoints_dense.clear();
+    interplot_increment=(local_waypoints[local_waypoints.size()-1].x-local_waypoints[0].x)/(local_horizon-1);
+    cout<<"local_waypoints_dense:"<<endl;
+    for(int i=0; i<local_horizon; i++)
+    {
+        waypoint.x=local_waypoints[0].x+i*interplot_increment;
+        waypoint.y=0;
+        for(int j=0; j<=poly_order; j++)
+        {
+            waypoint.y+=polyCoeff[j]*pow(waypoint.x, j);
+        }
+        local_waypoints_dense.push_back(waypoint);
+    }
+
+    X_vd_lst.clear();
+    vd_model.CalVDTrajectory(start_state, initial_controls, X_vd_lst, local_horizon, control_dt);
+
+    getLocalReferPoints(local_waypoints_dense, X_vd_lst, X_bar_lst);
+    ROS_INFO("planner_here2.3");
+    lamb=lamb_init;
+    optimization_counter=0;
+    while(optimization_counter<max_optimal_iterate)
+    {
+        //3. backward pass and get the costJ_nominal
+        alfa=1.0;
+        costJ=BackwardPassAndGetCostJ(X_vd_lst, lamb, true);
+        ROS_INFO("planner_here2.4");
+        //4. forward pass and get the final cost
+        forward_iter_flag=false;
+        ForwardPass();
+        if(forward_iter_flag)
+        {
+            X_vd_lst.swap(X_nominal_lst);
+            initial_controls.swap(planned_controls);
+            costJ_cache=costJ;
+            costJ=costJ_nominal;
+            costJ_nominal=costJ_cache;
+            cout<<"swap!"<<endl;
+            if(fabs(costJ-costJ_nominal)<optimal_tol)
+            {
+                cout<<"arrive optimal tol!"<<endl;
+                break;
+            }
+            else
+                lamb*=lamb_decay;
+        }
+        else
+        {
+            cout<<"linear search failed!"<<endl;
+            lamb*=lamb_ambify;
+            if(lamb>lamb_max)
+            {
+                cout<<"lamb out of range!"<<endl;
+                break;
+            }
+        }
+        optimization_counter++;
+        cout<<"optimal_counter="<<optimization_counter<<endl;
+    }
+    cout<<"optimal loop"<<optimization_counter<<endl;
+
     ROS_INFO("planner_here2.7");
 }
 

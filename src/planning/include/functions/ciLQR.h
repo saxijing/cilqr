@@ -30,7 +30,8 @@ class ciLQR
         void findClosestWaypointIndex(const vector<ObjState> &waypoints, const ObjState &state, int &closest_index, bool isFromStart);
         void polynominalFitting();
         void getLocalReferPoints(const vector<ObjState>& local_waypoints, const vector<ObjState>& trajcetory, vector<ObjState>& local_refer_points);
-        double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, bool isCompleteCal);
+        double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, double lambda, bool isCompleteCal);
+        void ForwardPass();
         void iLQRSolver();
         void update();
     protected:
@@ -150,7 +151,13 @@ class ciLQR
         Eigen::MatrixXd K;
         Eigen::MatrixXd d;
         Eigen::MatrixXd deltaU_star;
+        Eigen::MatrixXd Regular;
+        Eigen::MatrixXd I;
         Eigen::MatrixXd M_scalar;  //store 1*1 matrix calculation result
+        Eigen::MatrixXd B_reg;
+        Eigen::MatrixXd Quu_reg;
+        Eigen::MatrixXd Qxu_reg;
+        Eigen::MatrixXd Qux_reg;
         ObjState xk;
         ObjState xk1;
         vector<vector<double>>K_lst;
@@ -162,8 +169,10 @@ class ciLQR
         // double deltaV1d_temp, deltaV2d_temp;
         double costJ;
         double costJ_nominal;
+        double costJ_cache;
         double cost_single;
         int forward_counter;
+        int optimization_counter;
         double z;
         double beta1, beta2;
         double gama;
@@ -171,7 +180,7 @@ class ciLQR
         const double EPS=1e-5;
         const double start_dist=5;
         int max_forward_iterate;
-        double J, J_nominal;
+        int max_optimal_iterate;
         int refer_closest_index;
         double xm,ym,thetam;
         double xr,yr,thetar;
@@ -179,6 +188,14 @@ class ciLQR
         ObjState project_point;
         double max_percep_dist;
         double max_speed;
+        double lamb_init;
+        double lamb;
+        double lamb_decay;
+        double lamb_ambify;
+        double lamb_max;
+        bool forward_iter_flag;
+        double optimal_tol;
+        double J, J_nominal;
 };
 
 #endif
