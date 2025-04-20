@@ -12,6 +12,7 @@ class VehicleModel
         VehicleModel();
         VehicleModel(const double x, const double y, const double theta, const double v0, const double dT);
         ~VehicleModel();
+        void initializeVelocity(const double& target_vel);
         void repose(const double x, const double y, const double theta, const double v0, const double dT);
         void resize(const double l, const double w, const double h);
         void setMaxSpeed(const double& m_speed);
@@ -20,6 +21,7 @@ class VehicleModel
         void update();
         void updateOneStep(const ObjState& xk, ObjState& xk1, const CtrlInput& uk, const double& dt);
         void CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& U, vector<ObjState>& traj, const int& traj_len, const double& dt);
+        void getPredictedPose(const ObjState& current_state, const double& accel, const double& timestep, ObjState& predict_state);
         void getVehicleModelAandB(const double v, const double theta, const double accel, const double dt, Eigen::MatrixXd& MA, Eigen::MatrixXd& MB);
         double getPoseX() const;
         double getPoseY() const;
@@ -42,5 +44,6 @@ class VehicleModel
         double wheel_track;
         double max_speed;
         double calc_speed;
+        double predict_s;
 };
 #endif

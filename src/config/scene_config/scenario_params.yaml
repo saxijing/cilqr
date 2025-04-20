@@ -4,8 +4,8 @@
 
 # timestep of prediction, planning and control
 /timestep/planning: 0.1
-/timestep/control: 0.01
-/timestep/prediction: 0.01
+/timestep/control: 0.05
+/timestep/prediction: 0.05
 
 # params for building scene
 /planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
@@ -14,8 +14,8 @@
 
 # horizon
 /planner/global_horizon: 20
-/planner/local_horizon: 40
-/planner/prediction_horizon: 40
+/planner/local_horizon: 80
+/planner/prediction_horizon: 80
 
 # iLQR solver params
 /planner/poly_order: 5
@@ -30,8 +30,8 @@
 /planner/forward/line_search/gama: 0.5
 
 # weights
-/planner/weight/iLQR/w_pos_x: 2.0
-/planner/weight/iLQR/w_pos_y: 2.0
+/planner/weight/iLQR/w_pos_x: 1.5
+/planner/weight/iLQR/w_pos_y: 1.5
 /planner/weight/iLQR/w_vel: 0.5
 /planner/weight/iLQR/w_theta: 0.0
 /planner/weight/iLQR/w_accel: 1.0

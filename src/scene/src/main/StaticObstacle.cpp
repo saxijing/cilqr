@@ -8,8 +8,8 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "static_obstacle_scene");
     ros::NodeHandle nh;
     Scene scene("Static obstacle avoidance", nh);
-    scene.reposeEgoVehicle(10, 100, 0.746, 0, 0.01);
-    Object static_vehicle(1, "static_vehicle", 343.4, 408.2, 0.746, 0.0, 0.0, 0.01);
+    scene.reposeEgoVehicle(10, 100, 0.746, 5.0, 0.01);
+    Object static_vehicle(1, "static_vehicle", 50.388, 137.33, 0.746, 0.0, 0.0, 0.01);
     scene.addObject(static_vehicle);
     scene.update();
 }

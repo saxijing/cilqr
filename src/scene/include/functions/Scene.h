@@ -60,6 +60,7 @@ class Scene
         vector<ObjState> rightedge_points;
         vector<ObjState> leftedge_points;
         vector<CtrlInput> local_control_lst;
+        bool isFirstFrameFlag;
         double ego_max_speed;
         double dt;
         double lane_width;

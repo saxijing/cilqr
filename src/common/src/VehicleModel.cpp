@@ -67,6 +67,13 @@ void VehicleModel::repose(const double x, const double y, const double theta, co
     dt=dT;
 }
 
+void VehicleModel::initializeVelocity(const double& target_vel)
+{
+    veh_state.v=target_vel;
+    veh_state.x+=veh_state.v*dt*cos(veh_state.theta);
+    veh_state.y+=veh_state.v*dt*sin(veh_state.theta);
+}
+
 void VehicleModel::resize(const double l, const double w, const double h)
 {
     veh_size.length=l;
@@ -137,6 +144,15 @@ void VehicleModel::CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& 
         X_temp.yaw_rate=U[i-1].yaw_rate;
         traj.push_back(X_temp);
     }
+}
+
+void VehicleModel::getPredictedPose(const ObjState& current_state, const double& accel, const double& timestep, ObjState& predict_state)
+{
+    predict_s=current_state.v*timestep+0.5*accel*timestep*timestep;
+    predict_state.x=current_state.x+predict_s*cos(current_state.theta);
+    predict_state.y=current_state.y+predict_s*sin(current_state.theta);
+    predict_state.theta=current_state.theta;
+    predict_state.v=current_state.v+accel*timestep;
 }
 
 void VehicleModel::getVehicleModelAandB(const double v, const double theta, const double accel, const double dt, Eigen::MatrixXd& MA, Eigen::MatrixXd& MB)

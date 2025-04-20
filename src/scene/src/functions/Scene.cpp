@@ -23,6 +23,7 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     nh.getParam("/planner/global_horizon", global_horizon);
     nh.getParam("/planner/prediction_horizon", prediction_horizon);
     nh.getParam("/ego_vehicle/max_speed", ego_max_speed);
+    isFirstFrameFlag=true;
 
     {
         lock_guard<mutex> lock(control_lst_mutex);
@@ -167,6 +168,7 @@ void Scene::removeObjectByIndex(const int obj_index)
 void Scene::update()
 {
     int control_rate=1/dt;
+    double ego_initial_speed=ego_vehicle.getVelocity();
     ros::Rate controller_rate(control_rate);
     saturn_msgs::State ego_state_msg;
     saturn_msgs::StateLite obj_statelite_msg;
@@ -324,6 +326,20 @@ void Scene::update()
         }
         obstacles_rviz_pub.publish(obstacles_rviz_msg);
 
+        for(int i=0; i<obstacles.getObjectsNum(); i++)
+        {
+            obstacles.getObjectByIndexForModify(i).update();
+        }
+
+        //set ego vehicle with initial speed
+        if(isFirstFrameFlag&&ego_initial_speed>0)
+        {
+            ego_vehicle.initializeVelocity(ego_initial_speed);
+            isFirstFrameFlag=false;
+            controller_rate.sleep();
+            continue;
+        }
+
         //update ego vehicle state
         //cout<<"here1"<<endl;
         //cout<<"local_control_lst.size()="<<local_control_lst.size()<<endl;
@@ -340,16 +356,14 @@ void Scene::update()
                 lock_control_signal.yaw_rate=lock_local_control_lst[control_index].yaw_rate;
                 control_index++;
                 cout<<"main loop recved control: "<<lock_control_signal.accel<<","<<lock_control_signal.yaw_rate<<endl;
+                cout<<"control_signal=["<<lock_control_signal.accel<<", "<<lock_control_signal.yaw_rate<<"];"<<endl;
             }
         }
 
         ego_vehicle.applyU(lock_control_signal.accel, lock_control_signal.yaw_rate);
         ego_vehicle.update();
 
-        for(int i=0; i<obstacles.getObjectsNum(); i++)
-        {
-            obstacles.getObjectByIndexForModify(i).update();
-        }
+        
         ros::spinOnce();
         controller_rate.sleep();
         //ROS_INFO("here3");

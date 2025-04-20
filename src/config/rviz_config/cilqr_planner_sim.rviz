@@ -173,7 +173,7 @@ Visualization Manager:
       Marker Topic: /cilqr_planner/local_referline/points
       Name: ReferPoints
       Namespaces:
-        {}
+        local_points_and_lines: true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -181,7 +181,7 @@ Visualization Manager:
       Marker Topic: /cilqr_planner/local_referline/lines
       Name: ReferLines
       Namespaces:
-        {}
+        local_points_and_lines: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -219,9 +219,9 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 15.057493209838867
-        Y: 128.33114624023438
-        Z: -51.619693756103516
+        X: 49.5933723449707
+        Y: 148.49842834472656
+        Z: -51.6543083190918
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false

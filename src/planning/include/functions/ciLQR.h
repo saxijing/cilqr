@@ -17,6 +17,7 @@
 #include <eigen3/Eigen/Dense> 
 #include<fstream>
 #include<limits>
+
 using namespace std;
 
 class ciLQR
@@ -30,7 +31,9 @@ class ciLQR
         void findClosestWaypointIndex(const vector<ObjState> &waypoints, const ObjState &state, int &closest_index, bool isFromStart);
         void polynominalFitting();
         void getLocalReferPoints(const vector<ObjState>& local_waypoints, const vector<ObjState>& trajcetory, vector<ObjState>& local_refer_points);
-        double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, double lambda, bool isCompleteCal);
+        double getStateConstraintCostAndDeriva(const double& q1, const double& q2, const double& state_value, const double& limit, const string& type, const Eigen::MatrixXd& dcr, Eigen::MatrixXd& dx, Eigen::MatrixXd& ddx);
+        double getControlConstraintCostAndDeriva(const double& q1, const double& q2, const double& control_input, const double& limit, const string& type, const Eigen::MatrixXd& dcu, Eigen::MatrixXd& du, Eigen::MatrixXd& ddu);
+        double BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const vector<CtrlInput>& U_cal_lst, double lambda, bool isCompleteCal);
         void ForwardPass();
         void iLQRSolver();
         void update();
@@ -51,6 +54,7 @@ class ciLQR
         int planning_start_index;
         VehicleModel vd_model;
         ObjState ego_state;
+        ObjState ego_predict_state;
         ObjState start_state;
         ObjState waypoint;
         CtrlInput control_signal; 
@@ -170,7 +174,7 @@ class ciLQR
         double costJ;
         double costJ_nominal;
         double costJ_cache;
-        double cost_single;
+        double cost_single; //store indivitual cost value
         int forward_counter;
         int optimization_counter;
         double z;
@@ -178,7 +182,7 @@ class ciLQR
         double gama;
         bool isRecEgoVeh;
         const double EPS=1e-5;
-        const double start_dist=5;
+        double start_dist;
         int max_forward_iterate;
         int max_optimal_iterate;
         int refer_closest_index;
@@ -196,6 +200,14 @@ class ciLQR
         bool forward_iter_flag;
         double optimal_tol;
         double J, J_nominal;
+        
+        //partial function temp variables
+        double state_constraint_cost;
+        double ctrl_constraint_cost;
+        double constraint_value;
+        double obs_constrain_limit;
+        string limit_type;
+        double yaw_rate_limit;
 };
 
 #endif
