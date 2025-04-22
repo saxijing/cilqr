@@ -156,24 +156,19 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     Qxu.setZero();
     Qux.resize(state_num, control_num);
     Qux.setZero();
-    B_reg.resize(state_num, control_num);
-    B_reg.setZero();
-    Quu_reg.resize(control_num, control_num);
-    Quu_reg.setZero();
-    Qxu_reg.resize(control_num, state_num);
-    Qxu_reg.setZero();
-    Qux_reg.resize(state_num, control_num);
-    Qux_reg.setZero();
+    Quu_evals.resize(control_num,1);
+    Quu_evals.setZero();
+    Quu_evectors.resize(control_num, control_num);
+    Quu_evectors.setZero();
+    Quu_inv.resize(control_num, control_num);
+    Quu_inv.setZero();
+    
     K.resize(control_num, state_num);
     K.setZero();
     d.resize(control_num, 1);
     d.setZero();
     deltaU_star.resize(control_num, 1);
     deltaU_star.setZero();
-    Regular.resize(state_num, state_num);
-    Regular.setZero();
-    I.resize(state_num, state_num);
-    I.setIdentity();
     M_scalar.resize(1, 1);
     M_scalar.setZero();
 
@@ -704,11 +699,14 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         Qxu=B.transpose()*ddVk*A;
         Qxu=(Qxu.array().abs()<EPS).select(0, Qxu);
         Qux=Qxu.transpose();
-        Regular=lamb*I;
-        B_reg=Regular*B;
-        Qux_reg=Qux+A*B_reg;
-        Qxu_reg=Qux_reg.transpose();
-        Quu_reg=Quu+B_reg.transpose()*B_reg;
+        //regulation
+        Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(Quu);
+        Quu_evals=es.eigenvalues();
+        Quu_evectors=es.eigenvectors();
+        Quu_evals.cwiseMax(0.0);
+        Quu_evals.array()+=lamb;
+        Quu_inv=Quu_evectors*Quu_evals.asDiagonal().inverse()*Quu_evectors.transpose();
+        
         cout<<"Qx="<<Qx(0,0)<<","<<Qx(0,1)<<","<<Qx(0,2)<<","<<Qx(0,3)<<endl;
         cout<<"Qu="<<Qu(0,0)<<","<<Qu(0,1)<<endl;
         cout<<"Qxx="<<Qxx(0,0)<<","<<Qxx(0,1)<<","<<Qxx(0,2)<<","<<Qxx(0,3)<<endl;
@@ -720,10 +718,10 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cout<<Qxu(1,0)<<","<<Qxu(1,1)<<","<<Qxu(1,2)<<","<<Qxu(1,3)<<endl;
         if(isCompleteCal)
         {
-            K=-(Quu_reg.inverse()).transpose()*Qxu_reg;
+            K=Quu_inv.transpose()*Qxu;
             K=(K.array().abs()<EPS).select(0, K);
             cout<<"back K="<<K(0,0)<<","<<K(0,1)<<","<<K(0,2)<<","<<K(0,3)<<endl<<K(1,0)<<","<<K(1,1)<<","<<K(1,2)<<","<<K(1,3)<<endl;
-            d=-(Quu_reg.inverse()).transpose()*Qu.transpose();
+            d=-Quu_inv.transpose()*Qu.transpose();
             d=(d.array().abs()<EPS).select(0, d);
             cout<<"back d="<<d(0,0)<<","<<d(1,0)<<endl;
             K_lst.push_back({K(0,0), K(0,1), K(0,2), K(0,3), K(1,0), K(1,1), K(1,2), K(1,3)});
@@ -973,12 +971,16 @@ void ciLQR::iLQRSolver()
                 break;
             }
             else
+            {
                 lamb*=lamb_decay;
+                cout<<"lamb(decay)="<<lamb<<endl;
+            }
         }
         else
         {
             cout<<"linear search failed!"<<endl;
             lamb*=lamb_ambify;
+            cout<<"lamb(ambify)="<<lamb<<endl;
             if(lamb>lamb_max)
             {
                 cout<<"lamb out of range!"<<endl;

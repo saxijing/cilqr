@@ -155,13 +155,11 @@ class ciLQR
         Eigen::MatrixXd K;
         Eigen::MatrixXd d;
         Eigen::MatrixXd deltaU_star;
-        Eigen::MatrixXd Regular;
-        Eigen::MatrixXd I;
         Eigen::MatrixXd M_scalar;  //store 1*1 matrix calculation result
-        Eigen::MatrixXd B_reg;
-        Eigen::MatrixXd Quu_reg;
-        Eigen::MatrixXd Qxu_reg;
-        Eigen::MatrixXd Qux_reg;
+        //for regulization
+        Eigen::VectorXd Quu_evals;
+        Eigen::MatrixXd Quu_evectors;
+        Eigen::MatrixXd Quu_inv;
         ObjState xk;
         ObjState xk1;
         vector<vector<double>>K_lst;
