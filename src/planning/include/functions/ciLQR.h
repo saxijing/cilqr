@@ -57,6 +57,9 @@ class ciLQR
         ObjState ego_predict_state;
         ObjState start_state;
         ObjState waypoint;
+        ObjState center_point;
+        ObjState left_point;
+        ObjState right_point;
         CtrlInput control_signal; 
         CtrlInput delta_control_signal;
         //obstacles msg parse
@@ -65,6 +68,8 @@ class ciLQR
         vector<ObsInfo> obstacles_info;
         //end
         vector<ObjState> global_waypoints;
+        vector<ObjState> left_roadedge;
+        vector<ObjState> right_roadedge;
         vector<ObjState> local_waypoints;
         vector<ObjState> local_waypoints_dense;
         vector<ObjState> planned_path;
@@ -85,6 +90,8 @@ class ciLQR
         double predict_dt;
         double max_dist;
         double dist;
+        double lane_width;
+        double lane_num;
 
         Eigen::MatrixXd polyX;
         Eigen::MatrixXd polyY;
@@ -96,7 +103,7 @@ class ciLQR
         double ego_radius;
         double interplot_increment;
         double alfa;
-        double w_posX, w_posY, w_vel, w_theta;
+        double w_pos, w_vel, w_theta;
         double w_accel, w_yawrate;
         double q1_front, q2_front;
         double q1_rear, q2_rear;
@@ -108,7 +115,10 @@ class ciLQR
         double ellipse_b;
         double egoL;
         double egoHeight;
+        double egoWidth;
         double ego_lf, ego_lr;
+        double roadLR_dot;
+        double roadLR_norm;
         Eigen::MatrixXd Q;
         Eigen::MatrixXd R;
 
@@ -157,9 +167,12 @@ class ciLQR
         Eigen::MatrixXd deltaU_star;
         Eigen::MatrixXd M_scalar;  //store 1*1 matrix calculation result
         //for regulization
-        Eigen::VectorXd Quu_evals;
-        Eigen::MatrixXd Quu_evectors;
-        Eigen::MatrixXd Quu_inv;
+        Eigen::MatrixXd I;
+        Eigen::MatrixXd Reg;
+        Eigen::MatrixXd B_reg;
+        Eigen::MatrixXd Qux_reg;
+        Eigen::MatrixXd Quu_reg;
+
         ObjState xk;
         ObjState xk1;
         vector<vector<double>>K_lst;
@@ -206,6 +219,7 @@ class ciLQR
         double obs_constrain_limit;
         string limit_type;
         double yaw_rate_limit;
+        double edge_limit;
 };
 
 #endif

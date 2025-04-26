@@ -28,12 +28,14 @@ class Scene
         ~Scene();
         void readCenterlineAndCalRoadEdge();
         void recvCilqrPlannerControl(const saturn_msgs::ControlArray &msg);
+        //void recvCilqrPlannedPath(const nav_msgs::Path& msg);
         void reposeEgoVehicle(const double x, const double y, const double theta, const double v0, const double dT);
         void resizeEgoVehicle(const double l, const double w, const double h);
         void reconfigEgoVehVDpara(const double m, const double L, const double B);
         void addObject(const Object &obj);
         void removeObjectByID(const int id);
         void removeObjectByIndex(const int obj_index);
+        //void findClosestIndex(const vector<ObjState>& point_lst, const ObjState& point, int& closest_i);
         void update();
 
     protected:
@@ -43,6 +45,7 @@ class Scene
         ros::Publisher ego_vehicle_pub;
         ros::Publisher obstacles_pub;
         ros::Subscriber cilqr_planner_control_sub;
+        //ros::Subscriber cilqr_planned_path_sub;
         //for display in rviz,
         ros::Publisher  ego_rviz_pub;
         ros::Publisher  obstacles_rviz_pub;
@@ -55,10 +58,13 @@ class Scene
         ObjState waypoint;
         ObjState right_point;
         ObjState left_point;
+        ObjState path_point;
         CtrlInput control_signal;
+        ObjState ego_vehicle_state;
         vector<ObjState>  centerline_points;
         vector<ObjState> rightedge_points;
         vector<ObjState> leftedge_points;
+        vector<ObjState> planned_path_lst;
         vector<CtrlInput> local_control_lst;
         bool isFirstFrameFlag;
         double ego_max_speed;
@@ -72,6 +78,9 @@ class Scene
         int control_index;
         vector<CtrlInput> lock_local_control_lst;
         CtrlInput lock_control_signal;
+
+        // double dist, closest_dist;
+        // int closest_index;
 
 };
 #endif

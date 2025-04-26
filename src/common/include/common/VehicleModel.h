@@ -13,11 +13,13 @@ class VehicleModel
         VehicleModel(const double x, const double y, const double theta, const double v0, const double dT);
         ~VehicleModel();
         void initializeVelocity(const double& target_vel);
+        void normalizeAngle(double& angle_radius);
         void repose(const double x, const double y, const double theta, const double v0, const double dT);
         void resize(const double l, const double w, const double h);
+        void resetTimestamp(const double& deltaT);
         void setMaxSpeed(const double& m_speed);
-        void reconfigVDpara(const double m, const double L, const double B);
-        void applyU(const double accel, const double yaw_rate);
+        void reconfigVDpara(const double& m, const double& L, const double& B);
+        void applyU(const double& accel, const double& yaw_rate);
         void update();
         void updateOneStep(const ObjState& xk, ObjState& xk1, const CtrlInput& uk, const double& dt);
         void CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& U, vector<ObjState>& traj, const int& traj_len, const double& dt);
@@ -25,7 +27,7 @@ class VehicleModel
         void getVehicleModelAandB(const double v, const double theta, const double accel, const double dt, Eigen::MatrixXd& MA, Eigen::MatrixXd& MB);
         double getPoseX() const;
         double getPoseY() const;
-        double getPoseTheta() const;
+        double getPoseTheta();
         double getVelocity() const;
         double getAccelerate() const;
         double getYawRate() const;

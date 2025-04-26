@@ -9,6 +9,7 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     ego_vehicle_pub=nh.advertise<saturn_msgs::State>("/scene/ego_vehicle/state", 10, true);
     obstacles_pub=nh.advertise<saturn_msgs::ObstacleStateArray>("/scene/obstacles/state", 10, true);
     cilqr_planner_control_sub=nh.subscribe("/cilqr_planner/control", 10, &Scene::recvCilqrPlannerControl, this);
+    //cilqr_planned_path_sub=nh.subscribe("/cilqr_planner/local_planned_path", 10, &Scene::recvCilqrPlannedPath, this);
     ego_rviz_pub=nh.advertise<visualization_msgs::Marker>("/scene/ego_vehicle/rviz/state", 1, true);
     obstacles_rviz_pub=nh.advertise<visualization_msgs::MarkerArray>("/scene/obstacles/rviz/state", 1, true);
     centerline_pub=nh.advertise<nav_msgs::Path>("/scene/centerline", 10, true);
@@ -31,6 +32,7 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
         lock_control_signal.yaw_rate=0;
     }
 
+    ego_vehicle.resetTimestamp(dt);
     ego_vehicle.setMaxSpeed(ego_max_speed);
     readCenterlineAndCalRoadEdge();
 }
@@ -112,7 +114,7 @@ void Scene::readCenterlineAndCalRoadEdge()
     cout<<"read "<<centerline_points.size()<<"  row, road points is loaded!"<<endl;
 }
 
-void Scene::recvCilqrPlannerControl(const saturn_msgs::ControlArray  &msg)
+void Scene::recvCilqrPlannerControl(const saturn_msgs::ControlArray& msg)
 {
     ROS_INFO("receive cilqr planner control!");
     local_control_lst.clear();
@@ -134,6 +136,22 @@ void Scene::recvCilqrPlannerControl(const saturn_msgs::ControlArray  &msg)
         }
     }
 }
+
+// void Scene::recvCilqrPlannedPath(const nav_msgs::Path& msg)
+// {
+//     ROS_INFO("receive cilqr planned path!");
+//     planned_path_lst.clear();
+//     for(int i=0; i<msg.poses.size(); i++)
+//     {
+//         path_point.x=msg.poses[i].pose.position.x;
+//         path_point.y=msg.poses[i].pose.position.y;
+//         path_point.v=0;
+//         path_point.theta=acos(msg.poses[i].pose.orientation.w)*2;
+//         path_point.accel=0.0;
+//         path_point.yaw_rate=0.0;
+//         planned_path_lst.push_back(path_point);
+//     }
+// }
 
 void Scene::reposeEgoVehicle(const double x, const double y, const double theta, const double v0, const double dT)
 {
@@ -165,8 +183,25 @@ void Scene::removeObjectByIndex(const int obj_index)
     obstacles.removeObjectByIndex(obj_index);
 }
 
+// void Scene::findClosestIndex(const vector<ObjState>& point_lst, const ObjState& point, int& closest_i)
+// {
+//     if(point_lst.size()==0)
+//         return;
+//     closest_i=0;
+//     closest_dist=pow(point_lst[0].x-point.x, 2)+pow(point_lst[0].y-point.y, 2);
+//     for(int i=1; i<point_lst.size(); i++)
+//     {
+//         dist=pow(point_lst[i].x-point.x, 2)+pow(point_lst[i].y-point.y, 2);
+//         if(dist<closest_dist)
+//         {
+//             closest_i=i;
+//             closest_dist=dist;
+//         }
+//     }
+// }
 void Scene::update()
 {
+    cout<<"come into update!"<<endl;
     int control_rate=1/dt;
     double ego_initial_speed=ego_vehicle.getVelocity();
     ros::Rate controller_rate(control_rate);
@@ -244,6 +279,13 @@ void Scene::update()
 
     while(ros::ok())
     {
+        cout<<"come into ros loop!"<<endl;
+        ego_vehicle_state.x=ego_vehicle.getPoseX();
+        ego_vehicle_state.y=ego_vehicle.getPoseY();
+        ego_vehicle_state.theta=ego_vehicle.getPoseTheta();
+        ego_vehicle_state.v=ego_vehicle.getVelocity();
+        ego_vehicle_state.accel=ego_vehicle.getAccelerate();
+        ego_vehicle_state.yaw_rate=ego_vehicle.getYawRate();
         //fulfill ego_vehicle_state_msg and publish
         ego_state_msg.header.frame_id="ego_state";
         ego_state_msg.header.stamp=ros::Time::now();
@@ -332,6 +374,7 @@ void Scene::update()
         }
 
         //set ego vehicle with initial speed
+        cout<<"set speed!"<<endl;
         if(isFirstFrameFlag&&ego_initial_speed>0)
         {
             ego_vehicle.initializeVelocity(ego_initial_speed);
@@ -344,7 +387,11 @@ void Scene::update()
         //cout<<"here1"<<endl;
         //cout<<"local_control_lst.size()="<<local_control_lst.size()<<endl;
         //cout<<"control_index="<<control_index<<endl;
+        //cout<<"before find closest index."<<endl;
+        //findClosestIndex(planned_path_lst, ego_vehicle_state, closest_index);
+        //cout<<"after find closest index."<<endl;
         {
+            //cout<<"come into data lock!"<<endl;
             lock_guard<mutex> lock(control_lst_mutex);
             if(control_index>=lock_local_control_lst.size()||control_index<0)
             {
@@ -355,6 +402,7 @@ void Scene::update()
                 lock_control_signal.accel=lock_local_control_lst[control_index].accel;
                 lock_control_signal.yaw_rate=lock_local_control_lst[control_index].yaw_rate;
                 control_index++;
+                cout<<"control_index="<<control_index<<endl;
                 cout<<"main loop recved control: "<<lock_control_signal.accel<<","<<lock_control_signal.yaw_rate<<endl;
                 cout<<"control_signal=["<<lock_control_signal.accel<<", "<<lock_control_signal.yaw_rate<<"];"<<endl;
             }

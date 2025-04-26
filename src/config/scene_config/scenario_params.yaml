@@ -14,8 +14,8 @@
 
 # horizon
 /planner/global_horizon: 20
-/planner/local_horizon: 80
-/planner/prediction_horizon: 80
+/planner/local_horizon: 70
+/planner/prediction_horizon: 70
 
 # iLQR solver params
 /planner/poly_order: 5
