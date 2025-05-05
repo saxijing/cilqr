@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     Scene scene("Static obstacle avoidance", nh);
     scene.reposeEgoVehicle(10, 100, 0.746, 5.0, 0.01);
-    Object static_vehicle(1, "static_vehicle", 50.388, 137.33, 0.746, 0.0, 0.0, 0.01);
+    Object static_vehicle(1, "static_vehicle",33.50, 121.72, 0.746, 0.0, 0.0, 0.01);
     scene.addObject(static_vehicle);
     scene.update();
 }

@@ -13,6 +13,7 @@
 #include<saturn_msgs/ObstacleStateArray.h>
 #include<saturn_msgs/Control.h>
 #include<saturn_msgs/ControlArray.h>
+#include<saturn_msgs/Path.h>
 #include<common/VehicleModel.h>
 #include <eigen3/Eigen/Dense> 
 #include<fstream>
@@ -41,10 +42,10 @@ class ciLQR
         ros::NodeHandle nh;
         ros::Subscriber ego_state_sub;
         ros::Subscriber obstacles_state_sub;
-        ros::Publisher cilqr_control_pub;
         ros::Publisher rviz_local_refer_points_pub;
         ros::Publisher rviz_local_refer_lines_pub;
-        ros::Publisher rviz_local_planned_path_pub;
+        ros::Publisher rviz_cilqr_planned_path_pub;
+        ros::Publisher local_planned_path_pub;
         string global_waypoints_filepath;
         int state_num;
         int control_num;
@@ -54,7 +55,6 @@ class ciLQR
         int planning_start_index;
         VehicleModel vd_model;
         ObjState ego_state;
-        ObjState ego_predict_state;
         ObjState start_state;
         ObjState waypoint;
         ObjState center_point;
@@ -178,10 +178,6 @@ class ciLQR
         vector<vector<double>>K_lst;
         vector<vector<double>>d_lst;
         double deltaV, deltaV1d, deltaV2d;
-        // //store temp K, d in forward pass process, additional result, no sense in forward pass
-        // vector<vector<double>>K_temp_lst;
-        // vector<vector<double>>d_temp_lst;
-        // double deltaV1d_temp, deltaV2d_temp;
         double costJ;
         double costJ_nominal;
         double costJ_cache;
@@ -220,6 +216,8 @@ class ciLQR
         string limit_type;
         double yaw_rate_limit;
         double edge_limit;
+        
+        int start_index_multiple;
 };
 
 #endif

@@ -11,9 +11,10 @@ Panels:
         - /centerline1
         - /leftedge1
         - /rightedge1
-        - /PlannedPath1
+        - /CilqrPlannedPath1
         - /ReferPoints1
         - /ReferLines1
+        - /ScnenJointPath1
       Splitter Ratio: 0.5
     Tree Height: 806
   - Class: rviz/Selection
@@ -148,14 +149,14 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 25; 255; 0
+      Color: 239; 41; 41
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: PlannedPath
+      Name: CilqrPlannedPath
       Offset:
         X: 0
         Y: 0
@@ -165,7 +166,7 @@ Visualization Manager:
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
-      Topic: /cilqr_planner/local_planned_path
+      Topic: /cilqr_planner/rviz/planned_path
       Unreliable: false
       Value: true
     - Class: rviz/Marker
@@ -183,6 +184,29 @@ Visualization Manager:
       Namespaces:
         local_points_and_lines: true
       Queue Size: 100
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: ScnenJointPath
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /rviz/scene/planned_path
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
@@ -212,16 +236,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 174.60890197753906
+      Distance: 176.20277404785156
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 49.5933723449707
-        Y: 148.49842834472656
-        Z: -51.6543083190918
+        X: 56.058349609375
+        Y: 153.13265991210938
+        Z: -51.66063690185547
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false

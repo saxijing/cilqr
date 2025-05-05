@@ -987,6 +987,7 @@ planning/CMakeFiles/cilqr_planner.dir/src/functions/ciLQR.cpp.o: \
  /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
  /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
+ /home/saxijing/cilqr/devel/include/saturn_msgs/Path.h \
  /home/saxijing/cilqr/src/common/include/common/VehicleModel.h \
  /home/saxijing/cilqr/src/common/include/common/Common.h \
  /usr/include/eigen3/Eigen/Dense /usr/include/eigen3/Eigen/Core \

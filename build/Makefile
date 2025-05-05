@@ -549,6 +549,19 @@ _saturn_msgs_generate_messages_check_deps_Size/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_Size/fast
 
 #=============================================================================
+# Target rules for targets named _saturn_msgs_generate_messages_check_deps_Path
+
+# Build rule for target.
+_saturn_msgs_generate_messages_check_deps_Path: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _saturn_msgs_generate_messages_check_deps_Path
+.PHONY : _saturn_msgs_generate_messages_check_deps_Path
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_Path/fast:
+	$(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_Path/fast
+
+#=============================================================================
 # Target rules for targets named _saturn_msgs_generate_messages_check_deps_ObstacleStateArray
 
 # Build rule for target.
@@ -757,17 +770,69 @@ cilqr_planner/fast:
 .PHONY : cilqr_planner/fast
 
 #=============================================================================
-# Target rules for targets named scene
+# Target rules for targets named static_avoidance_scene
 
 # Build rule for target.
-scene: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene
-.PHONY : scene
+static_avoidance_scene: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 static_avoidance_scene
+.PHONY : static_avoidance_scene
 
 # fast build rule for target.
-scene/fast:
-	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/build
-.PHONY : scene/fast
+static_avoidance_scene/fast:
+	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/build
+.PHONY : static_avoidance_scene/fast
+
+#=============================================================================
+# Target rules for targets named following_scene
+
+# Build rule for target.
+following_scene: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 following_scene
+.PHONY : following_scene
+
+# fast build rule for target.
+following_scene/fast:
+	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/build
+.PHONY : following_scene/fast
+
+#=============================================================================
+# Target rules for targets named multi_obs_scene
+
+# Build rule for target.
+multi_obs_scene: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 multi_obs_scene
+.PHONY : multi_obs_scene
+
+# fast build rule for target.
+multi_obs_scene/fast:
+	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/build
+.PHONY : multi_obs_scene/fast
+
+#=============================================================================
+# Target rules for targets named lane_change_scene
+
+# Build rule for target.
+lane_change_scene: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lane_change_scene
+.PHONY : lane_change_scene
+
+# fast build rule for target.
+lane_change_scene/fast:
+	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/build
+.PHONY : lane_change_scene/fast
+
+#=============================================================================
+# Target rules for targets named overtake_scene
+
+# Build rule for target.
+overtake_scene: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 overtake_scene
+.PHONY : overtake_scene
+
+# fast build rule for target.
+overtake_scene/fast:
+	$(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/build
+.PHONY : overtake_scene/fast
 
 # Help Target
 help:
@@ -787,6 +852,7 @@ help:
 	@echo "... _saturn_msgs_generate_messages_check_deps_ControlArray"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleState"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleStateArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_Path"
 	@echo "... _saturn_msgs_generate_messages_check_deps_Size"
 	@echo "... _saturn_msgs_generate_messages_check_deps_State"
 	@echo "... _saturn_msgs_generate_messages_check_deps_StateLite"
@@ -823,11 +889,15 @@ help:
 	@echo "... tests"
 	@echo "... cilqr_planner"
 	@echo "... common"
+	@echo "... following_scene"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... scene"
+	@echo "... lane_change_scene"
+	@echo "... multi_obs_scene"
+	@echo "... overtake_scene"
+	@echo "... static_avoidance_scene"
 .PHONY : help
 
 

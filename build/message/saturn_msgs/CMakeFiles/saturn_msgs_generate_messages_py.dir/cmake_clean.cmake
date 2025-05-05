@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ControlArray.py"
   "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleState.py"
   "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleStateArray.py"
+  "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py"
   "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py"
   "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py"
   "/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py"

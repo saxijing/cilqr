@@ -9,6 +9,8 @@
    "OBSTACLESTATE"
    "<OBSTACLESTATEARRAY>"
    "OBSTACLESTATEARRAY"
+   "<PATH>"
+   "PATH"
    "<SIZE>"
    "SIZE"
    "<STATE>"

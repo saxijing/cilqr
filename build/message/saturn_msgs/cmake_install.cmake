@@ -51,6 +51,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg"
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Control.msg"
     "/home/saxijing/cilqr/src/message/saturn_msgs/msg/ControlArray.msg"
+    "/home/saxijing/cilqr/src/message/saturn_msgs/msg/Path.msg"
     )
 endif()
 

@@ -1,0 +1,6 @@
+<launch>
+   <rosparam command="load" file="$(find config)/scene_config/scene_overtake.yaml"/>
+   <node pkg="scene" type="overtake_scene" name="overtake_scene" output="screen"/>
+   <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 100" />
+   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find config)/rviz_config/cilqr_planner_sim.rviz"/>
+</launch>

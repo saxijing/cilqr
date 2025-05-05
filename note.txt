@@ -1,3 +1,29 @@
-roslaunch launch scene.launch>scene.txt
-roslaunch launch planner.launch>planner.txt
+static obstacle:
+roslaunch launch static_avoidance_scene.launch>static_scene.txt
+roslaunch launch cilqr_planner_static_avoidance.launch>static_planner.txt
+
+following car:
+roslaunch launch following_scene.launch>following_scene.txt
+roslaunch launch cilqr_planner_following.launch>follow_planner.txt
+
+multiple_obstacles:
+roslaunch launch multi_obstacles_scene.launch>multiple_scene.txt
+roslaunch launch cilqr_planner_multi_obstacles.launch>multi_planner.txt
+
+lane_change:
+roslaunch launch lane_change_scene.launch>lane_change_scene.txt
+roslaunch launch cilqr_planner_lane_change.launch>lane_change_planner.txt
+
+overtake:
+roslaunch launch overtake_scene.launch>overtake_scene.txt
+roslaunch launch cilqr_planner_overtake.launch>overtake_planner.txt
+
+
 source devel/setup.bash
+
+
+1. scnen/src/main 增加<scene>.cpp
+2. scene/CMakelist.txt 增加add_exe, target_link
+3. config/planner 增加<scene>.yaml
+4. launch/scene 增加<scene>.launch, 主要是rosname, exe_name不同, include的config文件不同
+5. launch/planner 增加<scene>.launch, 主要是include的config文件不同

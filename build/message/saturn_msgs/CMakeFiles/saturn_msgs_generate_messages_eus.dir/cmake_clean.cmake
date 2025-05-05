@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ControlArray.l"
   "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleState.l"
   "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/ObstacleStateArray.l"
+  "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/Path.l"
   "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/Size.l"
   "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/State.l"
   "/home/saxijing/cilqr/devel/share/roseus/ros/saturn_msgs/msg/StateLite.l"

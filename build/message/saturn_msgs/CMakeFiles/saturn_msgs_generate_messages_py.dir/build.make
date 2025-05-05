@@ -69,6 +69,7 @@ include message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py.dir/prog
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ControlArray.py
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Control.py
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleStateArray.py
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py
@@ -105,33 +106,41 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py: /home/saxijing/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG saturn_msgs/ObstacleStateArray"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg
 
+/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
+/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py: /home/saxijing/cilqr/src/message/saturn_msgs/msg/Path.msg
+/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python from MSG saturn_msgs/Path"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/Path.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg
+
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py: /home/saxijing/cilqr/src/message/saturn_msgs/msg/Size.msg
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python from MSG saturn_msgs/Size"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python from MSG saturn_msgs/Size"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/Size.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg
 
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python from MSG saturn_msgs/State"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python from MSG saturn_msgs/State"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg
 
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python from MSG saturn_msgs/StateLite"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Python from MSG saturn_msgs/StateLite"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg
 
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ControlArray.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Control.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py
+/home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleStateArray.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py
 /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/__init__.py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleState.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Python msg __init__.py for saturn_msgs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Python msg __init__.py for saturn_msgs"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg --initpy
 
 saturn_msgs_generate_messages_py: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_py
@@ -139,6 +148,7 @@ saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-
 saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ControlArray.py
 saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleState.py
 saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_ObstacleStateArray.py
+saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Path.py
 saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_Size.py
 saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_State.py
 saturn_msgs_generate_messages_py: /home/saxijing/cilqr/devel/lib/python2.7/dist-packages/saturn_msgs/msg/_StateLite.py

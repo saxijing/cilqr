@@ -140,7 +140,31 @@ message(STATUS "catkin_INCLUDE_DIRS: ${catkin_INCLUDE_DIRS}")
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(scene src/main/StaticObstacle.cpp
+add_executable(static_avoidance_scene src/main/StaticObstacle.cpp
+  src/functions/Scene.cpp
+  src/functions/Object.cpp
+  src/functions/Objects.cpp
+)
+
+add_executable(following_scene src/main/FollowCar.cpp
+  src/functions/Scene.cpp
+  src/functions/Object.cpp
+  src/functions/Objects.cpp
+)
+
+add_executable(multi_obs_scene src/main/MultiObatacles.cpp
+  src/functions/Scene.cpp
+  src/functions/Object.cpp
+  src/functions/Objects.cpp
+)
+
+add_executable(lane_change_scene src/main/LaneChange.cpp
+  src/functions/Scene.cpp
+  src/functions/Object.cpp
+  src/functions/Objects.cpp
+)
+
+add_executable(overtake_scene src/main/Overtake.cpp
   src/functions/Scene.cpp
   src/functions/Object.cpp
   src/functions/Objects.cpp
@@ -159,7 +183,27 @@ add_definitions(${EIGEN_DEFINITIONS})
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(scene
+target_link_libraries(static_avoidance_scene
+  ${catkin_LIBRARIES}
+  common
+)
+
+target_link_libraries(following_scene
+  ${catkin_LIBRARIES}
+  common
+)
+
+target_link_libraries(multi_obs_scene
+  ${catkin_LIBRARIES}
+  common
+)
+
+target_link_libraries(lane_change_scene
+  ${catkin_LIBRARIES}
+  common
+)
+
+target_link_libraries(overtake_scene
   ${catkin_LIBRARIES}
   common
 )

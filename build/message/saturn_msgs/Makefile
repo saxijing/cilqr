@@ -438,6 +438,20 @@ _saturn_msgs_generate_messages_check_deps_Size/fast:
 .PHONY : _saturn_msgs_generate_messages_check_deps_Size/fast
 
 # Convenience name for target.
+message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/rule
+.PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/rule
+
+# Convenience name for target.
+_saturn_msgs_generate_messages_check_deps_Path: message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/rule
+.PHONY : _saturn_msgs_generate_messages_check_deps_Path
+
+# fast build rule for target.
+_saturn_msgs_generate_messages_check_deps_Path/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/build.make message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir/build
+.PHONY : _saturn_msgs_generate_messages_check_deps_Path/fast
+
+# Convenience name for target.
 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule:
 	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
 .PHONY : message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir/rule
@@ -650,6 +664,7 @@ help:
 	@echo "... _saturn_msgs_generate_messages_check_deps_ControlArray"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleState"
 	@echo "... _saturn_msgs_generate_messages_check_deps_ObstacleStateArray"
+	@echo "... _saturn_msgs_generate_messages_check_deps_Path"
 	@echo "... _saturn_msgs_generate_messages_check_deps_Size"
 	@echo "... _saturn_msgs_generate_messages_check_deps_State"
 	@echo "... _saturn_msgs_generate_messages_check_deps_StateLite"

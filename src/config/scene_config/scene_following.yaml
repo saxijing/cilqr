@@ -1,0 +1,17 @@
+# timestep of prediction, planning and control
+/timestep/planning: 0.1
+/timestep/control: 0.05
+/timestep/prediction: 0.05
+/timestep/multiple/planner_start_index: 18
+
+# params for building scene
+/planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
+/road_info/lane_width: 3.5
+/road_info/lane_num: 2
+
+# # horizon
+/planner/global_horizon: 20
+/planner/prediction_horizon: 70
+
+# hardware params
+/ego_vehicle/max_speed: 30.0

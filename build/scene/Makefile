@@ -172,25 +172,85 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-scene/CMakeFiles/scene.dir/rule:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene/CMakeFiles/scene.dir/rule
-.PHONY : scene/CMakeFiles/scene.dir/rule
+scene/CMakeFiles/static_avoidance_scene.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene/CMakeFiles/static_avoidance_scene.dir/rule
+.PHONY : scene/CMakeFiles/static_avoidance_scene.dir/rule
 
 # Convenience name for target.
-scene: scene/CMakeFiles/scene.dir/rule
-.PHONY : scene
+static_avoidance_scene: scene/CMakeFiles/static_avoidance_scene.dir/rule
+.PHONY : static_avoidance_scene
 
 # fast build rule for target.
-scene/fast:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/build
-.PHONY : scene/fast
+static_avoidance_scene/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/build
+.PHONY : static_avoidance_scene/fast
+
+# Convenience name for target.
+scene/CMakeFiles/following_scene.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene/CMakeFiles/following_scene.dir/rule
+.PHONY : scene/CMakeFiles/following_scene.dir/rule
+
+# Convenience name for target.
+following_scene: scene/CMakeFiles/following_scene.dir/rule
+.PHONY : following_scene
+
+# fast build rule for target.
+following_scene/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/build
+.PHONY : following_scene/fast
+
+# Convenience name for target.
+scene/CMakeFiles/multi_obs_scene.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene/CMakeFiles/multi_obs_scene.dir/rule
+.PHONY : scene/CMakeFiles/multi_obs_scene.dir/rule
+
+# Convenience name for target.
+multi_obs_scene: scene/CMakeFiles/multi_obs_scene.dir/rule
+.PHONY : multi_obs_scene
+
+# fast build rule for target.
+multi_obs_scene/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/build
+.PHONY : multi_obs_scene/fast
+
+# Convenience name for target.
+scene/CMakeFiles/lane_change_scene.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene/CMakeFiles/lane_change_scene.dir/rule
+.PHONY : scene/CMakeFiles/lane_change_scene.dir/rule
+
+# Convenience name for target.
+lane_change_scene: scene/CMakeFiles/lane_change_scene.dir/rule
+.PHONY : lane_change_scene
+
+# fast build rule for target.
+lane_change_scene/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/build
+.PHONY : lane_change_scene/fast
+
+# Convenience name for target.
+scene/CMakeFiles/overtake_scene.dir/rule:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene/CMakeFiles/overtake_scene.dir/rule
+.PHONY : scene/CMakeFiles/overtake_scene.dir/rule
+
+# Convenience name for target.
+overtake_scene: scene/CMakeFiles/overtake_scene.dir/rule
+.PHONY : overtake_scene
+
+# fast build rule for target.
+overtake_scene/fast:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/build
+.PHONY : overtake_scene/fast
 
 src/functions/Object.o: src/functions/Object.cpp.o
 .PHONY : src/functions/Object.o
 
 # target to build an object file
 src/functions/Object.cpp.o:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Object.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Object.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Object.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Object.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Object.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Object.cpp.o
 .PHONY : src/functions/Object.cpp.o
 
 src/functions/Object.i: src/functions/Object.cpp.i
@@ -198,7 +258,11 @@ src/functions/Object.i: src/functions/Object.cpp.i
 
 # target to preprocess a source file
 src/functions/Object.cpp.i:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Object.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Object.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Object.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Object.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Object.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Object.cpp.i
 .PHONY : src/functions/Object.cpp.i
 
 src/functions/Object.s: src/functions/Object.cpp.s
@@ -206,7 +270,11 @@ src/functions/Object.s: src/functions/Object.cpp.s
 
 # target to generate assembly for a file
 src/functions/Object.cpp.s:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Object.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Object.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Object.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Object.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Object.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Object.cpp.s
 .PHONY : src/functions/Object.cpp.s
 
 src/functions/Objects.o: src/functions/Objects.cpp.o
@@ -214,7 +282,11 @@ src/functions/Objects.o: src/functions/Objects.cpp.o
 
 # target to build an object file
 src/functions/Objects.cpp.o:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Objects.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Objects.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Objects.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Objects.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Objects.cpp.o
 .PHONY : src/functions/Objects.cpp.o
 
 src/functions/Objects.i: src/functions/Objects.cpp.i
@@ -222,7 +294,11 @@ src/functions/Objects.i: src/functions/Objects.cpp.i
 
 # target to preprocess a source file
 src/functions/Objects.cpp.i:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Objects.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Objects.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Objects.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Objects.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Objects.cpp.i
 .PHONY : src/functions/Objects.cpp.i
 
 src/functions/Objects.s: src/functions/Objects.cpp.s
@@ -230,7 +306,11 @@ src/functions/Objects.s: src/functions/Objects.cpp.s
 
 # target to generate assembly for a file
 src/functions/Objects.cpp.s:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Objects.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Objects.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Objects.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Objects.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Objects.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Objects.cpp.s
 .PHONY : src/functions/Objects.cpp.s
 
 src/functions/Scene.o: src/functions/Scene.cpp.o
@@ -238,7 +318,11 @@ src/functions/Scene.o: src/functions/Scene.cpp.o
 
 # target to build an object file
 src/functions/Scene.cpp.o:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Scene.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Scene.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Scene.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Scene.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Scene.cpp.o
 .PHONY : src/functions/Scene.cpp.o
 
 src/functions/Scene.i: src/functions/Scene.cpp.i
@@ -246,7 +330,11 @@ src/functions/Scene.i: src/functions/Scene.cpp.i
 
 # target to preprocess a source file
 src/functions/Scene.cpp.i:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Scene.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Scene.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Scene.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Scene.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Scene.cpp.i
 .PHONY : src/functions/Scene.cpp.i
 
 src/functions/Scene.s: src/functions/Scene.cpp.s
@@ -254,15 +342,115 @@ src/functions/Scene.s: src/functions/Scene.cpp.s
 
 # target to generate assembly for a file
 src/functions/Scene.cpp.s:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/functions/Scene.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/functions/Scene.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/functions/Scene.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/functions/Scene.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/functions/Scene.cpp.s
 .PHONY : src/functions/Scene.cpp.s
+
+src/main/FollowCar.o: src/main/FollowCar.cpp.o
+.PHONY : src/main/FollowCar.o
+
+# target to build an object file
+src/main/FollowCar.cpp.o:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/main/FollowCar.cpp.o
+.PHONY : src/main/FollowCar.cpp.o
+
+src/main/FollowCar.i: src/main/FollowCar.cpp.i
+.PHONY : src/main/FollowCar.i
+
+# target to preprocess a source file
+src/main/FollowCar.cpp.i:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/main/FollowCar.cpp.i
+.PHONY : src/main/FollowCar.cpp.i
+
+src/main/FollowCar.s: src/main/FollowCar.cpp.s
+.PHONY : src/main/FollowCar.s
+
+# target to generate assembly for a file
+src/main/FollowCar.cpp.s:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/following_scene.dir/build.make scene/CMakeFiles/following_scene.dir/src/main/FollowCar.cpp.s
+.PHONY : src/main/FollowCar.cpp.s
+
+src/main/LaneChange.o: src/main/LaneChange.cpp.o
+.PHONY : src/main/LaneChange.o
+
+# target to build an object file
+src/main/LaneChange.cpp.o:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/main/LaneChange.cpp.o
+.PHONY : src/main/LaneChange.cpp.o
+
+src/main/LaneChange.i: src/main/LaneChange.cpp.i
+.PHONY : src/main/LaneChange.i
+
+# target to preprocess a source file
+src/main/LaneChange.cpp.i:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/main/LaneChange.cpp.i
+.PHONY : src/main/LaneChange.cpp.i
+
+src/main/LaneChange.s: src/main/LaneChange.cpp.s
+.PHONY : src/main/LaneChange.s
+
+# target to generate assembly for a file
+src/main/LaneChange.cpp.s:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/lane_change_scene.dir/build.make scene/CMakeFiles/lane_change_scene.dir/src/main/LaneChange.cpp.s
+.PHONY : src/main/LaneChange.cpp.s
+
+src/main/MultiObatacles.o: src/main/MultiObatacles.cpp.o
+.PHONY : src/main/MultiObatacles.o
+
+# target to build an object file
+src/main/MultiObatacles.cpp.o:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/main/MultiObatacles.cpp.o
+.PHONY : src/main/MultiObatacles.cpp.o
+
+src/main/MultiObatacles.i: src/main/MultiObatacles.cpp.i
+.PHONY : src/main/MultiObatacles.i
+
+# target to preprocess a source file
+src/main/MultiObatacles.cpp.i:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/main/MultiObatacles.cpp.i
+.PHONY : src/main/MultiObatacles.cpp.i
+
+src/main/MultiObatacles.s: src/main/MultiObatacles.cpp.s
+.PHONY : src/main/MultiObatacles.s
+
+# target to generate assembly for a file
+src/main/MultiObatacles.cpp.s:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/multi_obs_scene.dir/build.make scene/CMakeFiles/multi_obs_scene.dir/src/main/MultiObatacles.cpp.s
+.PHONY : src/main/MultiObatacles.cpp.s
+
+src/main/Overtake.o: src/main/Overtake.cpp.o
+.PHONY : src/main/Overtake.o
+
+# target to build an object file
+src/main/Overtake.cpp.o:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/main/Overtake.cpp.o
+.PHONY : src/main/Overtake.cpp.o
+
+src/main/Overtake.i: src/main/Overtake.cpp.i
+.PHONY : src/main/Overtake.i
+
+# target to preprocess a source file
+src/main/Overtake.cpp.i:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/main/Overtake.cpp.i
+.PHONY : src/main/Overtake.cpp.i
+
+src/main/Overtake.s: src/main/Overtake.cpp.s
+.PHONY : src/main/Overtake.s
+
+# target to generate assembly for a file
+src/main/Overtake.cpp.s:
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/overtake_scene.dir/build.make scene/CMakeFiles/overtake_scene.dir/src/main/Overtake.cpp.s
+.PHONY : src/main/Overtake.cpp.s
 
 src/main/StaticObstacle.o: src/main/StaticObstacle.cpp.o
 .PHONY : src/main/StaticObstacle.o
 
 # target to build an object file
 src/main/StaticObstacle.cpp.o:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/main/StaticObstacle.cpp.o
 .PHONY : src/main/StaticObstacle.cpp.o
 
 src/main/StaticObstacle.i: src/main/StaticObstacle.cpp.i
@@ -270,7 +458,7 @@ src/main/StaticObstacle.i: src/main/StaticObstacle.cpp.i
 
 # target to preprocess a source file
 src/main/StaticObstacle.cpp.i:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.i
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/main/StaticObstacle.cpp.i
 .PHONY : src/main/StaticObstacle.cpp.i
 
 src/main/StaticObstacle.s: src/main/StaticObstacle.cpp.s
@@ -278,7 +466,7 @@ src/main/StaticObstacle.s: src/main/StaticObstacle.cpp.s
 
 # target to generate assembly for a file
 src/main/StaticObstacle.cpp.s:
-	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/scene.dir/build.make scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.s
+	cd /home/saxijing/cilqr/build && $(MAKE) $(MAKESILENT) -f scene/CMakeFiles/static_avoidance_scene.dir/build.make scene/CMakeFiles/static_avoidance_scene.dir/src/main/StaticObstacle.cpp.s
 .PHONY : src/main/StaticObstacle.cpp.s
 
 # Help Target
@@ -294,7 +482,11 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... scene"
+	@echo "... following_scene"
+	@echo "... lane_change_scene"
+	@echo "... multi_obs_scene"
+	@echo "... overtake_scene"
+	@echo "... static_avoidance_scene"
 	@echo "... src/functions/Object.o"
 	@echo "... src/functions/Object.i"
 	@echo "... src/functions/Object.s"
@@ -304,6 +496,18 @@ help:
 	@echo "... src/functions/Scene.o"
 	@echo "... src/functions/Scene.i"
 	@echo "... src/functions/Scene.s"
+	@echo "... src/main/FollowCar.o"
+	@echo "... src/main/FollowCar.i"
+	@echo "... src/main/FollowCar.s"
+	@echo "... src/main/LaneChange.o"
+	@echo "... src/main/LaneChange.i"
+	@echo "... src/main/LaneChange.s"
+	@echo "... src/main/MultiObatacles.o"
+	@echo "... src/main/MultiObatacles.i"
+	@echo "... src/main/MultiObatacles.s"
+	@echo "... src/main/Overtake.o"
+	@echo "... src/main/Overtake.i"
+	@echo "... src/main/Overtake.s"
 	@echo "... src/main/StaticObstacle.o"
 	@echo "... src/main/StaticObstacle.i"
 	@echo "... src/main/StaticObstacle.s"

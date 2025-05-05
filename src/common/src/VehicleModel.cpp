@@ -83,6 +83,19 @@ void VehicleModel::repose(const double x, const double y, const double theta, co
     dt=dT;
 }
 
+void VehicleModel::repose(const ObjState& state)
+{
+    veh_state.x=state.x;
+    veh_state.y=state.y;
+    veh_state.theta=state.theta;
+    veh_state.v=state.v;
+    veh_state.accel=state.accel;
+    veh_state.yaw_rate=state.yaw_rate;
+
+    veh_ctrl.accel=state.accel;
+    veh_ctrl.yaw_rate=state.yaw_rate;
+}
+
 void VehicleModel::resize(const double l, const double w, const double h)
 {
     veh_size.length=l;
@@ -124,12 +137,15 @@ void VehicleModel::update()
     veh_state.v=calc_speed;
     veh_state.theta=veh_state.theta+dt*veh_ctrl.yaw_rate;
     normalizeAngle(veh_state.theta);
-    veh_state.accel=veh_ctrl.accel;
-    veh_state.yaw_rate=veh_ctrl.yaw_rate;
+    veh_state.accel=0.0;
+    veh_state.yaw_rate=0.0;
 }
 
-void VehicleModel::updateOneStep(const ObjState& xk, ObjState& xk1, const CtrlInput& uk, const double& dt)
+void VehicleModel::updateOneStep(ObjState& xk, ObjState& xk1, const CtrlInput& uk, const double& dt)
 {
+    xk.accel=uk.accel;
+    xk.yaw_rate=uk.yaw_rate;
+
     xk1.x=xk.x+(xk.v*dt+0.5*uk.accel*dt*dt)*cos(xk.theta);
     xk1.y=xk.y+(xk.v*dt+0.5*uk.accel*dt*dt)*sin(xk.theta);
     calc_speed=xk.v+dt*uk.accel;
@@ -137,18 +153,20 @@ void VehicleModel::updateOneStep(const ObjState& xk, ObjState& xk1, const CtrlIn
     else if(calc_speed<0) {calc_speed=0;}
     xk1.v=calc_speed;
     xk1.theta=xk.theta+dt*uk.yaw_rate;
+    xk1.accel=0.0;
+    xk1.yaw_rate=0.0;
     normalizeAngle(xk1.theta);
-    xk1.accel=uk.accel;
-    xk1.yaw_rate=uk.yaw_rate;
 }
 
-void VehicleModel::CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& U, vector<ObjState>& traj, const int& traj_len, const double& dt)
+void VehicleModel::CalVDTrajectory(ObjState& X0, const vector<CtrlInput>& U, vector<ObjState>& traj, const int& traj_len, const double& dt)
 {
     cout<<"come into CalVDTrajectory!"<<endl;
     //normalizeAngle(X0.theta);
     traj.clear();
+    X0.accel=U[0].accel;
+    X0.yaw_rate=U[0].yaw_rate;
     traj.push_back(X0);
-    for(int i=1; i<traj_len; i++)
+    for(int i=1; i<=traj_len; i++)
     {
         X_temp.x=traj[i-1].x+(traj[i-1].v*dt+0.5*dt*dt*U[i-1].accel)*cos(traj[i-1].theta);
         X_temp.y=traj[i-1].y+(traj[i-1].v*dt+0.5*dt*dt*U[i-1].accel)*sin(traj[i-1].theta);
@@ -158,10 +176,15 @@ void VehicleModel::CalVDTrajectory(const ObjState& X0, const vector<CtrlInput>& 
         X_temp.v=calc_speed;
         X_temp.theta=traj[i-1].theta+dt*U[i-1].yaw_rate;
         normalizeAngle(X_temp.theta);
-        X_temp.accel=U[i-1].accel;
-        X_temp.yaw_rate=U[i-1].yaw_rate;
+        if(i==traj_len)
+            break;
+        X_temp.accel=U[i].accel;
+        X_temp.yaw_rate=U[i].yaw_rate;
         traj.push_back(X_temp);
     }
+    X_temp.accel=0;
+    X_temp.yaw_rate=0;
+    traj.push_back(X_temp);
 }
 
 void VehicleModel::getPredictedPose(const ObjState& current_state, const double& accel, const double& timestep, ObjState& predict_state)
@@ -201,7 +224,17 @@ void VehicleModel::getVehicleModelAandB(const double v, const double theta, cons
     MB(2,1)=0.0;
     MB(3,0)=0.0;
     MB(3,1)=dt;
-}   
+}
+
+void VehicleModel::getVehicleState(ObjState& state)
+{
+    state.x=veh_state.x;
+    state.y=veh_state.y;
+    state.theta=veh_state.theta;
+    state.v=veh_state.v;
+    state.accel=veh_state.accel;
+    state.yaw_rate=veh_state.yaw_rate;
+}
 
 double VehicleModel::getPoseX() const
 {

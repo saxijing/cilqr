@@ -13,6 +13,8 @@
     (:file "_package_ObstacleState" :depends-on ("_package"))
     (:file "ObstacleStateArray" :depends-on ("_package_ObstacleStateArray"))
     (:file "_package_ObstacleStateArray" :depends-on ("_package"))
+    (:file "Path" :depends-on ("_package_Path"))
+    (:file "_package_Path" :depends-on ("_package"))
     (:file "Size" :depends-on ("_package_Size"))
     (:file "_package_Size" :depends-on ("_package"))
     (:file "State" :depends-on ("_package_State"))

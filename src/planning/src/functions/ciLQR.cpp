@@ -6,10 +6,10 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
 {
     ego_state_sub=nh.subscribe("/scene/ego_vehicle/state", 10, &ciLQR::recvEgoState, this);
     obstacles_state_sub=nh.subscribe("/scene/obstacles/state", 10, &ciLQR::recvObstaclesState, this);
-    cilqr_control_pub=nh.advertise<saturn_msgs::ControlArray>("/cilqr_planner/control", 10, true);
     rviz_local_refer_points_pub=nh.advertise<visualization_msgs::Marker>("/cilqr_planner/local_referline/points", 10, true);
     rviz_local_refer_lines_pub=nh.advertise<visualization_msgs::Marker>("/cilqr_planner/local_referline/lines", 10, true);
-    rviz_local_planned_path_pub=nh.advertise<nav_msgs::Path>("/cilqr_planner/local_planned_path", 10, true);
+    rviz_cilqr_planned_path_pub=nh.advertise<nav_msgs::Path>("/cilqr_planner/rviz/planned_path", 10, true);
+    local_planned_path_pub=nh.advertise<saturn_msgs::Path>("/cilqr_planner/planned_path", 10, true);
     
     ROS_INFO("ciLQR parameters loading...");
     nh.getParam("/planner/global_file_path", global_waypoints_filepath);
@@ -22,6 +22,7 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     nh.getParam("/timestep/planning", dt);
     nh.getParam("/timestep/control", control_dt);
     nh.getParam("/timestep/prediction", predict_dt);
+    nh.getParam("/timestep/multiple/planner_start_index", start_index_multiple);
     nh.getParam("/planner/safe_dist/a", safe_a);
     nh.getParam("/planner/safe_dist/b", safe_b);
     nh.getParam("/planner/safe_time", safe_time);
@@ -60,15 +61,15 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     nh.getParam("/planner/optimal/lamb/ambify", lamb_ambify);
     nh.getParam("/planner/optimal/lamb/max", lamb_max);
     nh.getParam("/planner/optimal/tol", optimal_tol);
-    nh.getParam("/planner/error/start_dist",start_dist);
     nh.getParam("/road_info/lane_width", lane_width);
     nh.getParam("/road_info/lane_num", lane_num);
+    
     cout<<"read optimal_tol="<<optimal_tol<<endl;
     cout<<"read beta_min="<<beta1<<endl;
     closest_global_index=0;
     closest_local_index=0;
     isFirstFrame=true;
-    planning_start_index=0;
+    planning_start_index=start_index_multiple*dt/control_dt;
     max_dist=numeric_limits<double>::max();
     dist=0.0;
     alfa=1.0;
@@ -189,7 +190,6 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     costJ=0;
     costJ_nominal=0;
     forward_counter=0;
-    //for ego initial speed
 
     ROS_INFO("ciLQR constructed!");
 
@@ -214,7 +214,7 @@ void ciLQR::recvEgoState(const saturn_msgs::State &msg)
 
 void ciLQR::recvObstaclesState(const saturn_msgs::ObstacleStateArray &msg)
 {
-    ROS_INFO("receive obstacles msg!");
+
     if(msg.obstacles.size()==0)
     {
         return;
@@ -352,8 +352,6 @@ void ciLQR::polynominalFitting()
         polyY(i,0)=local_waypoints[i].y;
     }
 
-    //poly_a=polyX.transpose()*polyX.ldlt().solve(polyX.transpose()*polyY);
-    //poly_a = polyX.colPivHouseholderQr().solve(polyY);
     poly_a = polyX.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(polyY);
     for(int i=0;i<=poly_order;i++)
     {
@@ -446,10 +444,7 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cout<<"X_bar=["<<X_bar_lst[n].x<<", "<<X_bar_lst[n].y<<", "<<X_bar_lst[n].theta<<", "<<X_bar_lst[n].v<<"]"<<endl;
 
     }
-    //ROS_INFO("backward_-1");
-    //cout<<"matrix X size:"<<X.rows()<<"*"<<X.cols()<<endl;
-    //cout<<"X_cal_lst size="<<X_cal_lst.size()<<endl;
-    //cout<<X_cal_lst[X_cal_lst.size()-1].x<<", "<<X_cal_lst[X_cal_lst.size()-1].y<<", "<<X_cal_lst[X_cal_lst.size()-1].theta<<", "<<X_cal_lst[X_cal_lst.size()-1].v<<endl;
+    
     // 1. whe k=N, calc relevant variables and ternimal costJ
     X(0,0)=X_cal_lst[X_cal_lst.size()-1].x;
     X(1,0)=X_cal_lst[X_cal_lst.size()-1].y;
@@ -471,18 +466,11 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
     M_scalar=(M_scalar.array().abs()<EPS).select(0, M_scalar);
     costJ_temp+=M_scalar(0,0);
     cout<<"cost_terminal="<<costJ_temp<<endl;
-    //cout<<"terminalX="<<X(0,0)<<","<<X(1,0)<<","<<X(2,0)<<","<<X(3,0)<<endl;
-    //cout<<"terminalXbar="<<X_bar(0,0)<<","<<X_bar(1,0)<<","<<X_bar(2,0)<<","<<X_bar(3,0)<<endl;
-    // for(int m=0; m<X_cal_lst.size(); m++)
-    // {
-    //     cout<<"X_bar: ("<<X_bar_lst[m].x<<","<<X_bar_lst[m].y<<","<<X_bar_lst[m].theta<<","<<X_bar_lst[m].v<<")    ";
-    //     cout<<"X: ("<<X_cal_lst[m].x<<","<<X_cal_lst[m].y<<","<<X_cal_lst[m].theta<<","<<X_cal_lst[m].v<<")"<<endl;
-    // }
 
     ROS_INFO("backward_1");
     // 2. when k=N-1~k=0, i represent timestep
     cout<<"local_horizon="<<local_horizon<<endl;
-    for(int i=local_horizon-2; i>=0; i--)
+    for(int i=local_horizon-1; i>=0; i--)
     {
         ROS_INFO("come into backward loop!");
         cout<<"local_i="<<i<<endl;
@@ -813,7 +801,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             cout<<"ddBu="<<ddBu(0,0)<<","<<ddBu(0,1)<<endl;
             cout<<ddBu(1,0)<<","<<ddBu(1,1)<<endl;
         }
-        //cout<<"yawrate_min="<<X_cal_lst[i].v*tan(steer_low)/egoL<<"; yawrate_max="<<X_cal_lst[i].v*tan(steer_high)/egoL<<"; cur_yawrate="<<U(1,0)<<endl;
         ROS_INFO("backward_4");
         if(isCompleteCal)
         {
@@ -836,13 +823,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             B_reg=Reg*B;
             Qux_reg=Qux+A*B_reg;
             Quu_reg=Quu+B_reg.transpose()*B_reg;
-            //partial regulation
-            // Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(Quu);
-            // Quu_evals=es.eigenvalues();
-            // Quu_evectors=es.eigenvectors();
-            // Quu_evals.cwiseMax(0.0);
-            // Quu_evals.array()+=lamb;
-            // Quu_inv=Quu_evectors*Quu_evals.asDiagonal().inverse()*Quu_evectors.transpose();
             
             cout<<"Qx="<<Qx(0,0)<<","<<Qx(0,1)<<","<<Qx(0,2)<<","<<Qx(0,3)<<endl;
             cout<<"Qu="<<Qu(0,0)<<","<<Qu(0,1)<<endl;
@@ -907,8 +887,7 @@ void ciLQR::ForwardPass()
         X_nominal_lst.push_back(xk);
         delta_controls.clear();
         planned_controls.clear();
-        //cout<<"planner_here2.5"<<endl;
-        for(int i=0; i<local_horizon-1; i++)
+        for(int i=0; i<=local_horizon-1; i++)
         {
             deltaX=(X_nominal-X);
             K(0,0)=K_lst[K_lst.size()-1-i][0];
@@ -930,18 +909,9 @@ void ciLQR::ForwardPass()
             control_signal.accel=control_signal.accel>a_high?a_high:control_signal.accel;
             control_signal.accel=control_signal.accel<a_low?a_low:control_signal.accel;
             control_signal.yaw_rate=initial_controls[i].yaw_rate+deltaU_star(1,0);
-            //control_signal.yaw_rate=control_signal.yaw_rate>X_nominal_lst[i].v*tan(steer_high)/egoL?X_nominal_lst[i].v*tan(steer_high)/egoL:control_signal.yaw_rate;
             planned_controls.push_back(control_signal);
-            //cout<<"X_nominal=["<<X_nominal(0,0)<<","<<X_nominal(1,0)<<","<<X_nominal(2,0)<<","<<X_nominal(3,0)<<"]";
-            //cout<<"   X_bar=["<<X_bar(0,0)<<", "<<X_bar(1,0)<<", "<<X_bar(2,0)", "<<X_bar(3,0)<<"]"<<endl;
-            //cout<<"X=["<<X(0,0)<<","<<X(1,0)<<","<<X(2,0)<<","<<X(3,0)<<"]"<<endl;
-            // cout<<"deltaX=["<<deltaX(0,0)<<","<<deltaX(1,0)<<","<<deltaX(2,0)<<","<<deltaX(3,0)<<"]"<<endl;
-            // cout<<"K_matrix:"<<K(0,0)<<","<<K(0,1)<<","<<K(0,2)<<","<<K(0,3)<<endl;
-            // cout<<K(1,0)<<","<<K(1,1)<<","<<K(1,2)<<","<<K(1,3)<<endl;
-            // cout<<"d_matrix:"<<d(0,0)<<","<<d(1,0)<<endl;
             cout<<"deltaU_star=["<<deltaU_star(0,0)<<","<<deltaU_star(1,0)<<"]"<<endl;
             cout<<"controls=["<<control_signal.accel<<", "<<control_signal.yaw_rate<<endl<<endl;
-            // cout<<"--------------------------------------"<<endl;
         
             vd_model.updateOneStep(xk, xk1, control_signal, control_dt);
             X_nominal_lst.push_back(xk1);
@@ -1018,27 +988,14 @@ void ciLQR::iLQRSolver()
     else
     {
         ROS_INFO("come to the 2nd frame!");
-        vd_model.getPredictedPose(ego_state, ego_state.accel, dt, ego_predict_state);
-        findClosestWaypointIndex(planned_path, ego_predict_state, planning_start_index, true);
-        if(pow(planned_path[planning_start_index].x-ego_state.x,2)+pow(planned_path[planning_start_index].y-ego_state.y,2)<start_dist*start_dist)
-        {
-            start_state.x=planned_path[planning_start_index].x;
-            start_state.y=planned_path[planning_start_index].y;
-            start_state.theta=planned_path[planning_start_index].theta;
-            start_state.v=ego_state.v;
-            start_state.accel=planned_path[planning_start_index].accel;
-            start_state.yaw_rate=planned_path[planning_start_index].yaw_rate;
+        start_state.x=planned_path[planning_start_index].x;
+        start_state.y=planned_path[planning_start_index].y;
+        start_state.theta=planned_path[planning_start_index].theta;
+        start_state.v=planned_path[planning_start_index].v;
+        start_state.accel=planned_path[planning_start_index].accel;
+        start_state.yaw_rate=planned_path[planning_start_index].yaw_rate;
+        findClosestWaypointIndex(global_waypoints, start_state, closest_global_index, false);
             
-        }
-        else
-        {
-            start_state.x=ego_predict_state.x;
-            start_state.y=ego_predict_state.y;
-            start_state.theta=ego_predict_state.theta;
-            start_state.v=ego_predict_state.v;
-            start_state.accel=ego_predict_state.accel;
-            start_state.yaw_rate=ego_predict_state.yaw_rate;
-        }
     }
     ROS_INFO("planner_here2.1");
     local_waypoints.clear();
@@ -1114,37 +1071,7 @@ void ciLQR::iLQRSolver()
                 break;
             }
         }
-        // if(forward_iter_flag)
-        // {
-        //     X_vd_lst.swap(X_nominal_lst);
-        //     initial_controls.swap(planned_controls);
-        //     costJ_cache=costJ;
-        //     costJ=costJ_nominal;
-        //     costJ_nominal=costJ_cache;
-        //     cout<<"swap!"<<endl;
-        //     cout<<"delta cost="<<costJ-costJ_nominal<<",  optimal_tol="<<optimal_tol<<endl;
-        //     if(fabs(costJ-costJ_nominal)<optimal_tol)
-        //     {
-        //         cout<<"arrive optimal tol!"<<endl;
-        //         break;
-        //     }
-        //     else
-        //     {
-        //         lamb*=lamb_decay;
-        //         cout<<"lamb(decay)="<<lamb<<endl;
-        //     }
-        // }
-        // else
-        // {
-        //     cout<<"linear search failed!"<<endl;
-        //     lamb*=lamb_ambify;
-        //     cout<<"lamb(ambify)="<<lamb<<endl;
-        //     if(lamb>lamb_max)
-        //     {
-        //         cout<<"lamb out of range!"<<endl;
-        //         break;
-        //     }
-        // }
+        
         optimization_counter++;
         cout<<"optimal_counter="<<optimization_counter<<endl;
     }
@@ -1164,8 +1091,11 @@ void ciLQR::update()
     saturn_msgs::Control control_msg;
     saturn_msgs::ControlArray control_lst_msg;
     
-    geometry_msgs::PoseStamped waypoint_msg;
-    nav_msgs::Path planned_path_msg;
+    saturn_msgs::StateLite planned_point_msg;
+    saturn_msgs::Path planned_path_msg;
+
+    nav_msgs::Path rviz_planned_path_msg;
+    geometry_msgs::PoseStamped path_point_msg;
 
     geometry_msgs::Point point_msg;
     visualization_msgs::Marker local_points_msg;
@@ -1184,49 +1114,44 @@ void ciLQR::update()
             continue;
         }
         isRecEgoVeh=false;
-
-        ROS_INFO("planner_here2");
         iLQRSolver();
-        ROS_INFO("planner_here3");
         
-        //fulfill related message, publish planned_path and planned_controls
-        //1. publish controls
-        control_lst_msg.header.frame_id="cilqr_planner";
-        control_lst_msg.header.stamp=ros::Time::now();
-        control_lst_msg.control_lst.clear();
-        cout<<"planned_controls:"<<endl;
-        for(int i=0; i<initial_controls.size();i++)
-        {
-            control_msg.u_accel=initial_controls[i].accel;
-            control_msg.u_yawrate=initial_controls[i].yaw_rate;
-            control_lst_msg.control_lst.push_back(control_msg);
-            cout<<initial_controls[i].accel<<","<<initial_controls[i].yaw_rate<<endl;
-        }
-        cilqr_control_pub.publish(control_lst_msg);
-        ROS_INFO("planner_here4");
-        //2. planned path for rviz and store
-        planned_path_msg.header.frame_id="map";
+        //2. planned path for publish to scnen, rviz,  and store
+        planned_path_msg.header.frame_id="cilqr";
         planned_path_msg.header.stamp=ros::Time::now();
-        planned_path_msg.poses.clear();
+        planned_path_msg.path.clear();
         planned_path.clear();
-        cout<<"planned_path:"<<endl;
-        for(int i=0; i<X_nominal_lst.size(); i++)
-        {
-            waypoint_msg.pose.position.x=X_vd_lst[i].x;
-            waypoint_msg.pose.position.y=X_vd_lst[i].y;
-            waypoint_msg.pose.position.z=egoHeight/2;
-            waypoint_msg.pose.orientation.x=0;
-            waypoint_msg.pose.orientation.y=0;
-            waypoint_msg.pose.orientation.z=sin(X_vd_lst[i].theta/2);
-            waypoint_msg.pose.orientation.w=cos(X_vd_lst[i].theta/2);
 
-            planned_path_msg.poses.push_back(waypoint_msg);
+        rviz_planned_path_msg.header.frame_id="map";
+        rviz_planned_path_msg.header.stamp=ros::Time::now();
+        rviz_planned_path_msg.poses.clear();
+
+        cout<<"planned_path:"<<endl;
+        for(int i=0; i<X_vd_lst.size(); i++)
+        {
+            planned_point_msg.x=X_vd_lst[i].x;
+            planned_point_msg.y=X_vd_lst[i].y;
+            planned_point_msg.theta=X_vd_lst[i].theta;
+            planned_point_msg.v=X_vd_lst[i].v;
+            planned_point_msg.accel=X_vd_lst[i].accel;
+            planned_point_msg.yawrate=X_vd_lst[i].yaw_rate;
+            planned_path_msg.path.push_back(planned_point_msg);
+
+            path_point_msg.pose.position.x=X_vd_lst[i].x;
+            path_point_msg.pose.position.y=X_vd_lst[i].y;
+            path_point_msg.pose.position.z=0;
+            path_point_msg.pose.orientation.x=0;
+            path_point_msg.pose.orientation.y=0;
+            path_point_msg.pose.orientation.z=sin(X_vd_lst[i].theta/2);
+            path_point_msg.pose.orientation.w=cos(X_vd_lst[i].theta/2);
+            rviz_planned_path_msg.poses.push_back(path_point_msg);
 
             planned_path.push_back(X_vd_lst[i]);
             cout<<X_vd_lst[i].x<<","<<X_vd_lst[i].y<<","<<X_vd_lst[i].theta<<","<<X_vd_lst[i].v<<endl;
         }
         cout<<"planned_path fulfill size:"<<planned_path.size()<<endl;
-        rviz_local_planned_path_pub.publish(planned_path_msg);
+        local_planned_path_pub.publish(planned_path_msg);
+        rviz_cilqr_planned_path_pub.publish(rviz_planned_path_msg);
         ROS_INFO("planner_here5");
         //3. local reference waypoint for rviz
         local_points_msg.header.frame_id="map";

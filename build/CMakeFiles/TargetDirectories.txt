@@ -62,6 +62,7 @@
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ControlArray.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Control.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Size.dir
+/home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_Path.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_ObstacleStateArray.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_State.dir
 /home/saxijing/cilqr/build/message/saturn_msgs/CMakeFiles/_saturn_msgs_generate_messages_check_deps_StateLite.dir
@@ -106,7 +107,11 @@
 /home/saxijing/cilqr/build/planning/CMakeFiles/install.dir
 /home/saxijing/cilqr/build/planning/CMakeFiles/install/local.dir
 /home/saxijing/cilqr/build/planning/CMakeFiles/install/strip.dir
-/home/saxijing/cilqr/build/scene/CMakeFiles/scene.dir
+/home/saxijing/cilqr/build/scene/CMakeFiles/static_avoidance_scene.dir
+/home/saxijing/cilqr/build/scene/CMakeFiles/following_scene.dir
+/home/saxijing/cilqr/build/scene/CMakeFiles/multi_obs_scene.dir
+/home/saxijing/cilqr/build/scene/CMakeFiles/lane_change_scene.dir
+/home/saxijing/cilqr/build/scene/CMakeFiles/overtake_scene.dir
 /home/saxijing/cilqr/build/scene/CMakeFiles/test.dir
 /home/saxijing/cilqr/build/scene/CMakeFiles/edit_cache.dir
 /home/saxijing/cilqr/build/scene/CMakeFiles/rebuild_cache.dir

@@ -69,6 +69,7 @@ include message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp.dir/pr
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/ControlArray.lisp
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Control.lisp
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Size.lisp
+message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Path.lisp
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/ObstacleStateArray.lisp
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/State.lisp
 message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/StateLite.lisp
@@ -104,22 +105,29 @@ message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp: /home/saxijin
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Lisp code from saturn_msgs/ObstacleStateArray.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/ObstacleStateArray.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg
 
+/home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Path.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
+/home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Path.lisp: /home/saxijing/cilqr/src/message/saturn_msgs/msg/Path.msg
+/home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Path.lisp: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
+/home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Path.lisp: /opt/ros/melodic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Lisp code from saturn_msgs/Path.msg"
+	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/Path.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg
+
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Size.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Size.lisp: /home/saxijing/cilqr/src/message/saturn_msgs/msg/Size.msg
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Size.lisp: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Lisp code from saturn_msgs/Size.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Lisp code from saturn_msgs/Size.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/Size.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg
 
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/State.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/State.lisp: /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/State.lisp: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Lisp code from saturn_msgs/State.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Lisp code from saturn_msgs/State.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/State.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg
 
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/StateLite.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/StateLite.lisp: /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg
 /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/StateLite.lisp: /opt/ros/melodic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Lisp code from saturn_msgs/StateLite.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/saxijing/cilqr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Lisp code from saturn_msgs/StateLite.msg"
 	cd /home/saxijing/cilqr/build/message/saturn_msgs && ../../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/saxijing/cilqr/src/message/saturn_msgs/msg/StateLite.msg -Isaturn_msgs:/home/saxijing/cilqr/src/message/saturn_msgs/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p saturn_msgs -o /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg
 
 saturn_msgs_generate_messages_lisp: message/saturn_msgs/CMakeFiles/saturn_msgs_generate_messages_lisp
@@ -127,6 +135,7 @@ saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp
 saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/ControlArray.lisp
 saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/ObstacleState.lisp
 saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/ObstacleStateArray.lisp
+saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Path.lisp
 saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/Size.lisp
 saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/State.lisp
 saturn_msgs_generate_messages_lisp: /home/saxijing/cilqr/devel/share/common-lisp/ros/saturn_msgs/msg/StateLite.lisp

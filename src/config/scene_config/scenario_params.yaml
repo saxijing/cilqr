@@ -6,6 +6,7 @@
 /timestep/planning: 0.1
 /timestep/control: 0.05
 /timestep/prediction: 0.05
+/timestep/multiple/planner_start_index: 23
 
 # params for building scene
 /planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
@@ -63,6 +64,9 @@
 /rviz/camera_pose/rotation/pitch: 1.57
 /rviz/camera_pose/rotation/yaw: 0
 /rviz/camera_pose/rotation/roll: 0
+
+# some acceptable error
+/planner/path_joint/max_error: 0.5
 
 
 

@@ -1108,6 +1108,7 @@ planning/CMakeFiles/cilqr_planner.dir/src/functions/ciLQR.cpp.o: /home/saxijing/
   /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/Path.h \
   /home/saxijing/cilqr/src/common/include/common/VehicleModel.h \
   /home/saxijing/cilqr/src/common/include/common/Common.h \
   /usr/include/eigen3/Eigen/Dense \
@@ -2401,6 +2402,7 @@ planning/CMakeFiles/cilqr_planner.dir/src/main/ciLQRPlanner.cpp.o: /home/saxijin
   /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/Path.h \
   /home/saxijing/cilqr/src/common/include/common/VehicleModel.h \
   /home/saxijing/cilqr/src/common/include/common/Common.h \
   /usr/include/eigen3/Eigen/Dense \
@@ -4091,6 +4093,8 @@ planning/CMakeFiles/cilqr_planner.dir/src/main/ciLQRPlanner.cpp.o: /home/saxijin
 /usr/include/boost/type_traits/add_reference.hpp:
 
 /usr/include/boost/mpl/aux_/find_if_pred.hpp:
+
+/home/saxijing/cilqr/devel/include/saturn_msgs/Path.h:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 

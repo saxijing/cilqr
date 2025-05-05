@@ -1477,6 +1477,7 @@ scene/CMakeFiles/scene.dir/src/functions/Scene.cpp.o: /home/saxijing/cilqr/src/s
   /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/Path.h \
   /home/saxijing/cilqr/src/common/include/common/VehicleModel.h \
   /home/saxijing/cilqr/src/common/include/common/Common.h \
   /usr/include/eigen3/Eigen/Dense \
@@ -2778,6 +2779,7 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
   /home/saxijing/cilqr/devel/include/saturn_msgs/ObstacleStateArray.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/Control.h \
   /home/saxijing/cilqr/devel/include/saturn_msgs/ControlArray.h \
+  /home/saxijing/cilqr/devel/include/saturn_msgs/Path.h \
   /home/saxijing/cilqr/src/common/include/common/VehicleModel.h \
   /home/saxijing/cilqr/src/common/include/common/Common.h \
   /usr/include/eigen3/Eigen/Dense \
@@ -4490,6 +4492,8 @@ scene/CMakeFiles/scene.dir/src/main/StaticObstacle.cpp.o: /home/saxijing/cilqr/s
 /usr/include/boost/type_traits/add_reference.hpp:
 
 /usr/include/boost/mpl/aux_/find_if_pred.hpp:
+
+/home/saxijing/cilqr/devel/include/saturn_msgs/Path.h:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
