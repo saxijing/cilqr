@@ -6,7 +6,7 @@
 /timestep/planning: 0.1
 /timestep/control: 0.05
 /timestep/prediction: 0.05
-/timestep/multiple/planner_start_index: 18
+/timestep/multiple/planner_start_index: 13
 
 # params for building scene
 /planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
@@ -41,9 +41,9 @@
 /planner/error/start_dist: 30.0
 
 # weights
-/planner/weight/iLQR/w_pos: 8.0
+/planner/weight/iLQR/w_pos: 10.0
 /planner/weight/iLQR/w_vel: 0.1
-/planner/weight/iLQR/w_theta: 0.5
+/planner/weight/iLQR/w_theta: 1.0
 /planner/weight/iLQR/w_accel: 0.1
 /planner/weight/iLQR/w_yawrate: 15.0
 /planner/weight/obstacle/q1_front: 2.75

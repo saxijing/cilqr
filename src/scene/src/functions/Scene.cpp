@@ -7,10 +7,8 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     scene_name=name;
     nh=nh_;
     ego_vehicle_pub=nh.advertise<saturn_msgs::State>("/scene/ego_vehicle/state", 10, true);
-    //ego_predict_pub=nh.advertise<saturn_msgs::State>("/scene/ego_vehicle/predict", 10, true);
     obstacles_pub=nh.advertise<saturn_msgs::ObstacleStateArray>("/scene/obstacles/state", 10, true);
     rviz_planned_path_pub=nh.advertise<nav_msgs::Path>("/rviz/scene/planned_path", 10, true);
-    //cilqr_planner_control_sub=nh.subscribe("/cilqr_planner/control", 10, &Scene::recvCilqrPlannerControl, this);
     cilqr_planned_path_sub=nh.subscribe("/cilqr_planner/planned_path", 10, &Scene::recvCilqrPlannedPath, this);
     ego_rviz_pub=nh.advertise<visualization_msgs::Marker>("/scene/ego_vehicle/rviz/state", 1, true);
     obstacles_rviz_pub=nh.advertise<visualization_msgs::MarkerArray>("/scene/obstacles/rviz/state", 1, true);
@@ -34,13 +32,6 @@ Scene::Scene(const string name, ros::NodeHandle &nh_)
     isFirstFrameFlag=true;
     planned_path_lst.clear();
     current_index=0;
-
-    // {
-    //     lock_guard<mutex> lock(control_lst_mutex);
-    //     lock_control_signal.accel=0;
-    //     lock_control_signal.yaw_rate=0;
-    // }
-
     ego_vehicle.resetTimestamp(dt);
     ego_vehicle.setMaxSpeed(ego_max_speed);
     readCenterlineAndCalRoadEdge();
@@ -140,44 +131,6 @@ void Scene::findClosestIndex(const vector<ObjState>& point_lst, const ObjState& 
         }
     }
 }
-
-// void Scene::findPathJointIndex(const vector<ObjState>& point_lst, const ObjState& joint, int& joint_i)
-// {
-//     joint_i=-1;
-//     for(int i=0; i<point_lst.size(); i++)
-//     {
-//         if(abs(point_lst[i].x-joint.x)<1e-9 && abs(point_lst[i].y-joint.y)<1e-9)
-//         {
-//             joint_i=i;
-//             break;
-//         }
-//     }
-//     if(joint_i==-1)
-//         cout<<"search joint index failed!"<<endl;
-// }
-
-// void Scene::recvCilqrPlannerControl(const saturn_msgs::ControlArray& msg)
-// {
-//     ROS_INFO("receive cilqr planner control!");
-//     local_control_lst.clear();
-//     //cout<<"msg.control_lst.size()="<<msg.control_lst.size()<<endl;
-//     for(int i=0; i<msg.control_lst.size(); i++)
-//     {
-//         control_signal.accel=msg.control_lst[i].u_accel;
-//         control_signal.yaw_rate=msg.control_lst[i].u_yawrate;
-//         local_control_lst.push_back(control_signal);
-//     }
-//     //cout<<"local_control_lst.size()="<<local_control_lst.size()<<endl;
-//     {
-//         lock_guard<mutex> lock(control_lst_mutex);
-//         lock_local_control_lst=move(local_control_lst);
-//         control_index=0;
-//         for(int i=0;i<lock_local_control_lst.size();i++)
-//         {
-//             cout<<"recv control: "<<lock_local_control_lst[i].accel<<","<<lock_local_control_lst[i].yaw_rate<<endl;
-//         }
-//     }
-// }
 
 void Scene::recvCilqrPlannedPath(const saturn_msgs::Path& msg)
 {
@@ -346,39 +299,6 @@ void Scene::update()
         ego_state_msg.accel=ego_vehicle.getAccelerate();
         ego_state_msg.yawrate=ego_vehicle.getYawRate();
         ego_vehicle_pub.publish(ego_state_msg);
-
-        //fulfill ego_predict_msg and publish
-        // ego_predict_msg.header.frame_id="ego_state";
-        // ego_predict_msg.header.stamp.ros::Time::now();
-        // ego_predict_msg.id=0;
-        // ego_predict_msg.name="ego_vehicle";
-        // if(planned_path_lst.size()<=current_index+delta_start_index)
-        // {
-        //     ego_vehicle.getVehicleState(ego_vehicle_state);
-        //     ego_vehicle.getPredictedPose(ego_vehicle_state, ego_vehicle_state.accel, planning_start_index_multiple*planning_dt, ego_predict_state);
-        //     //cout<<"ego_pose: "<<ego_vehicle_state.x<<", "<<ego_vehicle_state.y<<", "<<ego_vehicle_state.theta<<", "<<ego_vehicle_state.v<<endl;
-        //     //cout<<"ego_predict: "<<ego_predict_state.x<<", "<<ego_predict_state.y<<", "<<ego_predict_state.theta<<", "<<ego_predict_state.v<<endl;
-        // }
-        // else
-        // {
-        //     cout<<"path_size="<<planned_path_lst.size()<<",  index="<<delta_start_index<<endl;
-        //     ego_predict_state.x=planned_path_lst[current_index+delta_start_index].x;
-        //     ego_predict_state.y=planned_path_lst[current_index+delta_start_index].y;
-        //     ego_predict_state.theta=planned_path_lst[current_index+delta_start_index].theta;
-        //     ego_predict_state.v=planned_path_lst[current_index+delta_start_index].v;
-        //     ego_predict_state.accel=planned_path_lst[current_index+delta_start_index].accel;
-        //     ego_predict_state.yaw_rate=planned_path_lst[current_index+delta_start_index].yaw_rate;
-        //     ego_vehicle.getVehicleState(ego_vehicle_state);
-        //     cout<<"ego pose: "<<ego_vehicle_state.x<<", "<<ego_vehicle_state.y<<", "<<ego_vehicle_state.theta<<", "<<ego_vehicle_state.v<<endl;
-        //     cout<<"ego_predict from last path:"<<ego_predict_state.x<<", "<<ego_predict_state.y<<", "<<ego_predict_state.theta<<", "<<ego_predict_state.v<<endl;
-        // }
-        // ego_predict_msg.x=ego_predict_state.x;
-        // ego_predict_msg.y=ego_predict_state.y;
-        // ego_predict_msg.theta=ego_predict_state.theta;
-        // ego_predict_msg.v=ego_predict_state.v;
-        // ego_predict_msg.accel=ego_predict_state.accel;
-        // ego_predict_msg.yawrate=ego_predict_state.yaw_rate;
-        // ego_predict_pub.publish(ego_predict_msg);
         
         //fulfill ego_state_rviz_msg and publish
         ego_rviz_msg.header.frame_id="map";
@@ -483,34 +403,6 @@ void Scene::update()
             controller_rate.sleep();
             continue;
         }
-
-        //update ego vehicle state
-        //cout<<"here1"<<endl;
-        //cout<<"local_control_lst.size()="<<local_control_lst.size()<<endl;
-        //cout<<"control_index="<<control_index<<endl;
-        //cout<<"before find closest index."<<endl;
-        //findClosestIndex(planned_path_lst, ego_vehicle_state, closest_index);
-        //cout<<"after find closest index."<<endl;
-        // {
-        //     //cout<<"come into data lock!"<<endl;
-        //     lock_guard<mutex> lock(control_lst_mutex);
-        //     if(control_index>=lock_local_control_lst.size()||control_index<0)
-        //     {
-        //         control_index=0;
-        //     }
-        //     if(lock_local_control_lst.size()>0)
-        //     {
-        //         lock_control_signal.accel=lock_local_control_lst[control_index].accel;
-        //         lock_control_signal.yaw_rate=lock_local_control_lst[control_index].yaw_rate;
-        //         control_index++;
-        //         cout<<"control_index="<<control_index<<endl;
-        //         cout<<"main loop recved control: "<<lock_control_signal.accel<<","<<lock_control_signal.yaw_rate<<endl;
-        //         cout<<"control_signal=["<<lock_control_signal.accel<<", "<<lock_control_signal.yaw_rate<<"];"<<endl;
-        //     }
-        // }
-
-        // ego_vehicle.applyU(lock_control_signal.accel, lock_control_signal.yaw_rate);
-        // ego_vehicle.update();
         
         if(planned_path_lst.size()>0&&current_index+1<planning_start_index+delta_start_index)
         {
@@ -519,14 +411,6 @@ void Scene::update()
             cout<<"current_index="<<current_index<<endl;
             cout<<"next position: "<<planned_path_lst[current_index].x<<", "<<planned_path_lst[current_index].y<<", "<<planned_path_lst[current_index].theta<<endl;
             ego_vehicle.repose(planned_path_lst[current_index]);
-
-            // if(current_index>=0&&current_index<planned_path_lst.size()-1)
-            // {
-            //     current_index++;
-            //     ego_vehicle.repose(planned_path_lst[current_index]);
-            //     ego_vehicle.getVehicleState(ego_vehicle_state);
-            //     cout<<"update ego vehicle state!"<<endl;
-            // }
         }
         ego_vehicle.getVehicleState(ego_vehicle_state);
         ros::spinOnce();

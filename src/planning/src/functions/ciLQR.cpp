@@ -64,8 +64,6 @@ ciLQR::ciLQR(ros::NodeHandle &nh_): nh(nh_)
     nh.getParam("/road_info/lane_width", lane_width);
     nh.getParam("/road_info/lane_num", lane_num);
     
-    cout<<"read optimal_tol="<<optimal_tol<<endl;
-    cout<<"read beta_min="<<beta1<<endl;
     closest_global_index=0;
     closest_local_index=0;
     isFirstFrame=true;
@@ -434,15 +432,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
 
         deltaV1d=0;
         deltaV2d=0;
-        cout<<"process: backward pass"<<endl;
-    }
-    else
-        cout<<"process: forward pass"<<endl;
-    for(int n=0; n<X_cal_lst.size(); n++)
-    {
-        cout<<"X_cal=["<<X_cal_lst[n].x<<", "<<X_cal_lst[n].y<<", "<<X_cal_lst[n].theta<<", "<<X_cal_lst[n].v<<"];  ";
-        cout<<"X_bar=["<<X_bar_lst[n].x<<", "<<X_bar_lst[n].y<<", "<<X_bar_lst[n].theta<<", "<<X_bar_lst[n].v<<"]"<<endl;
-
     }
     
     // 1. whe k=N, calc relevant variables and ternimal costJ
@@ -455,7 +444,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
     X_bar(1,0)=X_bar_lst[X_bar_lst.size()-1].y;
     X_bar(2,0)=X_bar_lst[X_bar_lst.size()-1].theta;
     X_bar(3,0)=X_bar_lst[X_bar_lst.size()-1].v;
-    ROS_INFO("backward_0");
     if(isCompleteCal)
     {
         dVk=(X-X_bar).transpose()*Q;
@@ -465,15 +453,10 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
     M_scalar=0.5*(X-X_bar).transpose()*Q*(X-X_bar);
     M_scalar=(M_scalar.array().abs()<EPS).select(0, M_scalar);
     costJ_temp+=M_scalar(0,0);
-    cout<<"cost_terminal="<<costJ_temp<<endl;
 
-    ROS_INFO("backward_1");
     // 2. when k=N-1~k=0, i represent timestep
-    cout<<"local_horizon="<<local_horizon<<endl;
     for(int i=local_horizon-1; i>=0; i--)
     {
-        ROS_INFO("come into backward loop!");
-        cout<<"local_i="<<i<<endl;
         //2.1 fulfill X and X_bar matrix
         X(0,0)=X_cal_lst[i].x;
         X(1,0)=X_cal_lst[i].y;
@@ -484,7 +467,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         X_bar(1,0)=X_bar_lst[i].y;
         X_bar(2,0)=X_bar_lst[i].theta;
         X_bar(3,0)=X_bar_lst[i].v;
-        ROS_INFO("backward_2");
         //2.2 obstacles avoidance constraints, j represent different obstacle
         X_front(0,0)=X_cal_lst[i].x+ego_lf*cos(X_cal_lst[i].theta);
         X_front(1,0)=X_cal_lst[i].y+ego_lf*sin(X_cal_lst[i].theta);
@@ -515,8 +497,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         }
         if(obstacles_info.size()!=0)
         {
-            cout<<"come into obstacle loop"<<endl;
-            cout<<"obatacles num:"<<obstacles_info.size()<<endl;
             for(int j=0; j<obstacles_info.size(); j++)
             {
                 if(pow(obstacles_info[j].predicted_states[0].x-ego_state.x,2)+pow(obstacles_info[j].predicted_states[0].y-ego_state.y,2)>=max_percep_dist*max_percep_dist)
@@ -527,8 +507,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
                 ellipse_b=0.5*obstacles_info[j].size.length+obstacles_info[j].predicted_states[i].v*safe_time*sin(obstacles_info[j].predicted_states[i].theta)+safe_b+ego_radius;
                 P(0,0)=1/(ellipse_a*ellipse_a);
                 P(1,1)=1/(ellipse_b*ellipse_b);
-                cout<<"ellipse_a="<<ellipse_a<<",   ellipse_b="<<ellipse_b<<endl;
-                cout<<"obstacles length="<<obstacles_info[j].size.length<<endl;
 
                 X_obs(0,0)=obstacles_info[j].predicted_states[i].x;
                 X_obs(1,0)=obstacles_info[j].predicted_states[i].y;
@@ -541,10 +519,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
                 T=(T.array().abs()<EPS).select(0, T);
                 X_front_obs=T*(X_front-X_obs);
                 X_front_obs=(X_front_obs.array().abs()<EPS).select(0, X_front_obs);
-                cout<<"T="<<T(0,0)<<","<<T(0,1)<<","<<T(0,2)<<","<<T(0,3)<<endl<<T(1,0)<<","<<T(1,1)<<","<<T(1,2)<<","<<T(1,3)<<endl;
-                cout<<T(2,0)<<","<<T(2,1)<<","<<T(2,2)<<","<<T(2,3)<<endl<<T(3,0)<<","<<T(3,1)<<","<<T(3,2)<<","<<T(3,3)<<endl;
-                cout<<"X_front="<<X_front(0,0)<<","<<X_front(1,0)<<","<<X_front(2,0)<<","<<X_front(3,0)<<endl;
-                cout<<"X_obs="<<X_obs(0,0)<<","<<X_obs(1,0)<<","<<X_obs(2,0)<<","<<X_obs(3,0)<<endl;
                 X_rear_obs=T*(X_rear-X_obs);
                 X_rear_obs=(X_rear_obs.array().abs()<EPS).select(0, X_rear_obs);
                 if(isCompleteCal)
@@ -567,17 +541,10 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
                 cost_single=getStateConstraintCostAndDeriva(q1_front, q2_front, M_scalar(0,0), obs_constrain_limit, limit_type, dCf, dBf, ddBf);
                 cost_single=fabs(cost_single)<EPS?0:cost_single;
                 costJ_temp+=cost_single;
-                cout<<"X_front_obs=["<<X_front_obs(0,0)<<","<<X_front_obs(1,0)<<X_front_obs(2,0)<<X_front_obs(3,0)<<"]"<<endl;
-                cout<<"orgin_front_obs_cost="<<cost_single<<endl;
                 if(isCompleteCal)
                 {
                     dBf=(dBf.array().abs()<EPS).select(0, dBf);
                     ddBf=(ddBf.array().abs()<EPS).select(0, ddBf);
-                    cout<<"obs dBf="<<dBf(0,0)<<","<<dBf(0,1)<<","<<dBf(0,2)<<","<<dBf(0,3)<<endl;
-                    cout<<"obs ddBf="<<ddBf(0,0)<<","<<ddBf(0,1)<<","<<ddBf(0,2)<<","<<ddBf(0,3)<<endl;
-                    cout<<ddBf(1,0)<<ddBf(1,1)<<","<<ddBf(1,2)<<","<<ddBf(1,3)<<endl;
-                    cout<<ddBf(2,0)<<","<<ddBf(2,1)<<","<<ddBf(2,2)<<","<<ddBf(2,3)<<endl;
-                    cout<<ddBf(3,0)<<","<<ddBf(3,1)<<","<<ddBf(3,2)<<","<<ddBf(3,3)<<endl;
                 }
 
                 //(2)rear:
@@ -586,17 +553,10 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
                 cost_single=getStateConstraintCostAndDeriva(q1_rear, q2_rear, M_scalar(0,0), obs_constrain_limit, limit_type, dCr, dBr, ddBr);
                 cost_single=fabs(cost_single)<EPS?0:cost_single;
                 costJ_temp+=cost_single;
-                cout<<"X_rear_obs=["<<X_rear_obs(0,0)<<","<<X_rear_obs(1,0)<<X_rear_obs(2,0)<<X_rear_obs(3,0)<<"]"<<endl;
-                cout<<"orgin_rear_obs_cost="<<cost_single<<endl;
                 if(isCompleteCal)
                 {
                     dBr=(dBr.array().abs()<EPS).select(0, dBr);
                     ddBr=(ddBr.array().abs()<EPS).select(0, ddBr);
-                    cout<<"obs dBr="<<dBr(0,0)<<","<<dBr(0,1)<<","<<dBr(0,2)<<","<<dBr(0,3)<<endl;
-                    cout<<"obs ddBr="<<ddBr(0,0)<<","<<ddBr(0,1)<<","<<ddBr(0,2)<<","<<ddBr(0,3)<<endl;
-                    cout<<ddBr(1,0)<<","<<ddBr(1,1)<<","<<ddBr(1,2)<<","<<ddBr(1,3)<<endl;
-                    cout<<ddBr(2,0)<<","<<ddBr(2,1)<<","<<ddBr(2,2)<<","<<ddBr(2,3)<<endl;
-                    cout<<ddBr(3,0)<<","<<ddBr(3,1)<<","<<ddBr(3,2)<<","<<ddBr(3,3)<<endl;
                 }
                 
                 //calculate dX and ddX
@@ -609,20 +569,14 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
                 }   
             }
         }
-        ROS_INFO("backward_3");
 
         // 2.3 roadedge constraint
         //(1) left roadedge constraint: ego front
-        cout<<"left edge match point=("<<left_roadedge[closest_global_index].x<<", "<<left_roadedge[closest_global_index].y<<")"<<endl;
-        cout<<"right edge match point=("<<right_roadedge[closest_global_index].x<<", "<<right_roadedge[closest_global_index].y<<")"<<endl;
-        cout<<"ego pos: ("<<X_front(0,0)<<", "<<X_front(1,0)<<")    ("<<X_rear(0,0)<<", "<<X_rear(1,0)<<")"<<endl;
-        cout<<"closest_global_index="<<closest_global_index<<endl;
         limit_type="lower";
         edge_limit=egoWidth/2;
         roadLR_dot=(right_roadedge[closest_global_index].x-left_roadedge[closest_global_index].x)*(X_front(0,0)-left_roadedge[closest_global_index].x)+(right_roadedge[closest_global_index].y-left_roadedge[closest_global_index].y)*(X_front(1,0)-left_roadedge[closest_global_index].y);
         roadLR_norm=sqrt(pow(left_roadedge[closest_global_index].x-right_roadedge[closest_global_index].x, 2)+pow(left_roadedge[closest_global_index].y-right_roadedge[closest_global_index].y, 2));
         M_scalar(0,0)=roadLR_dot/roadLR_norm;
-        cout<<"ego front to leftedge: "<<M_scalar(0,0)<<endl;
         dCf(0,0)=-(right_roadedge[closest_global_index].x-left_roadedge[closest_global_index].x)/roadLR_norm;
         dCf(0,1)=-(right_roadedge[closest_global_index].y-left_roadedge[closest_global_index].y)/roadLR_norm;
         dCf(0,2)=0.0;
@@ -630,16 +584,12 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cost_single=getStateConstraintCostAndDeriva(q1_front, q2_front, M_scalar(0,0), edge_limit, limit_type, dCf, dBf, ddBf);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"ego front left edge cost="<<cost_single<<endl;
 
         roadLR_dot=(right_roadedge[closest_global_index].x-left_roadedge[closest_global_index].x)*(X_rear(0,0)-left_roadedge[closest_global_index].x)+(right_roadedge[closest_global_index].y-left_roadedge[closest_global_index].y)*(X_rear(1,0)-left_roadedge[closest_global_index].y);
         M_scalar(0,0)=roadLR_dot/roadLR_norm;
-        cout<<"ego rear to leftedge: "<<M_scalar(0,0)<<endl;
         cost_single=getStateConstraintCostAndDeriva(q1_rear, q2_rear, M_scalar(0,0), edge_limit, limit_type, dCf, dBr, ddBr);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"ego rear left edge cost="<<cost_single<<endl;
-
         if(isCompleteCal)
         {
             dBf=(dBf.array().abs()<EPS).select(0, dBf);
@@ -655,7 +605,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         //(2) right roadedge constraint
         roadLR_dot=(left_roadedge[closest_global_index].x-right_roadedge[closest_global_index].x)*(X_front(0,0)-right_roadedge[closest_global_index].x)+(left_roadedge[closest_global_index].y-right_roadedge[closest_global_index].y)*(X_front(1,0)-right_roadedge[closest_global_index].y);
         M_scalar(0,0)=roadLR_dot/roadLR_norm;
-        cout<<"ego front to rightedge: "<<M_scalar(0,0)<<endl;
         dCf(0,0)=(right_roadedge[closest_global_index].x-left_roadedge[closest_global_index].x)/roadLR_norm;
         dCf(0,1)=(right_roadedge[closest_global_index].y-left_roadedge[closest_global_index].y)/roadLR_norm;
         dCf(0,2)=0.0;
@@ -663,15 +612,12 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cost_single=getStateConstraintCostAndDeriva(q1_front, q2_front, M_scalar(0,0), edge_limit, limit_type, dCf, dBf, ddBf);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"ego front right edge cost="<<cost_single<<endl;
 
         roadLR_dot=(left_roadedge[closest_global_index].x-right_roadedge[closest_global_index].x)*(X_rear(0,0)-right_roadedge[closest_global_index].x)+(left_roadedge[closest_global_index].y-right_roadedge[closest_global_index].y)*(X_rear(1,0)-right_roadedge[closest_global_index].y);
         M_scalar(0,0)=roadLR_dot/roadLR_norm;
-        cout<<"ego rear to rightedge: "<<M_scalar(0,0)<<endl;
         cost_single=getStateConstraintCostAndDeriva(q1_rear, q2_rear, M_scalar(0,0), edge_limit, limit_type, dCf, dBr, ddBr);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"ego rear right edge cost="<<cost_single<<endl;
         if(isCompleteCal)
         {
             dBf=(dBf.array().abs()<EPS).select(0, dBf);
@@ -689,39 +635,26 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         {
             dX=dX+(X-X_bar).transpose()*Q;
             dX=(dX.array().abs()<EPS).select(0, dX);
-            cout<<"distance dX total="<<dX(0,0)<<","<<dX(0,1)<<","<<dX(0,2)<<","<<dX(0,3)<<endl;
             ddX=ddX+Q;
             ddX=(ddX.array().abs()<EPS).select(0, ddX);
-            cout<<"distance ddX total="<<ddX(0,0)<<","<<ddX(0,1)<<","<<ddX(0,2)<<","<<ddX(0,3)<<endl;
-            cout<<ddX(1,0)<<","<<ddX(1,1)<<","<<ddX(1,2)<<","<<ddX(1,3)<<endl;
-            cout<<ddX(2,0)<<","<<ddX(2,1)<<","<<ddX(2,2)<<","<<ddX(2,3)<<endl;
-            cout<<ddX(3,0)<<","<<ddX(3,1)<<","<<ddX(3,2)<<","<<ddX(3,3)<<endl;
         }
         M_scalar=0.5*(X-X_bar).transpose()*Q*(X-X_bar);
         M_scalar=(M_scalar.array().abs()<EPS).select(0, M_scalar);
-        cout<<"process cost="<<M_scalar(0,0)<<endl;
         costJ_temp+=M_scalar(0,0);
-        cout<<"J_temp_process="<<M_scalar(0,0)<<endl;
 
         // 2.4 control cost vector<vector<double>>K_lst;
         U(0,0)=U_cal_lst[i].accel;
         U(1,0)=U_cal_lst[i].yaw_rate;
-        cout<<"U=["<<U(0,0)<<","<<U(1,0)<<"]"<<endl;
         if(isCompleteCal)
         {
             dU=dU+U.transpose()*R;
             dU=(dU.array().abs()<EPS).select(0, dU);
             ddU=ddU+R;
             ddU=(ddU.array().abs()<EPS).select(0, ddU);
-            cout<<"control cost dU="<<dU(0,0)<<","<<dU(0,1)<<endl;
-            cout<<"control cost ddU="<<ddU(0,0)<<","<<ddU(0,1)<<endl;
-            cout<<ddU(1,0)<<","<<ddU(1,1)<<endl;
         }
         M_scalar=0.5*U.transpose()*R*U;
         M_scalar=(M_scalar.array().abs()<EPS).select(0, M_scalar);
-        cout<<"control cost="<<M_scalar(0,0)<<endl;
         costJ_temp+=M_scalar(0,0);
-        cout<<"J_temp_control="<<M_scalar(0,0)<<endl;
 
         // 2.5 control constraint cost
         dCu<<1,0;
@@ -729,7 +662,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cost_single=getControlConstraintCostAndDeriva(q1_acc, q2_acc, U(0,0), a_high, limit_type, dCu, dBu, ddBu);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"control_constraint_cost1="<<cost_single<<endl;
         if(isCompleteCal)
         {
             dBu=(dBu.array().abs()<EPS).select(0, dBu);
@@ -738,9 +670,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             dU=(dU.array().abs()<EPS).select(0, dU);
             ddU=ddU+ddBu;
             ddU=(ddU.array().abs()<EPS).select(0, ddU);
-            cout<<"dBu="<<dBu(0,0)<<","<<dBu(0,1)<<endl;
-            cout<<"ddBu="<<ddBu(0,0)<<","<<ddBu(0,1)<<endl;
-            cout<<ddBu(1,0)<<","<<ddBu(1,1)<<endl;
         }
         
         dCu<<-1,0;
@@ -748,7 +677,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cost_single=getControlConstraintCostAndDeriva(q1_acc, q2_acc, U(0,0), a_low, limit_type, dCu, dBu, ddBu);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;  
-        cout<<"control_constraint_cost2="<<cost_single<<endl;
         if(isCompleteCal)
         {
             dBu=(dBu.array().abs()<EPS).select(0, dBu);
@@ -757,9 +685,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             dU=(dU.array().abs()<EPS).select(0, dU);
             ddU=ddU+ddBu;
             ddU=(ddU.array().abs()<EPS).select(0, ddU);
-            cout<<"dBu="<<dBu(0,0)<<","<<dBu(0,1)<<endl;
-            cout<<"ddBu="<<ddBu(0,0)<<","<<ddBu(0,1)<<endl;
-            cout<<ddBu(1,0)<<","<<ddBu(1,1)<<endl;
         }
         
         dCu<<0,1;
@@ -768,7 +693,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cost_single=getControlConstraintCostAndDeriva(q1_yr, q2_yr, U(1,0), yaw_rate_limit, limit_type, dCu, dBu, ddBu);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"control_constraint_cost3="<<cost_single<<endl;
         if(isCompleteCal)
         {
             dBu=(dBu.array().abs()<EPS).select(0, dBu);
@@ -777,9 +701,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             dU=(dU.array().abs()<EPS).select(0, dU);
             ddU=ddU+ddBu;
             ddU=(ddU.array().abs()<EPS).select(0, ddU);
-            cout<<"dBu="<<dBu(0,0)<<","<<dBu(0,1)<<endl;
-            cout<<"ddBu="<<ddBu(0,0)<<","<<ddBu(0,1)<<endl;
-            cout<<ddBu(1,0)<<","<<ddBu(1,1)<<endl;
         }
         
         dCu<<0,-1;
@@ -788,7 +709,6 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
         cost_single=getControlConstraintCostAndDeriva(q1_yr, q2_yr, U(1,0), yaw_rate_limit, limit_type, dCu, dBu, ddBu);
         cost_single=fabs(cost_single)<EPS?0:cost_single;
         costJ_temp+=cost_single;
-        cout<<"control_constraint_cost4="<<cost_single<<endl;
         if(isCompleteCal)
         {
             dBu=(dBu.array().abs()<EPS).select(0, dBu);
@@ -797,11 +717,7 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             dU=(dU.array().abs()<EPS).select(0, dU);
             ddU=ddU+ddBu;
             ddU=(ddU.array().abs()<EPS).select(0, ddU);
-            cout<<"dBu="<<dBu(0,0)<<","<<dBu(0,1)<<endl;
-            cout<<"ddBu="<<ddBu(0,0)<<","<<ddBu(0,1)<<endl;
-            cout<<ddBu(1,0)<<","<<ddBu(1,1)<<endl;
         }
-        ROS_INFO("backward_4");
         if(isCompleteCal)
         {
             // 2.6 calculate Qx, Qu, Qxx, Quu, Qxu, Qux, deltaV
@@ -823,23 +739,11 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             B_reg=Reg*B;
             Qux_reg=Qux+A*B_reg;
             Quu_reg=Quu+B_reg.transpose()*B_reg;
-            
-            cout<<"Qx="<<Qx(0,0)<<","<<Qx(0,1)<<","<<Qx(0,2)<<","<<Qx(0,3)<<endl;
-            cout<<"Qu="<<Qu(0,0)<<","<<Qu(0,1)<<endl;
-            cout<<"Qxx="<<Qxx(0,0)<<","<<Qxx(0,1)<<","<<Qxx(0,2)<<","<<Qxx(0,3)<<endl;
-            cout<<Qxx(1,0)<<","<<Qxx(1,1)<<","<<Qxx(1,2)<<","<<Qxx(1,3)<<endl;
-            cout<<Qxx(2,0)<<","<<Qxx(2,1)<<","<<Qxx(2,2)<<","<<Qxx(2,3)<<endl;
-            cout<<Qxx(3,0)<<","<<Qxx(3,1)<<","<<Qxx(3,2)<<","<<Qxx(3,3)<<endl;
-            cout<<"Quu="<<Quu(0,0)<<","<<Quu(0,1)<<","<<Quu(1,0)<<","<<Quu(1,1)<<endl;
-            cout<<"Qxu="<<Qxu(0,0)<<","<<Qxu(0,1)<<","<<Qxu(0,2)<<","<<Qxu(0,3)<<endl;
-            cout<<Qxu(1,0)<<","<<Qxu(1,1)<<","<<Qxu(1,2)<<","<<Qxu(1,3)<<endl;
 
             K=-(Quu_reg.inverse()).transpose()*Qux_reg.transpose();
             K=(K.array().abs()<EPS).select(0, K);
-            cout<<"back K="<<K(0,0)<<","<<K(0,1)<<","<<K(0,2)<<","<<K(0,3)<<endl<<K(1,0)<<","<<K(1,1)<<","<<K(1,2)<<","<<K(1,3)<<endl;
             d=-(Quu_reg.inverse()).transpose()*Qu.transpose();
             d=(d.array().abs()<EPS).select(0, d);
-            cout<<"back d="<<d(0,0)<<","<<d(1,0)<<endl;
             K_lst.push_back({K(0,0), K(0,1), K(0,2), K(0,3), K(1,0), K(1,1), K(1,2), K(1,3)});
             d_lst.push_back({d(0,0), d(1,0)});
             M_scalar=Qu*d;
@@ -856,14 +760,12 @@ double ciLQR::BackwardPassAndGetCostJ(const vector<ObjState>&X_cal_lst, const ve
             ddVk=(ddVk.array().abs()<EPS).select(0, ddVk);
         }
     }
-    ROS_INFO("backward_5");
     return costJ_temp;
 }
 
 void ciLQR::ForwardPass()
 {
     forward_counter=0;
-    cout<<"forward start..."<<endl;
     while(forward_counter<max_forward_iterate)
     {
         // initialize X0 and X_nominal0
@@ -910,8 +812,6 @@ void ciLQR::ForwardPass()
             control_signal.accel=control_signal.accel<a_low?a_low:control_signal.accel;
             control_signal.yaw_rate=initial_controls[i].yaw_rate+deltaU_star(1,0);
             planned_controls.push_back(control_signal);
-            cout<<"deltaU_star=["<<deltaU_star(0,0)<<","<<deltaU_star(1,0)<<"]"<<endl;
-            cout<<"controls=["<<control_signal.accel<<", "<<control_signal.yaw_rate<<endl<<endl;
         
             vd_model.updateOneStep(xk, xk1, control_signal, control_dt);
             X_nominal_lst.push_back(xk1);
@@ -936,13 +836,6 @@ void ciLQR::ForwardPass()
         costJ_nominal=BackwardPassAndGetCostJ(X_nominal_lst, planned_controls, lamb, false);
         deltaV=alfa*deltaV1d+alfa*alfa*deltaV2d;
         z=(costJ_nominal-costJ)/deltaV;
-        cout<<"costJ_nominal="<<costJ_nominal<<endl;
-        cout<<"costJ="<<costJ<<endl;
-        cout<<"deltaV1d="<<deltaV1d<<endl;
-        cout<<"deltaV2d="<<deltaV2d<<endl;
-        cout<<"deltaV="<<deltaV<<endl;
-        cout<<"alfa="<<alfa<<endl;
-        cout<<"z="<<z<<endl;
         if((costJ_nominal<costJ)||(fabs(costJ-costJ_nominal)<1.0e-9))//(z>=beta1&&z<=beta2)
         {
             forward_iter_flag=true;
@@ -955,7 +848,7 @@ void ciLQR::ForwardPass()
         }
         forward_counter++;
     }
-    cout<<"forward loop: "<<forward_counter<<endl;
+    //cout<<"forward loop: "<<forward_counter<<endl;
 }
 
 
@@ -987,7 +880,6 @@ void ciLQR::iLQRSolver()
     }
     else
     {
-        ROS_INFO("come to the 2nd frame!");
         start_state.x=planned_path[planning_start_index].x;
         start_state.y=planned_path[planning_start_index].y;
         start_state.theta=planned_path[planning_start_index].theta;
@@ -997,7 +889,6 @@ void ciLQR::iLQRSolver()
         findClosestWaypointIndex(global_waypoints, start_state, closest_global_index, false);
             
     }
-    ROS_INFO("planner_here2.1");
     local_waypoints.clear();
     local_end_index=min<int>(global_waypoints.size(), closest_global_index+global_horizon);
     for(int i=closest_global_index; i<local_end_index; i++)
@@ -1010,12 +901,10 @@ void ciLQR::iLQRSolver()
         waypoint.yaw_rate=global_waypoints[i].yaw_rate;
         local_waypoints.push_back(waypoint);
     }
-    ROS_INFO("planner_here2.2");
     //2. polynominal fitting of local waypoints, make local waypoints dense, and calculate x_bar_lst
     polynominalFitting();
     local_waypoints_dense.clear();
     interplot_increment=(local_waypoints[local_waypoints.size()-1].x-local_waypoints[0].x)/(local_horizon-1);
-    cout<<"local_waypoints_dense:"<<endl;
     for(int i=0; i<local_horizon; i++)
     {
         waypoint.x=local_waypoints[0].x+i*interplot_increment;
@@ -1029,8 +918,6 @@ void ciLQR::iLQRSolver()
 
     X_vd_lst.clear();
     vd_model.CalVDTrajectory(start_state, initial_controls, X_vd_lst, local_horizon, control_dt);
-
-    ROS_INFO("planner_here2.3");
     lamb=lamb_init;
     optimization_counter=0;
     while(optimization_counter<max_optimal_iterate)
@@ -1039,7 +926,6 @@ void ciLQR::iLQRSolver()
         alfa=1.0;
         getLocalReferPoints(local_waypoints_dense, X_vd_lst, X_bar_lst);
         costJ=BackwardPassAndGetCostJ(X_vd_lst, initial_controls, lamb, true);
-        ROS_INFO("planner_here2.4");
         //4. forward pass and get the final cost
         forward_iter_flag=false;
         ForwardPass();
@@ -1050,7 +936,6 @@ void ciLQR::iLQRSolver()
             costJ_cache=costJ;
             costJ=costJ_nominal;
             costJ_nominal=costJ_cache;
-            cout<<"delta cost="<<costJ-costJ_nominal<<",  optimal_tol="<<optimal_tol<<endl;
             break;
         }
         else if(costJ_nominal<costJ)
@@ -1073,19 +958,15 @@ void ciLQR::iLQRSolver()
         }
         
         optimization_counter++;
-        cout<<"optimal_counter="<<optimization_counter<<endl;
+        //cout<<"optimal_counter="<<optimization_counter<<endl;
     }
-    cout<<"optimal loop"<<optimization_counter<<endl;
-
-    ROS_INFO("planner_here2.7");
+    //cout<<"optimal loop"<<optimization_counter<<endl;
 }
 
 void ciLQR::update()
 {
-    
     cout<<"come into cilqr update!"<<endl;
     int planning_rate=1/dt;
-    cout<<"planning_rate="<<planning_rate<<endl;
     ros::Rate planner_rate(planning_rate);
 
     saturn_msgs::Control control_msg;
@@ -1101,10 +982,8 @@ void ciLQR::update()
     visualization_msgs::Marker local_points_msg;
     visualization_msgs::Marker local_lines_msg;
     
-    cout<<"planner_here1"<<endl;
     while(ros::ok())
     {
-        cout<<"come into main loop";
         ros::spinOnce();
         ROS_INFO("planner recv finished!");
         if(!isRecEgoVeh)
@@ -1126,7 +1005,6 @@ void ciLQR::update()
         rviz_planned_path_msg.header.stamp=ros::Time::now();
         rviz_planned_path_msg.poses.clear();
 
-        cout<<"planned_path:"<<endl;
         for(int i=0; i<X_vd_lst.size(); i++)
         {
             planned_point_msg.x=X_vd_lst[i].x;
@@ -1147,12 +1025,9 @@ void ciLQR::update()
             rviz_planned_path_msg.poses.push_back(path_point_msg);
 
             planned_path.push_back(X_vd_lst[i]);
-            cout<<X_vd_lst[i].x<<","<<X_vd_lst[i].y<<","<<X_vd_lst[i].theta<<","<<X_vd_lst[i].v<<endl;
         }
-        cout<<"planned_path fulfill size:"<<planned_path.size()<<endl;
         local_planned_path_pub.publish(planned_path_msg);
         rviz_cilqr_planned_path_pub.publish(rviz_planned_path_msg);
-        ROS_INFO("planner_here5");
         //3. local reference waypoint for rviz
         local_points_msg.header.frame_id="map";
         local_points_msg.header.stamp=ros::Time::now();
@@ -1190,7 +1065,6 @@ void ciLQR::update()
         }
         rviz_local_refer_points_pub.publish(local_points_msg);
         rviz_local_refer_lines_pub.publish(local_lines_msg);
-        ROS_INFO("planner_here6");
         planner_rate.sleep();
     }
 }
