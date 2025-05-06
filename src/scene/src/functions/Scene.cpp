@@ -134,19 +134,14 @@ void Scene::findClosestIndex(const vector<ObjState>& point_lst, const ObjState& 
 
 void Scene::recvCilqrPlannedPath(const saturn_msgs::Path& msg)
 {
-    cout<<"receive cilqr planned path!"<<endl;
     if(msg.path.size()==0)
         return;
     if(planned_path_lst.size()>0)
     {
         planning_start_index+=delta_start_index;
-        cout<<"planning_start_index="<<planning_start_index<<endl;
         planned_path_lst.erase(planned_path_lst.begin()+planning_start_index, planned_path_lst.end());
-        cout<<"after cut 1 path_length="<<planned_path_lst.size()<<endl;
         findClosestIndex(planned_path_lst, ego_vehicle_state, current_index, false);
-        cout<<"current_index="<<current_index<<endl;
         planned_path_lst.erase(planned_path_lst.begin(), planned_path_lst.begin()+current_index);
-        cout<<"after cut 2 path_length="<<planned_path_lst.size()<<endl;
         planning_start_index-=current_index;
         current_index-=current_index;
         //current_index++;
@@ -161,7 +156,6 @@ void Scene::recvCilqrPlannedPath(const saturn_msgs::Path& msg)
         path_point.yaw_rate=msg.path[i].yawrate;
         planned_path_lst.push_back(path_point);
     }
-    cout<<"after joint path_length="<<planned_path_lst.size()<<endl;
 }
 
 void Scene::reposeEgoVehicle(const double x, const double y, const double theta, const double v0, const double dT)
@@ -286,7 +280,6 @@ void Scene::update()
 
     while(ros::ok())
     {
-        cout<<"come into ros loop!"<<endl;
         //fulfill ego_vehicle_state_msg and publish
         ego_state_msg.header.frame_id="ego_state";
         ego_state_msg.header.stamp=ros::Time::now();
@@ -407,9 +400,6 @@ void Scene::update()
         if(planned_path_lst.size()>0&&current_index+1<planning_start_index+delta_start_index)
         {
             current_index++;
-            cout<<"planned path length="<<planned_path_lst.size()<<endl;
-            cout<<"current_index="<<current_index<<endl;
-            cout<<"next position: "<<planned_path_lst[current_index].x<<", "<<planned_path_lst[current_index].y<<", "<<planned_path_lst[current_index].theta<<endl;
             ego_vehicle.repose(planned_path_lst[current_index]);
         }
         ego_vehicle.getVehicleState(ego_vehicle_state);

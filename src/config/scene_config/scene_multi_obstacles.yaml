@@ -2,7 +2,7 @@
 /timestep/planning: 0.1
 /timestep/control: 0.05
 /timestep/prediction: 0.05
-/timestep/multiple/planner_start_index: 10
+/timestep/multiple/planner_start_index: 25
 
 # params for building scene
 /planner/global_file_path: "/home/saxijing/cilqr/data/static_avoid_centerline.csv"
