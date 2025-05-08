@@ -10,8 +10,26 @@ x_k+(v_k \cdot \Delta t+ \frac{1}{2} \dot{v_k} \cdot \Delta t^2) \cdot \cos(\the
 y_k+(v_k \cdot \Delta t+ \frac{1}{2} \dot{v_k} \cdot \Delta t^2) \cdot \sin(\theta_k) \\
 v_k+\dot{v_k} \cdot \Delta t \\
 \theta_k + \dot{\theta_k} \cdot \Delta t
-\end{pmatrix} 
+\end{pmatrix}
 $$
+
+<p align="right">(1)</p>
+其中，
+
+$$\vec{x_k}=\begin{pmatrix} x_k \\
+y_k \\
+v_k \\
+\theta_k
+\end{pmatrix} $$
+
+<p align="right">(2)</p>
+
+$$\vec{u_k}=\begin{pmatrix} \dot{v_k}\\ 
+\dot{\theta_k} \end{pmatrix} $$
+
+<p align="right">(3)</p>
+对上述离散系统进行线性化，即
+
 
 ## 2 Cost Function
 ## 3 Backward Pass
