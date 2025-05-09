@@ -113,6 +113,13 @@ $$
 #### 2.2.1 避障约束
 (1)避障约束函数推导
 
+避障场景中，将主车近似为两个圆，障碍物考虑其速度，近似为椭圆，如图1所示。
+
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/ego_obs_approximate.jpg" width=800> </div>
+
+<p align="center">图1 避障约束近似示意图</p>
+
+
 障碍物长轴：
 
 $$
@@ -142,6 +149,116 @@ P=
 $$
 
 <p align="right">(11)</p>
+
+主车两个近似圆圆心的位置为：
+
+$$
+\vec{X} _ {front}=\begin{pmatrix}
+x_{front} \\
+y_{front} \\
+v_{front} \\
+\theta_{front}
+\end{pmatrix}
+=\begin{pmatrix}
+x_{ego} + l_f \cdot \cos \theta_{ego} \\
+y_{ego} + l_f \cdot \sin \theta_{ego} \\
+v_{ego}
+\theta_{ego} \\
+\end{pmatrix}
+$$
+
+<p align="right">(12)</p>
+
+$$
+\vec{X} _ {rear}=\begin{pmatrix}
+x_{rear} \\
+y_{rear} \\
+v_{rear} \\
+\theta_{rear}
+\end{pmatrix}
+=\begin{pmatrix}
+x_{ego} - l_r \cdot \cos \theta_{ego} \\
+y_{ego} - l_r \cdot \sin \theta_{ego} \\
+v_{ego} \\
+\theta_{ego}
+\end{pmatrix}
+$$
+
+<p align="right">(13)</p>
+
+则前后两个近似圆圆心处对主车状态求导如下：
+
+$$
+\frac{\partial \vec{X}_{front}}{\partial \vec{X}}=\begin{pmatrix}
+\frac{\partial f_1}{\partial \vec{X}} \\
+\frac{\partial f_2}{\partial \vec{X}} \\
+\frac{\partial f_3}{\partial \vec{X}} \\
+\frac{\partial f_4}{\partial \vec{X}}
+\end{pmatrix}
+=\begin{pmatrix}
+\frac{\partial f_1}{\partial \vec{x_1}} & \frac{\partial f_1}{\partial \vec{x_2}} & \frac{\partial f_1}{\partial \vec{x_3}} & \frac{\partial f_1}{\partial \vec{x_4}} \\
+\frac{\partial f_2}{\partial \vec{x_1}} & \frac{\partial f_2}{\partial \vec{x_2}} & \frac{\partial f_2}{\partial \vec{x_3}} & \frac{\partial f_2}{\partial \vec{x_4}} \\
+\frac{\partial f_3}{\partial \vec{x_1}} & \frac{\partial f_3}{\partial \vec{x_2}} & \frac{\partial f_3}{\partial \vec{x_3}} & \frac{\partial f_3}{\partial \vec{x_4}} \\
+\frac{\partial f_4}{\partial \vec{x_1}} & \frac{\partial f_4}{\partial \vec{x_2}} & \frac{\partial f_4}{\partial \vec{x_3}} & \frac{\partial f_4}{\partial \vec{x_4}}
+\end{pmatrix}
+=\begin{pmatrix}
+1 & 0 & 0 & -l_f \sin \theta _{ego} \\
+0 & 1 & 0 & l_f \cos \theta _{ego} \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+$$
+
+<p align="right">(14)</p>
+
+同理，
+
+$$
+\frac{\partial \vec{X}_{rear}}{\partial \vec{X}}
+=\begin{pmatrix}
+1 & 0 & 0 & -l_r \sin \theta _{ego} \\
+0 & 1 & 0 & l_r \cos \theta _{ego} \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+$$
+
+<p align="right">(15)</p>
+
+分别将前后近似圆的位置坐标转换到障碍物obstacle坐标系下：
+
+$$
+\vec{X}^O_{front}=T \cdot (\vec{X} _ {front} - \vec{X} _ {obs})
+=\begin{pmatrix}
+\cos \theta _ {obs} & \sin \theta _ {obs} & 0 & 0 \\
+-\sin \theta _ {obs} & \cos \theta_{obs} & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}
+\begin{pmatrix}
+x_{front} - x_{obs} \\
+y_{front} - y_{obs} \\
+0-v_{obs} \\
+0-\theta_{obs}
+\end{pmatrix}
+=\begin{pmatrix}
+(x_{front}-x_{obs}) \cdot \cos \theta_{obs} + (y_{front}-y_{obs}) \cdot \sin \theta_{obs} \\
+-(x_{front}-x_{obs}) \cdot \sin \theta_{obs} + (y_{front}-y_{obs}) \cdot \cos \theta_{obs} \\
+0 \\
+0
+\end{pmatrix}
+$$
+
+<p align="right">(16)</p>
+
+同理，
+
+$$
+\vec{X}^O_{rear}=T \cdot (\vec{X}_{rear}-\vec{X} _{obs})
+$$
+
+<p align="right">(17)</p>
+
 
 ## 3 Backward Pass
 ## 4 Forward Pass
