@@ -114,6 +114,35 @@ $$
 (1)避障约束函数推导
 
 障碍物长轴：
+
+$$
+a=\frac{1}{2}l_{obs} + v_{obs} \cdot t_{safe} \cdot \cos \theta_{obs} + s_{safe \_a} + r_{ego}
+$$
+
+<p align="right">(9)</p>
+
+障碍物短轴：
+
+$$
+b=\frac{1}{2}l_{obs} + v_{obs} \cdot t_{safe} \cdot \sin \theta_{obs} + s_{safe \_b} + r_{ego}
+$$
+
+<p align="right">(10)</p>
+
+则避障约束中的矩阵P为
+
+$$
+P=
+\begin{pmatrix}
+\frac{1}{a^2} & 0 & 0 & 0\\
+0 & \frac{1}{b^2} & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{pmatrix}
+$$
+
+<p align="right">(11)</p>
+
 ## 3 Backward Pass
 ## 4 Forward Pass
 ## 5 Results
