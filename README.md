@@ -109,9 +109,9 @@ $$
 
 <p align="right">(8)</p>
 
-### 2.2 约束转换为惩罚函数
+### 2.2 约束转换为障碍函数
 #### 2.2.1 避障约束
-(1)避障约束函数推导
+**(1)避障约束函数推导**
 
 避障场景中，将主车近似为两个圆，障碍物考虑其速度，近似为椭圆，如图1所示。
 
@@ -286,7 +286,7 @@ $$
 
 将式(11)(14)(16)代入式(19), 式(11)(15)(17)代入式(20)，即可求出避障约束对状态向量的一阶导。
 
-(2) 避障约束函数线性化
+**(2) 避障约束函数线性化**
 在Xk处对上述Cf, Cr函数进行泰勒一阶展开，将约束函数线性化：
 
 $$
@@ -320,7 +320,7 @@ $$
 
 <p align="right">(24)</p>
 
-(3) 避障约束转换为barrier function
+**(3) 避障约束转换为barrier function**
 
 为了将约束问题转化为无约束问题，将式(8)(24)中的避障约束不等式转换为障碍函数(barrier function)添加到目标函数中，前后两个近似圆对应的障碍函数分别为
 
@@ -361,11 +361,128 @@ $$
 
 $$
 \begin{cases}
-\frac{\partial ^2 {b_f}}{\partial \vec{X}^2} = q_1 q_2^2 e ^{q_2 f_{Cf}(\vec{X})} \cdot \big( \frac{\partial C_f}{\partial \vec{X}} \big|_ {\vec{X}_ k} \big)^T \big( \frac{\partial C_f}{\partial \vec{X}} \big|_{\vec{X}_k} \big)
+\frac{\partial ^2 {b_f}(\vec{X})}{\partial \vec{X}^2} = q_1 q_2^2 e ^{q_2 f_{Cf}(\vec{X})} \cdot \big( \frac{\partial C_f}{\partial \vec{X}} \big|_ {\vec{X}_ k} \big)^T \cdot \big( \frac{\partial C_f}{\partial \vec{X}} \big|_ {\vec{X}_ k} \big) \\
+\frac{\partial ^2 {b_r}(\vec{X})}{\partial \vec{X}^2} = q_1 q_2^2 e ^{q_2 f_{Cr}(\vec{X})} \cdot \big( \frac{\partial C_r}{\partial \vec{X}} \big|_ {\vec{X}_ k} \big)^T \cdot \big( \frac{\partial C_r}{\partial \vec{X}} \big|_{\vec{X}_k} \big)
 \end{cases}
 $$
 
+<p align="right">(28)</p>
+
+将式(18)(19)(20)(24)代入式(28)中，即可求出barrier function的二阶导。
+
+上述所求的barrier function的一二阶导会在使用iLQR方法进行迭代求解时用到。
+
+### 2.2 控制量约束
+本节的主要目的是将式(8)中的第一二个不等式约束转换为障碍函数形式作为目标函数的一部分，将约束问题转换为无约束问题。
+
+由于控制约束本身就是线性的，因此无需进行线性化近似，直接转换为指数形式的障碍函数(barrier function)。首先将控制约束拆解为以下四个不等式：
+
+$$
+\begin{cases}
+C_1(\vec{u})=\dot{v} - a_{high} \leq 0 \\
+C_2(\vec{u}) = a_{low} -\dot{v} \leq 0 \\
+C_3(\vec{u}) = \dot \theta - \frac{v \cdot \tan \delta _{max}}{L} \leq 0 \\
+C_4(\vec{u}) =\frac{v \cdot \tan \delta _{min}}{L} -\dot \theta \leq 0
+\end{cases}
+$$
+
+<p align="right">(29)</p>
+
+再将上述四个控制约束函数转换为障碍函数：
+
+$$
+\begin{cases}
+b_1(\vec{u})= q_1 e^{q_2 C_1(\vec{u})} \\
+b_2(\vec{u})= q_1 e^{q_2 C_2(\vec{u})} \\
+b_3(\vec{u})= q_1 e^{q_2 C_3(\vec{u})} \\
+b_4(\vec{u})= q_1 e^{q_2 C_4(\vec{u})} \\
+\end{cases}
+$$
+
+<p align="right">(30)</p>
+
+控制约束障碍函数的一阶导为
+
+$$
+\begin{cases}
+\frac{\partial b_1(\vec{u})}{\partial \vec{u}} = q_1 q_2 e^{q_2 C_1(\vec{u})} \cdot \frac{\partial C_1{\vec{u}}}{\partial \vec{u}} \\
+\frac{\partial b_2(\vec{u})}{\partial \vec{u}} = q_1 q_2 e^{q_2 C_2(\vec{u})} \cdot \frac{\partial C_2{\vec{u}}}{\partial \vec{u}} \\
+\frac{\partial b_3(\vec{u})}{\partial \vec{u}} = q_1 q_2 e^{q_2 C_3(\vec{u})} \cdot \frac{\partial C_3{\vec{u}}}{\partial \vec{u}} \\
+\frac{\partial b_4(\vec{u})}{\partial \vec{u}} = q_1 q_2 e^{q_2 C_4(\vec{u})} \cdot \frac{\partial C_4{\vec{u}}}{\partial \vec{u}}
+\end{cases}
+$$
+
+<p align="right">(31)</p>
+
+其中，
+
+$$
+\begin{cases}
+\frac{\partial C_1(\vec{u})}{\partial \vec{u}} = \begin{pmatrix} \frac{\partial C_1(\vec{u})}{\partial u_1} & \frac{\partial C_1(\vec{u})}{\partial u_2} \end{pmatrix} = \begin{pmatrix} 1 & 0 \end{pmatrix} \\
+\frac{\partial C_2(\vec{u})}{\partial \vec{u}} = \begin{pmatrix} \frac{\partial C_2(\vec{u})}{\partial u_1} & \frac{\partial C_2(\vec{u})}{\partial u_2} \end{pmatrix} =\begin{pmatrix} -1 & 0 \end{pmatrix} \\
+\frac{\partial C_3(\vec{u})}{\partial \vec{u}} = \begin{pmatrix} \frac{\partial C_3(\vec{u})}{\partial u_1} & \frac{\partial C_3(\vec{u})}{\partial u_2} \end{pmatrix} =\begin{pmatrix} 0 & 1 \end{pmatrix} \\
+\frac{\partial C_4(\vec{u})}{\partial \vec{u}} = \begin{pmatrix} \frac{\partial C_4(\vec{u})}{\partial u_1} & \frac{\partial C_4(\vec{u})}{\partial u_2} \end{pmatrix} =\begin{pmatrix} 0 & -1 \end{pmatrix} \\
+\end{cases}
+$$
+
+<p align="right">(32)</p>
+
+将式(29)(32)代入式(31), 求出控制约束障碍函数的一阶导。
+
+控制约束障碍函数的二阶导为
+
+$$
+\begin{cases}
+\frac{\partial ^2 b_1(\vec{u})}{\partial \vec{u}^2} = q_1 q_2^2 e ^{q_2 C_1(\vec{u})} \cdot \Big(\frac{\partial C_1(\vec{u})}{\partial \vec{u}} \Big)^T \cdot \Big( \frac{\partial C_1(\vec{u})}{\partial \vec{u}} \Big) \\
+\frac{\partial ^2 b_2(\vec{u})}{\partial \vec{u}^2} = q_1 q_2^2 e ^{q_2 C_2(\vec{u})} \cdot \Big(\frac{\partial C_2(\vec{u})}{\partial \vec{u}} \Big)^T \cdot \Big( \frac{\partial C_2(\vec{u})}{\partial \vec{u}} \Big) \\
+\frac{\partial ^2 b_3(\vec{u})}{\partial \vec{u}^2} = q_1 q_2^2 e ^{q_2 C_3(\vec{u})} \cdot \Big(\frac{\partial C_3(\vec{u})}{\partial \vec{u}} \Big)^T \cdot \Big( \frac{\partial C_3(\vec{u})}{\partial \vec{u}} \Big) \\
+\frac{\partial ^2 b_4(\vec{u})}{\partial \vec{u}^2} = q_1 q_2^2 e ^{q_2 C_4(\vec{u})} \cdot \Big(\frac{\partial C_4(\vec{u})}{\partial \vec{u}} \Big)^T \cdot \Big( \frac{\partial C_4(\vec{u})}{\partial \vec{u}} \Big)
+\end{cases}
+$$
+
+<p align="right">(33)</p>
+
+将式(29)(32)代入式(33)可得到控制约束障碍函数的二阶导，在后续使用iLQR方法迭代求导时会用到。
+
+### 2.3 最终问题
+
+经过上述处理，该运动规划问题由2.1节的约束优化问题转换为式(34)所示的无约束优化问题。
+
+$$
+J=\frac{1}{2} \Big( \vec{X}_ N - \vec{X}^r _ N \Big) ^T S \Big(\vec{X}_ N - \vec{X} ^ r_N \Big) + \sum_{k=1}^{N-1} \Big[ \frac{1}{2} {\Big( \vec{X}_ k - \vec{X} _ k ^ r)} ^ T Q ( {\vec{X}_ k - \vec{X}^r_k} \Big) + \frac{1}{2} \vec{u}_ k^T R \vec{u} _ k + \sum_{m=0} ^{M} \Big( b _{fm} (\vec{X}_k) + b _{rm} (\vec{X}_k) \Big) + b_1(\vec{u}_k) + b_2(\vec{u}_k) + b_3(\vec{u}_k) + b_4(\vec{u}_k)
+ \Big]
+$$
+
+<p align="right">(34)</p>
+
+其中M为该时刻主车周围障碍物总数，bfm, brm分别为主车两个近似圆的避障障碍函数，b1, b2, b3, b4分别为控制约束障碍函数。目标函数对状态向量和控制向量的一阶导、二阶导求法均已在2.2节给出。以下给出使用iLQR方法求解问题的过程。
+
 ## 3 Backward Pass
+
+### 3.1 代价函数处理
+
+根据LQR先验知识，代价函数J由末端代价和过程代价两部分组成，根据式(8)(34), 可将代价函数写为
+
+$$
+J=\ell _f(\vec{X}_N) + \sum _{k=1}^{N-1} \ell (\vec{X}_k, \vec{u}_k)
+$$
+
+<p align="right">(35)</p>
+
+### 3.2 Q函数与贝尔曼方程
+
+when $k=N$, cost to go function 
+
+$$ V_N= \ell _f(\vec{X}_N) = \frac{1}{2} \Big( \vec{X}_N - \vec{X}_N^r \Big)^T S \Big( \vec{X}_N - \vec{X}_N^r \Big) $$
+
+<p align="right">(36)</p>
+
+when $k \neq N$, cost to go function
+
+$$
+V_k = min \\{ \ell (\vec{X}_ k, \vec{u}_ k) + V_{k+1} (f(\vec{X}_k, \vec{u}_k)) \\}
+$$
+
 ## 4 Forward Pass
 ## 5 Results
 ## 6 Commands
