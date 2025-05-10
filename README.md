@@ -259,6 +259,111 @@ $$
 
 <p align="right">(17)</p>
 
+将式(8)中的第三四个不等式约束对状态量求导
+
+$$
+\begin{cases}
+  C_f(\vec{X}) =1 - \vec{X^O_{front}}^T \cdot P \cdot \vec{X^O} _ {front} <0  \\
+  C_r(\vec{X}) =1 - \vec{X^O _ {rear}}^T \cdot P \cdot \vec{X^O}_{rear} <0
+\end{cases}
+$$
+
+<p align="right">(18)</p>
+
+则
+
+$$
+\frac{\partial C_f}{\partial \vec{X}}=\frac{\partial \vec{C_f}}{\partial \vec{X}^O_{front}} \cdot \frac{\partial \vec{X}^O_{front}}{\partial \vec{X}_{front}} \cdot \frac{\partial \vec{X} _{front}}{\partial \vec{X}} = -2 \vec{X^O _{front}}^T \cdot P \cdot T \cdot \frac{\partial \vec{X} _{front}}{\partial \vec{X}}
+$$
+
+<p align="right">(19)</p>
+
+$$
+\frac{\partial C_r}{\partial \vec{X}}=\frac{\partial \vec{C_r}}{\partial \vec{X}^O_{rear}} \cdot \frac{\partial \vec{X}^O_{rear}}{\partial \vec{X}_{rear}} \cdot \frac{\partial \vec{X} _{rear}}{\partial \vec{X}} = -2 \vec{X^O _{rear}}^T \cdot P \cdot T \cdot \frac{\partial \vec{X} _{rear}}{\partial \vec{X}}
+$$
+
+<p align="right">(20)</p>
+
+将式(11)(14)(16)代入式(19), 式(11)(15)(17)代入式(20)，即可求出避障约束对状态向量的一阶导。
+
+(2) 避障约束函数线性化
+在Xk处对上述Cf, Cr函数进行泰勒一阶展开，将约束函数线性化：
+
+$$
+C_f(\vec{X}_k + \delta \vec{X}_k) = C_f(\vec{X}_k) + \frac{\partial C_f}{\partial \vec{X}} \Big| _{\vec{X}=\vec{X}_k} \cdot \delta \vec{X}_k
+$$
+
+<p align="right">(21)</p>
+
+$$
+\delta C_f(\vec{X}_k)=\frac{\partial C_f}{\partial \vec{X}} \Big| _{\vec{X}_k} \cdot \delta \vec{X}_k
+$$
+
+<p align="right">(22)</p>
+
+同理，
+
+$$
+\delta C_r(\vec{X}_k)=\frac{\partial C_r}{\partial \vec{X}} \Big| _{\vec{X}_k} \cdot \delta \vec{X}_k
+$$
+
+<p align="right">(23)</p>
+
+将线性化后的避障约束函数写为
+
+$$
+\begin{cases}
+f_{Cf}(\vec{X})=\frac{\partial C_f}{\partial \vec{X}} \Big| _ {\vec{X}_ k} \cdot \vec{X} \\
+f_{Cr}(\vec{X})=\frac{\partial C_r}{\partial \vec{X}} \Big| _{\vec{X}_k} \cdot \vec{X}
+\end{cases}
+$$
+
+<p align="right">(24)</p>
+
+(3) 避障约束转换为barrier function
+
+为了将约束问题转化为无约束问题，将式(8)(24)中的避障约束不等式转换为障碍函数(barrier function)添加到目标函数中，前后两个近似圆对应的障碍函数分别为
+
+$$
+\begin{cases}
+b_f(\vec{X})=q_1 e^{q_2 f_{Cf}(\vec{X})} \\
+b_r(\vec{X})=q_1 e^{q_2 f_{Cr}(\vec{X})}
+\end{cases}
+$$
+
+<p align="right">(25)</p>
+
+上述barrier function对状态向量的一阶导为
+
+$$
+\begin{cases}
+\frac{\partial b_f(\vec{X})}{\partial \vec{X}}=q_1 q_2e^{q_2 f_{Cf}(\vec{X})} \cdot \frac{\partial f_{Cf}(\vec{X})}{\partial \vec{X}}= q_1 q_2 e^{q_2 f_{Cf}(\vec{X})} \cdot \frac{\partial C_f}{\partial \vec{X}} \Big| _ {\vec{X}_ k} \\
+\frac{\partial b_r(\vec{X})}{\partial \vec{X}}=q_1 q_2e^{q_2 f_{Cr}(\vec{X})} \cdot \frac{\partial f_{Cr}(\vec{X})}{\partial \vec{X}}= q_1 q_2 e^{q_2 f_{Cr}(\vec{X})} \cdot \frac{\partial C_r}{\partial \vec{X}} \Big| _{\vec{X}_k}
+\end{cases}
+$$
+
+<p align="right">(26)</p>
+
+将式(18)(19)(20)(24)代入式(26)可求出避障约束barrier function对状态向量的一阶导。
+
+由于已经对避障约束函数进行了线性化，所以避障函数Cf, Cr对状态向量的二阶导为0，即
+
+$$
+\begin{cases}
+\frac{\partial ^2 {C_f}}{\partial \vec{X}^2} = 0 \\
+\frac{\partial ^2 {C_r}}{\partial \vec{X}^2} = 0
+\end{cases}
+$$
+
+<p align="right">(27)</p>
+
+所以避障约束barrier function对状态向量的二阶导为
+
+$$
+\begin{cases}
+\frac{\partial ^2 {b_f}}{\partial \vec{X}^2} = q_1 q_2^2 e ^{q_2 f_{Cf}(\vec{X})} \cdot \big( \frac{\partial C_f}{\partial \vec{X}} \big|_ {\vec{X}_ k} \big)^T \big( \frac{\partial C_f}{\partial \vec{X}} \big|_{\vec{X}_k} \big)
+\end{cases}
+$$
 
 ## 3 Backward Pass
 ## 4 Forward Pass
