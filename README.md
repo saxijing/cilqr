@@ -287,7 +287,7 @@ $$
 将式(11)(14)(16)代入式(19), 式(11)(15)(17)代入式(20)，即可求出避障约束对状态向量的一阶导。
 
 **(2) 避障约束函数线性化**
-在Xk处对上述Cf, Cr函数进行泰勒一阶展开，将约束函数线性化：
+在Xk处对上述 $C_f,C_r$ 函数进行泰勒一阶展开，将约束函数线性化：
 
 $$
 C_f(\vec{X}_k + \delta \vec{X}_k) = C_f(\vec{X}_k) + \frac{\partial C_f}{\partial \vec{X}} \Big| _{\vec{X}=\vec{X}_k} \cdot \delta \vec{X}_k
@@ -346,7 +346,7 @@ $$
 
 将式(18)(19)(20)(24)代入式(26)可求出避障约束barrier function对状态向量的一阶导。
 
-由于已经对避障约束函数进行了线性化，所以避障函数Cf, Cr对状态向量的二阶导为0，即
+由于已经对避障约束函数进行了线性化，所以避障函数 $C_f,C_r$ 对状态向量的二阶导为0，即
 
 $$
 \begin{cases}
@@ -455,7 +455,7 @@ $$
 
 <p align="right">(34)</p>
 
-其中M为该时刻主车周围障碍物总数，bfm, brm分别为主车两个近似圆的避障障碍函数，b1, b2, b3, b4分别为控制约束障碍函数。目标函数对状态向量和控制向量的一阶导、二阶导求法均已在2.2节给出。以下给出使用iLQR方法求解问题的过程。
+其中M为该时刻主车周围障碍物总数， $b_{fm}$ , $b_{rm}$ 分别为主车两个近似圆的避障障碍函数， $b_1, b_2, b_3, b_4$ 分别为控制约束障碍函数。目标函数对状态向量和控制向量的一阶导、二阶导求法均已在2.2节给出。以下给出使用iLQR方法求解问题的过程。
 
 ## 3 Backward Pass
 
@@ -480,8 +480,126 @@ $$ V_N= \ell _f(\vec{X}_N) = \frac{1}{2} \Big( \vec{X}_N - \vec{X}_N^r \Big)^T S
 when $k \neq N$, cost to go function
 
 $$
-V_k = min \\{ \ell (\vec{X}_ k, \vec{u}_ k) + V_{k+1} (f(\vec{X}_k, \vec{u}_k)) \\}
+V_k = min \\{ \ell (\vec{X}_ k, \vec{u}_ k) + V_{k+1} \big( f(\vec{X}_k, \vec{u}_k) \big) \\}
 $$
+
+<p align="right">(37)</p>
+
+令
+
+$$
+Q_k(\vec{X}_k, \vec{u}_k) = \ell (\vec{X}_k, \vec{u} _ k) + V _{k+1} \big[ f(\vec{X}_k, \vec{u}_k) \big]
+$$
+
+<p align="right">(38)</p>
+
+在 $(\vec{X}_k, \vec{u}_k)$ 处进行二阶泰勒展开：
+
+$$
+Q(\vec{X}_k + \delta \vec{X}_k, \vec{u}_k + \delta \vec{u}_k) 
+= Q(\vec{X}_k, \vec{u}_k) + \frac{\partial Q}{\partial \vec{X}} \Big| _ {(\vec{X}_k, \vec{u}_k)} \cdot \delta \vec{X}_k+ 
+\frac{\partial Q}{\partial \vec{u}} \Big| _ {(\vec{X}_k, \vec{u}_k)} \cdot \delta \vec{u}_k +
+\frac{1}{2} {(\delta \vec{X}_k)}^T \cdot \frac{\partial ^2 Q}{\partial \vec{X}^2} \bigg| _ {(\vec{X}_k, \vec{u}_k)} (\delta \vec{X}_k) +
+\frac{1}{2} {(\delta \vec{u}_k)}^T \cdot \frac{\partial ^2 Q}{\partial \vec{u}^2} \bigg| _ {(\vec{X}_k, \vec{u}_k)} (\delta \vec{u}_k) + 
+\frac{1}{2} {(\delta \vec{X}_k)}^T \cdot \frac{\partial ^2 Q}{\partial \vec{u} \partial \vec{X}} \bigg| _ {(\vec{X}_k, \vec{u}_k)} (\delta \vec{u}_k) +
+\frac{1}{2} {(\delta \vec{u}_k)}^T \cdot \frac{\partial ^2 Q}{\partial \vec{X} \partial \vec{u}} \bigg| _ {(\vec{X}_k, \vec{u}_k)} (\delta \vec{X}_k)
+$$
+
+<p align="right">(39)</p>
+
+则
+
+$$
+\begin{aligned}
+\delta Q(\vec{X}_k, \vec{u}_k) = Q_x \cdot \delta \vec{X}_k +Q_u \cdot \delta \vec{u}_k + \frac{1}{2}(\delta \vec{X}_k)^T Q _{xx} (\delta \vec{X}_k) +
+\frac{1}{2}(\delta \vec{u}_k)^T Q _{uu} (\delta \vec{u}_k) + \frac{1}{2}(\delta \vec{X}_k)^T Q _{ux} (\delta \vec{u}_k) +
+\frac{1}{2}(\delta \vec{u}_k)^T Q _{xu} (\delta \vec{X}_k) \\\
+\qquad \qquad \quad =\begin{bmatrix} Q_x & Q_u \end{bmatrix} \begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix} + 
+\frac{1}{2} \begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix}^T \begin{bmatrix} Q _{xx} & Q _{ux} \\\ Q _{xu} & Q _{uu}\end{bmatrix}
+\begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix} &
+\end{aligned}
+$$
+
+<p align="right">(40)</p>
+
+其中
+
+$$
+Q_X = \frac{\partial \ell}{\partial \vec{X}} \Big| _ {\vec{X}_k, \vec{u}_k} + \frac{\partial V _{k+1}}{\partial \vec{X} _{k+1}} \cdot \frac{\partial \vec{X} _{k+1}}{\partial \vec{X} _{k}}
+$$
+
+<p align="right">(41)</p>
+
+$$
+Q_u = \frac{\partial \ell}{\partial \vec{u}} \Big| _ {\vec{X}_k, \vec{u}_k} + \frac{\partial V _{k+1}}{\partial \vec{X} _{k+1}} \cdot \frac{\partial \vec{X} _{k+1}}{\partial \vec{u} _{k}}
+$$
+
+<p align="right">(42)</p>
+
+$$
+Q_{XX} = \frac{\partial Q_X}{\partial \vec{X}} = \frac{\partial ^2 \ell}{\partial \vec{X}^2} \Big| _{\vec{X}_k, \vec{u}_k} + \frac{\partial ^2 V _{k+1}}{\partial \vec{X} _{k+1} \partial \vec{X}_k} \cdot \frac{\partial \vec{X} _{k+1}}{\partial \vec{X} _{k}}
+=\frac{\partial ^2 \ell}{\partial \vec{X}^2} \Bigg| _{\vec{X}_k, \vec{u}_k} + \Big( \frac{\partial \vec{X} _{k+1}}{\partial \vec{X}_k} \Big)^T \cdot \frac{\partial ^2 V _{k+1}}{\partial \vec{X} _{k+1} ^2} \cdot \big( \frac{\partial \vec{X} _{k+1}}{\partial \vec{X}_k} \big)
+$$
+
+<p align="right">(43)</p>
+
+$$
+Q_{uu} = \frac{\partial Q_u}{\partial \vec{u}} = \frac{\partial ^2 \ell}{\partial \vec{u}^2} \Big| _{\vec{X}_k, \vec{u}_k} + \frac{\partial ^2 V _{k+1}}{\partial \vec{X} _{k+1} \partial \vec{u}_k} \cdot \frac{\partial \vec{X} _{k+1}}{\partial \vec{u} _{k}}
+=\frac{\partial ^2 \ell}{\partial \vec{u}^2} \Bigg| _{\vec{X}_k, \vec{u}_k} + \Big( \frac{\partial \vec{X} _{k+1}}{\partial \vec{u}_k} \Big)^T \cdot \frac{\partial ^2 V _{k+1}}{\partial \vec{X} _{k+1} ^2} \cdot \big( \frac{\partial \vec{X} _{k+1}}{\partial \vec{u}_k} \big)
+$$
+
+<p align="right">(44)</p>
+
+$$
+Q_{Xu} = \frac{\partial Q_X}{\partial \vec{u}} = \frac{\partial ^2 \ell}{\partial \vec{X} \partial \vec{u}} \Big| _{\vec{X}_k, \vec{u}_k} + \frac{\partial ^2 V _{k+1}}{\partial \vec{X} _{k+1} \partial \vec{u}_k} \cdot \frac{\partial \vec{X} _{k+1}}{\partial \vec{X} _{k}}
+=\frac{\partial ^2 \ell}{\partial \vec{X} \partial \vec{u}} \Bigg| _{\vec{X}_k, \vec{u}_k} + \Big( \frac{\partial \vec{X} _{k+1}}{\partial \vec{u}_k} \Big)^T \cdot \frac{\partial ^2 V _{k+1}}{\partial \vec{X} _{k+1} ^2} \cdot \big( \frac{\partial \vec{X} _{k+1}}{\partial \vec{X}_k} \big)
+$$
+
+<p align="right">(45)</p>
+
+$$
+Q_{uX}=Q_{Xu}^T
+$$
+
+<p align="right">(46)</p>
+
+其中， $\quad \frac{\partial \vec{X} _{k+1}}{\partial \vec{X} _{k}} =A_k \quad $, 即式(6);  $\quad \frac{\partial \vec{X} _{k+1}}{\partial \vec{u} _{k}} =B_k \quad $, 即式(7)。
+
+要求使得 $\delta Q$ 最小的 $\delta \vec{u}$ ，即是要求令 $\frac{\partial (\delta Q)}{\partial (\delta \vec{u})}=0$ 的 $\delta \vec{u}^*$ 。
+
+$$
+\frac{\partial (\delta Q)}{\partial (\delta \vec{u})} = Q_u+(\delta \vec{u})^T Q _{uu} + (\delta \vec{X})^T Q _{uX} = 0
+$$
+
+<p align="right">(47)</p>
+
+求出
+
+$$
+\delta \vec{u}_ k^* = -(Q_{uu}^{-1})^T \big[ Q_u^T + Q_{Xu} \cdot (\delta \vec{X}_k) \big]
+$$
+
+<p align="right">(48)</p>
+
+令
+
+$$
+\begin{cases}
+K=-(Q_{uu}^{-1})^T \cdot Q_{Xu} \\
+d= -(Q_{uu}^{-1})^T \cdot Q_u^T
+\end{cases}
+$$
+
+<p align="right">(49)</p>
+
+则 $\delta \vec{u}_k^*$ 可写为
+
+$$
+\delta \vec{u}_k^* = K \cdot \delta \vec{X}_k +d
+$$
+<p align="right">(50)</p>
+
+
 
 ## 4 Forward Pass
 ## 5 Results
