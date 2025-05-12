@@ -511,10 +511,10 @@ $$
 
 $$
 \begin{aligned}
-\delta Q(\vec{X}_k, \vec{u}_k) = Q_x \cdot \delta \vec{X}_k +Q_u \cdot \delta \vec{u}_k + \frac{1}{2}(\delta \vec{X}_k)^T Q _{xx} (\delta \vec{X}_k) +
+\delta Q(\vec{X}_k, \vec{u}_k) &= Q_x \cdot \delta \vec{X}_k +Q_u \cdot \delta \vec{u}_k + \frac{1}{2}(\delta \vec{X}_k)^T Q _{xx} (\delta \vec{X}_k) +
 \frac{1}{2}(\delta \vec{u}_k)^T Q _{uu} (\delta \vec{u}_k) + \frac{1}{2}(\delta \vec{X}_k)^T Q _{ux} (\delta \vec{u}_k) +
 \frac{1}{2}(\delta \vec{u}_k)^T Q _{xu} (\delta \vec{X}_k) \\\
-\qquad \qquad \quad =\begin{bmatrix} Q_x & Q_u \end{bmatrix} \begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix} + 
+&=\begin{bmatrix} Q_x & Q_u \end{bmatrix} \begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix} + 
 \frac{1}{2} \begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix}^T \begin{bmatrix} Q _{xx} & Q _{ux} \\\ Q _{xu} & Q _{uu}\end{bmatrix}
 \begin{bmatrix} \delta \vec{X}_k \\\ \delta \vec{u}_k \end{bmatrix} &
 \end{aligned}
@@ -565,7 +565,7 @@ $$
 
 其中， $\quad \frac{\partial \vec{X} _{k+1}}{\partial \vec{X} _{k}} =A_k \quad $, 即式(6);  $\quad \frac{\partial \vec{X} _{k+1}}{\partial \vec{u} _{k}} =B_k \quad $, 即式(7)。
 
-要求使得 $\delta Q$ 最小的 $\delta \vec{u}$ ，即是要求令 $\frac{\partial (\delta Q)}{\partial (\delta \vec{u})}=0$ 的 $\delta \vec{u}^*$ 。
+要求使得 $\delta Q$ 最小的 $\delta \vec{u}$ ，即是要求令 $\frac{\partial (\delta Q)}{\partial (\delta \vec{u})}=0$ 的最优控制量 $\delta \vec{u}^*$ 。
 
 $$
 \frac{\partial (\delta Q)}{\partial (\delta \vec{u})} = Q_u+(\delta \vec{u})^T Q _{uu} + (\delta \vec{X})^T Q _{uX} = 0
@@ -599,7 +599,74 @@ $$
 $$
 <p align="right">(50)</p>
 
+由于 $V_k = min \\{ Q_k(\vec{X}_k, \vec{u}_k) \\}$ , 所以 $\delta V_k = min \\{ \delta Q_k(\vec{X}_k, \vec{u}_k) \\}$ ,将式(48)代入式(40)求出 $\delta Q _ {min}$ , 即 $\delta V$ :
 
+$$
+\begin{aligned}
+\delta V &= min \\{ \delta Q_k(\vec{X} _ k, \vec{u} _ k) \\} \\
+&= Q_X \cdot \delta \vec{X} _ k + Q _ u \cdot \delta \vec{u} _ k ^ * + \frac{1}{2} (\delta \vec{X} _ k)^T Q_{XX} (\delta \vec{X} _ k) + \frac{1}{2} (\delta \vec{u} _ k ^ * )^T Q_{uu} (\delta \vec{u} _ k ^ * ) + \frac{1}{2} (\delta \vec{X} _ k)^T Q_{uX} (\delta \vec{u} _ k ^ *) + \frac{1}{2} (\delta \vec{u} _ k ^ *)^T Q_{Xu} (\delta \vec{X}_ k) \\ 
+&= Q_X \cdot \delta \vec{X}_ k + Q_u(K \cdot \delta \vec{X}_ k +d) + \frac{1}{2} (\delta \vec{X} _ k)^T Q_{XX} (\delta \vec{X} _ k) + \frac{1}{2} (K \cdot \delta \vec{X}_ k +d) ^ T Q_{uu} (K \cdot \delta \vec{X}_ k +d) + \frac{1}{2} (\delta \vec{X} _ k) ^ T \cdot Q_{uX} (K \cdot \delta \vec{X}_ k +d) + \frac{1}{2}(K \cdot \delta \vec{X}_ k +d) ^ T Q_{Xu} (\delta \vec{X}_k) \\
+&= \Big( Q_X + Q _u K + d^T Q _{uu} K + d ^ T Q _ {Xu} \Big) \delta \vec{X} _ k + \frac{1}{2}(\delta \vec{X} _ k) ^ T \big[ Q _ {XX} + K ^ T Q _ {uu} K + Q _ {uX} K + K ^T Q _ {Xu} \big] (\delta \vec{X}_k) + Q_u d + \frac{1}{2} d^T Q _{uu} d
+\end{aligned}
+$$
+
+<p align="right">(51)</p>
+
+由此推导出式(41)~式(46)中的 $\frac{\partial V_{k+1}}{\partial \vec{X}_{k+1}}$ , $\quad \frac{\partial ^ 2 V _ {k+1}}{\partial \vec{X} _ {k+1} ^ 2}$ 的求法如下：
+
+①当 $k=N$ 时， $\frac{\partial V_{k+1}}{\partial \vec{X}_{k+1}}, \quad \frac{\partial ^ 2 V _ {k+1}}{\partial \vec{X} _ {k+1} ^ 2}=0$ 
+
+②当 $k=N-1$ 时， 
+
+$$
+\frac{\partial V_{k+1}}{\partial \vec{X}_{k+1}} = \frac{\partial \ell _f (\vec{X} _ N)}{\partial \vec{X} _ N} = \big( \vec{X} _ N - \vec{X} _ N ^ r \big) ^ T S
+$$
+
+<p align="right">(52)</p>
+
+$$
+\frac{\partial ^ 2 V _ {k+1}}{\partial \vec{X} _ {k+1} ^ 2} = \frac{\partial ^ 2 \ell _f (\vec{X} _ N)}{\partial \vec{X} _ N ^ 2} =S 
+$$
+
+<p align="right">(53)</p>
+
+③当 $k \leq N-2$ 时，说明此时 $V_{N-1}$已经算完。
+
+在 $(\vec{X}_k, \vec{u}_k)$ 处对 $V_k$ 进行二阶泰勒展开：
+
+$$
+V_k ( \vec{X}_k + \delta \vec{X}_k, \quad \vec{u}_k + \delta \vec{u}_k ) = V_k ( \vec{X}_k, \vec{u} _ k ) + \frac{\partial V}{\partial \vec{X}} \Bigg| _ {(\vec{X}_k, \vec{u}_k)} \cdot \delta \vec{X}_k + \frac{1}{2} (\delta \vec{X}_k) ^ T \cdot \frac{\partial ^ 2 V}{\partial \vec{X} ^ 2} \Bigg| _ {(\vec{X}_k, \vec{u}_k)} \cdot (\delta \vec{X}_k)
+$$
+
+<p align="right">(54)</p>
+
+$$
+\delta V_k(\vec{X}_k, \vec{u} _ k) = \frac{\partial V}{\partial \vec{X}} \Bigg| _ {(\vec{X}_k, \vec{u}_k)} \cdot \delta \vec{X}_k + \frac{1}{2} (\delta \vec{X}_k) ^ T \cdot \frac{\partial ^ 2 V}{\partial \vec{X} ^ 2} \Bigg| _ {(\vec{X}_k, \vec{u}_k)} \cdot (\delta \vec{X}_k)
+$$
+
+<p align="right">(55)</p>
+
+结合式(51)与式(55), 可得：
+
+$$
+\frac{\partial V}{\partial \vec{X}} \Bigg| _ {(\vec{X}_k, \vec{u}_k)} =  Q_X + Q _u K + d^T Q _{uu} K + d ^ T Q _ {Xu}
+$$
+
+<p align="right">(56)</p>
+
+$$
+\frac{\partial ^ 2 V}{\partial \vec{X} ^ 2} \Bigg| _ {(\vec{X}_k, \vec{u}_k)} = Q _ {XX} + K ^ T Q _ {uu} K + Q _ {uX} K + K ^T Q _ {Xu}
+$$
+
+<p align="right">(57)</p>
+
+$$
+\Delta V = \frac{1}{2} d^T Q _{uu} d + Q_u d
+$$
+
+<p align="right">(58)</p>
+
+$\Delta V$ 为余项。
 
 ## 4 Forward Pass
 ## 5 Results
