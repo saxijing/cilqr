@@ -1,5 +1,6 @@
 # CILQR方法用于自动驾驶运动规划的原理推导与操作指南
 注：为避免引入错误，全文所有矩阵求导运算均采用分子布局
+## 0 Results
 ## 1 Vehicle Model
 将车辆位置姿态进行建模，其离散化状态空间方程为：
 
@@ -115,7 +116,7 @@ $$
 
 避障场景中，将主车近似为两个圆，障碍物考虑其速度，近似为椭圆，如图1所示。
 
-<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/ego_obs_approximate.jpg" width=800> </div>
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/ego_obs_approx.jpg" width=800> </div>
 
 <p align="center">图1 避障约束近似示意图</p>
 
@@ -670,10 +671,55 @@ $\Delta V$ 为余项。
 
 ### 3.3 Backward Pass算法流程总结
 
-
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/backward_persudo.jpg" width=600> </div>
 
 ## 4 Forward Pass
-## 5 Results
+
+Backward Pass过程计算出了 $0$ ~ $N-1$ 时刻的最优控制量 $\delta \vec{u} _ k ^ *$ ， Forward Pass阶段需要根据最优控制量序列、车辆模型及参考轨迹序列计算出一条目标轨迹。过程如下：
+
+令 $\delta \vec{X}_k= \vec{X}_k ^ {new} - \vec{X} ^ r _ k$
+
+<p align="right">(59)</p>
+
+其中， $\vec{X}_k ^ {new}$ 为本次迭代计算出的轨迹点， $\vec{X} ^ r _ k$ 为参考轨迹点。
+
+则根据第3部分的计算，
+
+$$
+\delta \vec{u}_k ^ {new} = K \cdot \delta \vec{X}_k + \alpha \cdot d, \qquad \alpha \in [0,1]
+$$
+
+<p align="right">(60)</p>
+
+$$
+\vec{u}_k ^ {new} = \vec{u}_k + \delta \vec{u}_k
+$$
+
+<p align="right">(61)</p>
+
+$$
+\vec{X}_{k+1} ^ {new} = f(\vec{X}_k ^ {new}, \vec{u}_k ^ {new})
+$$
+
+<p align="right">(62)</p>
+
+其中， $f(\vec{\overline X}_k, \vec{\overline u}_k)$ 参考式(1)。由此计算出一系列标称轨迹点。
+
+式(60)中的 $\alpha$ 为线搜索的迭代步长，用于在Backward Pass获得的解附近搜索最优解，当未达到终止条件时，每次 $\alpha$ 的更新规则为
+
+$$
+\alpha = \gamma \cdot \alpha, \quad usually \quad \gamma = 0.5
+$$
+
+<p align="right">(63)</p>
+
+当满足终止条件时，更新目标轨迹为新计算出的轨迹 $\vec{X}_k ^ {new}$ 、控制输入为新计算出的 $\vec{u}_k ^ {new}$ ,并同步更新路径代价 $J$ 。
+
+Forward Pass算法流程总结如下：
+
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/forward_pass_persudo.jpg" width=600> </div>
+
+## 5 Project Architecture
 ## 6 Commands
 
 
