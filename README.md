@@ -1,6 +1,19 @@
 # CILQR方法用于自动驾驶运动规划的原理推导与操作指南
 注：为避免引入错误，全文所有矩阵求导运算均采用分子布局
 ## 0 Results
+
+项目成果展示如下：
+
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Results/Following.gif" width=500><img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Results/MultiObs.gif" width=500> </div>
+
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Results/LaneChange.gif" width=500><img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Results/Overtake.gif" width=500> </div>
+
+<p align="center">项目成果展示</p>
+
+
+
+本项目代码在跟车、多障碍物躲避、变道、超车这些常见场景下均表现良好，满足使用需求。由于项目使用C++ 在ROS架构下实现，所以使用rviz做成果展示，其中绿色矩形为主车，灰色矩形为npc车辆，尺寸均按照tesla model3设置，主车前面的绿色曲线为实时规划路径，可以看出项目在静态、动态场景下均有良好表现，可以根据决策结果不同设置不同参数，达到不同的速度与路径选择。
+
 ## 1 Vehicle Model
 将车辆位置姿态进行建模，其离散化状态空间方程为：
 
@@ -720,6 +733,37 @@ Forward Pass算法流程总结如下：
 <div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/forward_pass_persudo.jpg" width=600> </div>
 
 ## 5 Project Architecture
+
+为更好地贴近实车环境，本项目采用C++编程，将仿真场景与运动规划分为两个进程，使用ROS架构实现进程间的通信。同时为了配合控制模块，每帧都进行了规划起点的确定和轨迹拼接、规划与控制采用了不同的计算频率。项目整体架构如下：
+
+<div align=center> <img src="https://github.com/saxijing/cilqr/blob/main/data/display_materials/Figures/project_architecture.jpg" width=800> </div>
+
+<p align="center">图2 项目架构</p>
+
 ## 6 Commands
 
+四个测试场景的运行命令如下：
 
+**(1)Following:**
+
+roslaunch launch following_scene.launch
+
+roslaunch launch cilqr_planner_following.launch
+
+**(2)Obstacles Avoidance:**
+
+roslaunch launch multi_obstacles_scene.launch
+
+roslaunch launch cilqr_planner_multi_obstacles.launch
+
+**(3)Lane Change:**
+
+roslaunch launch lane_change_scene.launch
+
+roslaunch launch cilqr_planner_lane_change.launch
+
+**(4)Overtake:**
+
+roslaunch launch overtake_scene.launch
+
+roslaunch launch cilqr_planner_overtake.launch
